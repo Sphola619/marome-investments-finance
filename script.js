@@ -1,116 +1,150 @@
-// Mock data - will be replaced with real API calls
-const mockSectorData = [
-  { 
-      name: "Technology", 
-      performance: "+2.8%", 
-      description: "Average performance of AAPL, MSFT, NVDA", 
-      trend: "positive" 
-  },
-  { 
-      name: "Healthcare", 
-      performance: "+1.5%", 
-      description: "Average performance of JNJ, UNH, PFE", 
-      trend: "positive" 
-  },
-  { 
-      name: "Financials", 
-      performance: "+0.9%", 
-      description: "Average performance of JPM, BAC, WFC", 
-      trend: "positive" 
-  },
-  { 
-      name: "Energy", 
-      performance: "-1.2%", 
-      description: "Average performance of XOM, CVX, COP", 
-      trend: "negative" 
-  },
-  { 
-      name: "Consumer Cyclical", 
-      performance: "+1.8%", 
-      description: "Average performance of AMZN, TSLA, HD", 
-      trend: "positive" 
-  },
-  { 
-      name: "Consumer Defensive", 
-      performance: "+0.7%", 
-      description: "Average performance of WMT, PG, KO", 
-      trend: "positive" 
-  }
-];
+// =====================
+// CONFIG
+// =====================
+const API_BASE_URL = "http://localhost:5000/api";
 
-const mockNewsData = [
-  {
-      title: "Federal Reserve Holds Interest Rates Steady",
-      content: "The Federal Reserve announced it will maintain current interest rates, citing stable economic growth and controlled inflation.",
-      source: "Reuters",
-      time: "2 hours ago"
-  },
-  {
-      title: "Tech Giants Report Strong Quarterly Earnings",
-      content: "Major technology companies exceed earnings expectations, driven by AI adoption and cloud services growth.",
-      source: "Bloomberg", 
-      time: "4 hours ago"
-  },
-  {
-      title: "Global Supply Chain Improvements Boost Manufacturing",
-      content: "Enhanced logistics and reduced bottlenecks are positively impacting manufacturing sectors worldwide.",
-      source: "Financial Times",
-      time: "6 hours ago"
-  }
-];
+// =====================
+// FETCH REAL SECTOR DATA
+// =====================
+async function fetchRealSectorData() {
+    try {
+        console.log("🔄 Fetching real sector data…");
 
-function populateMarketList() {
-  const marketList = document.getElementById('marketList');
-  if (!marketList) return;
-  
-  marketList.innerHTML = '';
-  
-  // Sort by performance (highest first)
-  const sortedData = [...mockSectorData].sort((a, b) => {
-      const aValue = parseFloat(a.performance);
-      const bValue = parseFloat(b.performance);
-      return bValue - aValue;
-  });
-  
-  sortedData.forEach(sector => {
-      const marketItem = document.createElement('div');
-      marketItem.className = 'market-item';
-      marketItem.innerHTML = `
-          <div class="market-info">
-              <h3>${sector.name}</h3>
-              <p>${sector.description}</p>
-          </div>
-          <div class="performance ${sector.trend}">${sector.performance}</div>
-      `;
-      marketList.appendChild(marketItem);
-  });
+        const response = await fetch(`${API_BASE_URL}/sectors`);
+        if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+
+        const data = await response.json();
+
+        // Ensure data is an array
+        if (!Array.isArray(data)) {
+            console.error("❌ Unexpected sector API response:", data);
+            return null;
+        }
+
+        // Convert Finnhub format to your UI format
+        return data.map(item => ({
+            name: item.sector,
+            description: `Sector: ${item.sector}`,
+            performance: item.changesPercentage,           // already like "+1.23%"
+            trend: item.changesPercentage.startsWith("+") ? "positive" : "negative"
+        }));
+    } catch (err) {
+        console.error("❌ Failed to load real sector data:", err);
+        return null;
+    }
 }
 
-function populateNewsList() {
-  const newsList = document.getElementById('newsList');
-  if (!newsList) return;
-  
-  newsList.innerHTML = '';
-  
-  mockNewsData.forEach(news => {
-      const newsItem = document.createElement('div');
-      newsItem.className = 'news-item';
-      newsItem.innerHTML = `
-          <h4>${news.title}</h4>
-          <p>${news.content}</p>
-          <div class="news-meta">${news.time} • ${news.source}</div>
-      `;
-      newsList.appendChild(newsItem);
-  });
+// =====================
+// FETCH MARKET NEWS
+// =====================
+async function fetchNews() {
+    try {
+        console.log("📰 Fetching news…");
+        const response = await fetch(`${API_BASE_URL}/news`);
+        if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+        
+        const news = await response.json();
+        return news.slice(0, 8);
+    } catch (err) {
+        console.error("❌ Failed to load news:", err);
+        return [];
+    }
 }
 
-// Initialize when page loads
-document.addEventListener('DOMContentLoaded', function() {
-  populateMarketList();
-  populateNewsList();
-  
-  // Simulate loading delay
-  setTimeout(() => {
-      console.log("Dashboard loaded - ready to connect to real API!");
-  }, 1000);
+// =====================
+// POPULATE SECTORS LIST
+// =====================
+function populateMarketList(sectors, isRealData = true) {
+    const marketList = document.getElementById("market-list");
+
+    if (!marketList) {
+        console.error("❌ Element with id 'market-list' not found in HTML.");
+        return;
+    }
+
+    marketList.innerHTML = "";
+
+    sectors.forEach(sector => {
+        const div = document.createElement("div");
+        div.className = "market-item";
+
+        div.innerHTML = `
+            <div class="market-info">
+                <h3>${sector.name}</h3>
+                <p>${sector.description}</p>
+            </div>
+            <div class="performance ${sector.trend}">
+                ${sector.performance}
+            </div>
+        `;
+
+        marketList.appendChild(div);
+    });
+
+    if (!isRealData) {
+        const msg = document.createElement("div");
+        msg.style.cssText = "text-align:center;margin-top:1rem;color:#777;font-size:0.9rem;";
+        msg.innerHTML = "⚠ Using mock data (backend unavailable)";
+        marketList.appendChild(msg);
+    }
+}
+
+// =====================
+// POPULATE NEWS PANEL
+// =====================
+function populateNewsList(newsData) {
+    const newsList = document.getElementById("news-list");
+    if (!newsList) return;
+
+    newsList.innerHTML = "";
+
+    newsData.forEach(article => {
+        const li = document.createElement("li");
+        li.className = "news-item";
+
+        li.innerHTML = `
+            <a href="${article.url}" target="_blank">${article.headline}</a>
+            <span class="news-source">${article.source}</span>
+        `;
+
+        newsList.appendChild(li);
+    });
+}
+
+// =====================
+// DEFAULT MOCK DATA
+// =====================
+function getMockSectorData() {
+    return [
+        { name: "Technology", description: "Tech sector", performance: "+1.24%", trend: "positive" },
+        { name: "Healthcare", description: "Healthcare sector", performance: "-0.42%", trend: "negative" },
+        { name: "Energy", description: "Energy sector", performance: "+0.93%", trend: "positive" }
+    ];
+}
+
+// =====================
+// INITIAL LOAD
+// =====================
+window.addEventListener("DOMContentLoaded", async () => {
+    console.log("🚀 Loading dashboard…");
+
+    const realData = await fetchRealSectorData();
+    const news = await fetchNews();
+
+    if (realData) {
+        populateMarketList(realData, true);
+    } else {
+        populateMarketList(getMockSectorData(), false);
+    }
+
+    populateNewsList(news);
 });
+
+// =====================
+// AUTO REFRESH
+// =====================
+setInterval(async () => {
+    console.log("🔄 Auto-refreshing sectors…");
+    const realData = await fetchRealSectorData();
+    if (realData) populateMarketList(realData, true);
+}, 300000);
