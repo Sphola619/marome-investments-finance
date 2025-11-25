@@ -4,29 +4,26 @@
 const API_BASE_URL = "http://localhost:5000/api";
 
 // =====================
-// FETCH REAL SECTOR DATA
+// FETCH REAL SECTOR DATA (from backend -> Polygon ETF method)
 // =====================
 async function fetchRealSectorData() {
     try {
-        console.log("🔄 Fetching real sector data…");
-
+        console.log("🔄 Fetching sector data from backend...");
         const response = await fetch(`${API_BASE_URL}/sectors`);
         if (!response.ok) throw new Error(`HTTP error ${response.status}`);
 
         const data = await response.json();
-
-        // Ensure data is an array
         if (!Array.isArray(data)) {
             console.error("❌ Unexpected sector API response:", data);
             return null;
         }
 
-        // Convert Finnhub format to your UI format
+        // Map backend format -> UI format expected by populateMarketList
         return data.map(item => ({
             name: item.sector,
             description: `Sector: ${item.sector}`,
-            performance: item.changesPercentage,           // already like "+1.23%"
-            trend: item.changesPercentage.startsWith("+") ? "positive" : "negative"
+            performance: item.changesPercentage,
+            trend: item.changesPercentage.startsWith("-") ? "negative" : "positive"
         }));
     } catch (err) {
         console.error("❌ Failed to load real sector data:", err);
@@ -35,16 +32,17 @@ async function fetchRealSectorData() {
 }
 
 // =====================
-// FETCH MARKET NEWS
-// =====================
+// FETCH MARKET NEWS (from backend Finnhub)
+ // =====================
 async function fetchNews() {
     try {
-        console.log("📰 Fetching news…");
+        console.log("📰 Fetching news...");
         const response = await fetch(`${API_BASE_URL}/news`);
         if (!response.ok) throw new Error(`HTTP error ${response.status}`);
-        
+
         const news = await response.json();
-        return news.slice(0, 8);
+        // Finnhub returns an array — limit to 8
+        return Array.isArray(news) ? news.slice(0, 8) : [];
     } catch (err) {
         console.error("❌ Failed to load news:", err);
         return [];
@@ -54,9 +52,8 @@ async function fetchNews() {
 // =====================
 // POPULATE SECTORS LIST
 // =====================
-function populateMarketList(sectors, isRealData = true) {
+function populateMarketList(sectors) {
     const marketList = document.getElementById("market-list");
-
     if (!marketList) {
         console.error("❌ Element with id 'market-list' not found in HTML.");
         return;
@@ -80,17 +77,10 @@ function populateMarketList(sectors, isRealData = true) {
 
         marketList.appendChild(div);
     });
-
-    if (!isRealData) {
-        const msg = document.createElement("div");
-        msg.style.cssText = "text-align:center;margin-top:1rem;color:#777;font-size:0.9rem;";
-        msg.innerHTML = "⚠ Using mock data (backend unavailable)";
-        marketList.appendChild(msg);
-    }
 }
 
 // =====================
-// POPULATE NEWS PANEL
+// POPULATE NEWS CARDS (styled as cards in CSS)
 // =====================
 function populateNewsList(newsData) {
     const newsList = document.getElementById("news-list");
@@ -99,52 +89,63 @@ function populateNewsList(newsData) {
     newsList.innerHTML = "";
 
     newsData.forEach(article => {
-        const li = document.createElement("li");
-        li.className = "news-item";
+        const div = document.createElement("div");
+        div.className = "news-card";
 
-        li.innerHTML = `
-            <a href="${article.url}" target="_blank">${article.headline}</a>
-            <span class="news-source">${article.source}</span>
+        // Some Finnhub articles may not have url/headline exactly the same fields; handle gracefully
+        const url = article.url || article.link || "#";
+        const headline = article.headline || article.title || "Market news";
+        const source = article.source || article.source_id || "";
+
+        // epoch seconds -> readable date
+        let dateStr = "";
+        try {
+            dateStr = article.datetime ? new Date(article.datetime * 1000).toLocaleDateString() : "";
+        } catch (e) {
+            dateStr = "";
+        }
+
+        div.innerHTML = `
+            <a href="${url}" target="_blank" rel="noopener" class="news-link">
+                <h3 class="news-title">${headline}</h3>
+                <p class="news-source">${source} • ${dateStr}</p>
+            </a>
         `;
 
-        newsList.appendChild(li);
+        newsList.appendChild(div);
     });
-}
-
-// =====================
-// DEFAULT MOCK DATA
-// =====================
-function getMockSectorData() {
-    return [
-        { name: "Technology", description: "Tech sector", performance: "+1.24%", trend: "positive" },
-        { name: "Healthcare", description: "Healthcare sector", performance: "-0.42%", trend: "negative" },
-        { name: "Energy", description: "Energy sector", performance: "+0.93%", trend: "positive" }
-    ];
 }
 
 // =====================
 // INITIAL LOAD
 // =====================
 window.addEventListener("DOMContentLoaded", async () => {
-    console.log("🚀 Loading dashboard…");
+    console.log("🚀 Loading dashboard...");
 
-    const realData = await fetchRealSectorData();
+    const realSectors = await fetchRealSectorData();
     const news = await fetchNews();
 
-    if (realData) {
-        populateMarketList(realData, true);
+    if (realSectors && realSectors.length > 0) {
+        populateMarketList(realSectors);
     } else {
-        populateMarketList(getMockSectorData(), false);
+        console.error("⚠ No sector data returned from backend.");
+        // Optionally show a message in UI instead of mock data
+        const marketList = document.getElementById("market-list");
+        if (marketList) {
+            marketList.innerHTML = `<div style="text-align:center;color:#777;padding:1rem;">⚠ Sector data unavailable. Try again later.</div>`;
+        }
     }
 
     populateNewsList(news);
 });
 
 // =====================
-// AUTO REFRESH
+// AUTO REFRESH (5 minutes)
 // =====================
 setInterval(async () => {
-    console.log("🔄 Auto-refreshing sectors…");
-    const realData = await fetchRealSectorData();
-    if (realData) populateMarketList(realData, true);
+    console.log("🔄 Auto-refreshing...");
+    const realSectors = await fetchRealSectorData();
+    if (realSectors && realSectors.length > 0) {
+        populateMarketList(realSectors);
+    }
 }, 300000);
