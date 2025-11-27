@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
     <!-- Header -->
     <header class="header">
         <a href="index.html" class="logo">
@@ -28,61 +29,24 @@
         <h1>Forex Markets</h1>
 
         <div class="dashboard-grid">
-            <!-- Forex Pairs -->
+
+            <!-- Forex Pairs (Dynamic List) -->
             <div class="performance-section">
                 <h2 class="section-title">Major Currency Pairs</h2>
-                <div class="market-list">
-                    <div class="market-item">
-                        <div class="market-info">
-                            <h3>EUR/USD</h3>
-                            <p>Euro / US Dollar</p>
-                        </div>
-                        <div class="performance positive">+0.12%</div>
-                    </div>
 
+                <!-- THIS IS WHERE FOREX.JS WILL INSERT THE DATA -->
+                <div id="forex-list" class="market-list">
                     <div class="market-item">
                         <div class="market-info">
-                            <h3>GBP/USD</h3>
-                            <p>British Pound / US Dollar</p>
+                            <h3>Loading FX data...</h3>
+                            <p>Please wait</p>
                         </div>
-                        <div class="performance negative">-0.08%</div>
-                    </div>
-
-                    <div class="market-item">
-                        <div class="market-info">
-                            <h3>USD/JPY</h3>
-                            <p>US Dollar / Japanese Yen</p>
-                        </div>
-                        <div class="performance positive">+0.05%</div>
-                    </div>
-
-                    <div class="market-item">
-                        <div class="market-info">
-                            <h3>USD/ZAR</h3>
-                            <p>US Dollar / South African Rand</p>
-                        </div>
-                        <div class="performance positive">+0.36%</div>
-                    </div>
-
-                    <div class="market-item">
-                        <div class="market-info">
-                            <h3>AUD/USD</h3>
-                            <p>Australian Dollar / US Dollar</p>
-                        </div>
-                        <div class="performance negative">-0.11%</div>
-                    </div>
-
-                    <div class="market-item">
-                        <div class="market-info">
-                            <h3>USD/CHF</h3>
-                            <p>US Dollar / Swiss Franc</p>
-                        </div>
-                        <div class="performance positive">+0.09%</div>
+                        <div class="performance">--%</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Optional second column (for symmetry) -->
+            <!-- Market Overview (Static for now) -->
             <div class="performance-section">
                 <h2 class="section-title">Market Overview</h2>
                 <p style="color:#666; font-size:0.95rem;">
@@ -90,12 +54,14 @@
                     This section will show trends, volatility heat maps, and signals.
                 </p>
             </div>
+
         </div>
 
         <div class="disclaimer">
-            ⚠️ Disclaimer: Marome Investments provides analytical data for informational purposes only...
+            ⚠️ Disclaimer: Marome Investments provides analytical data for informational purposes only.
         </div>
     </div>
 
+    <script src="forex.js"></script>
 </body>
 </html>

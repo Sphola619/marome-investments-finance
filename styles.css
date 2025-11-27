@@ -233,3 +233,33 @@ body {
 .news-card a {
   color: inherit;
 }
+
+/* ===== FOREX CARD STYLE ===== */
+.market-item {
+  background: #ffffff;
+  padding: 1rem 1.2rem;
+  border-radius: 10px;
+  border-left: 4px solid #2563eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+  cursor: pointer;  /* <- pointer cursor */
+}
+
+/* Hover animation */
+.market-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.10);
+}
+
+/* Make the FX card feel clickable */
+.market-info h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.market-info p {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
