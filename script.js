@@ -4,33 +4,24 @@
 const API_BASE_URL = "http://localhost:5000/api";
 
 // =====================
-// FETCH REAL SECTOR DATA
+// FETCH REAL SECTOR DATA (Polygon -> ETF)
 // =====================
 async function fetchRealSectorData() {
     try {
-        console.log("📊 Fetching sector performance...");
+        const resp = await fetch(`${API_BASE_URL}/sectors`);
+        if (!resp.ok) return null;
 
-        const response = await fetch(`${API_BASE_URL}/sectors`);
-        if (!response.ok) throw new Error(`Sector API error: ${response.status}`);
+        const data = await resp.json();
 
-        const data = await response.json();
-
-        // Convert backend → frontend format
-        return data.map(item => {
-            const pct = item.changesPercentage || "0.00%";
-
-            let trend = "neutral";
-            if (pct.startsWith("+")) trend = "positive";
-            else if (pct.startsWith("-")) trend = "negative";
-
-            return {
-                name: item.sector,
-                description: `Sector: ${item.sector}`,
-                performance: pct,
-                trend
-            };
-        });
-
+        return data.map(item => ({
+            name: item.sector,
+            description: `Sector: ${item.sector}`,
+            performance: item.changesPercentage,
+            trend:
+                item.changesPercentage.includes("-")
+                    ? "negative"
+                    : "positive"
+        }));
     } catch (err) {
         console.error("❌ Sector fetch error:", err);
         return null;
@@ -38,20 +29,15 @@ async function fetchRealSectorData() {
 }
 
 // =====================
-// FETCH MARKET NEWS
+// FETCH NEWS (Finnhub)
 // =====================
 async function fetchNews() {
     try {
-        console.log("📰 Fetching news...");
+        const resp = await fetch(`${API_BASE_URL}/news`);
+        if (!resp.ok) return [];
 
-        const response = await fetch(`${API_BASE_URL}/news`);
-        if (!response.ok) throw new Error(`News API error: ${response.status}`);
-
-        const data = await response.json();
-
-        // Limit to 8 articles
-        return Array.isArray(data) ? data.slice(0, 8) : [];
-
+        const data = await resp.json();
+        return data.slice(0, 8);
     } catch (err) {
         console.error("❌ News fetch error:", err);
         return [];
@@ -59,12 +45,10 @@ async function fetchNews() {
 }
 
 // =====================
-// POPULATE SECTORS LIST
+// POPULATE SECTOR LIST
 // =====================
 function populateMarketList(sectors) {
     const container = document.getElementById("market-list");
-    if (!container) return;
-
     container.innerHTML = "";
 
     sectors.forEach(sector => {
@@ -86,51 +70,52 @@ function populateMarketList(sectors) {
 }
 
 // =====================
-// POPULATE NEWS LIST
+// POPULATE NEWS CARDS
 // =====================
 function populateNewsList(news) {
-    const list = document.getElementById("news-list");
-    if (!list) return;
-
-    list.innerHTML = "";
+    const container = document.getElementById("news-list");
+    container.innerHTML = "";
 
     news.forEach(article => {
-        const dateStr = article.datetime
-            ? new Date(article.datetime * 1000).toLocaleDateString()
-            : "Today";
-
         const div = document.createElement("div");
         div.className = "news-card";
 
         div.innerHTML = `
-            <a href="${article.url || "#"}" target="_blank" class="news-link">
-                <h3 class="news-title">${article.headline || "Market Update"}</h3>
-                <p class="news-source">${article.source || ""} • ${dateStr}</p>
+            <a href="${article.url}" target="_blank" class="news-link">
+                <h3 class="news-title">${article.headline}</h3>
+                <p class="news-source">
+                    ${article.source} • ${new Date(article.datetime * 1000).toLocaleDateString()}
+                </p>
             </a>
         `;
 
-        list.appendChild(div);
+        container.appendChild(div);
     });
 }
 
 // =====================
-// INITIAL PAGE LOAD
+// INITIAL LOAD
 // =====================
 document.addEventListener("DOMContentLoaded", async () => {
-    console.log("🚀 Loading dashboard...");
-
     const sectors = await fetchRealSectorData();
     const news = await fetchNews();
 
-    if (sectors) populateMarketList(sectors);
+    if (sectors) {
+        populateMarketList(sectors);
+    } else {
+        document.getElementById("market-list").innerHTML =
+            `<div style="text-align:center;color:#777;padding:1rem;">
+                ❌ Sector data unavailable (Rate limit). Please try again.
+            </div>`;
+    }
+
     populateNewsList(news);
 });
 
 // =====================
-// AUTO-REFRESH every 5 minutes
+// AUTO REFRESH (5 min)
 // =====================
 setInterval(async () => {
-    console.log("🔄 Auto-refreshing sector data...");
     const sectors = await fetchRealSectorData();
     if (sectors) populateMarketList(sectors);
 }, 300000);

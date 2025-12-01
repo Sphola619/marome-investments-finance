@@ -263,3 +263,17 @@ body {
   font-size: 0.9rem;
   color: #6b7280;
 }
+
+/* Shared Layout for All Market Pages */
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #1f2937;
+}
+
+.placeholder-text {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.6;
+}
