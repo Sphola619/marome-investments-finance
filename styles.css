@@ -277,3 +277,62 @@ body {
   color: #666;
   line-height: 1.6;
 }
+
+/* Trend Indicator Styles */
+.trend-info {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #374151;
+}
+
+.trend-badge {
+  font-size: 1.3rem;
+}
+
+.forex-card {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.forex-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+}
+
+/*Market Overview*/
+.market-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.performance {
+  font-weight: bold;
+  font-size: 1.1rem;
+  width: 80px;        /* <— Force equal width */
+  text-align: right;  /* <— Align neatly */
+}
+
+/* Strength Meter Cards */
+.strength-card {
+  background: #ffffff;
+  padding: 1rem;
+  border-radius: 10px;
+  border-left: 4px solid #8b5cf6; /* Purple tone */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.trend-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.trend-badge {
+  font-size: 1.3rem;
+}
