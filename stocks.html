@@ -7,14 +7,15 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Same header as index.html -->
+
+    <!-- Header -->
     <header class="header">
       <a href="index.html" class="logo">
         Marome <br><span>Investments</span>
       </a>
       <nav>
         <ul class="nav-links">
-          <li><a href="index.html">Dashboard</a></li> <!-- Link back to home -->
+          <li><a href="index.html">Dashboard</a></li>
           <li><a href="stocks.html" class="active">Stock Markets</a></li>
           <li><a href="forex.html">Forex</a></li>
           <li><a href="commodities.html">Commodities</a></li>
@@ -26,22 +27,38 @@
 
     <div class="container">
       <h1>Stock Markets</h1>
+
       <div class="dashboard-grid">
-        <!-- Stock-specific content here -->
+
+        <!-- Major Indices Section -->
         <div class="performance-section">
             <h2 class="section-title">Major Indices</h2>
-            <!-- S&P 500, NASDAQ, Dow Jones etc. -->
+
+            <!-- where JS injects index cards -->
+            <div id="indices-list" class="market-list">
+                <div class="market-item">
+                    <div class="market-info">
+                        <h3>Loading Indices...</h3>
+                        <p>Please wait</p>
+                    </div>
+                    <div class="performance">--%</div>
+                </div>
+            </div>
         </div>
+
+        <!-- Market News -->
         <div class="news-section">
-            <h2 class="section-title">Stock Market News</h2>
-            <!-- Stock-specific news -->
+            <h2 class="section-title">Global Market Summary</h2>
+            <div id="news-list"></div>
         </div>
+
       </div>
-        
-      <!-- Same disclaimer -->
+
       <div class="disclaimer">
-          ⚠️ Disclaimer: Marome Investments provides analytical data for informational purposes only...
+        ⚠️ Disclaimer: Marome Investments provides analytical data for informational purposes only.
       </div>
     </div>
+
+    <script src="stocks.js"></script>
 </body>
 </html>

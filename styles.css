@@ -336,3 +336,11 @@ body {
 .trend-badge {
   font-size: 1.3rem;
 }
+
+/* Highlight active link */
+.nav-links a.active {
+  background-color: #2563eb;   /* blue background */
+  color: white;                /* white text */
+  border: 2px solid #2563eb;   /* blue border */
+  border-radius: 6px;
+}
