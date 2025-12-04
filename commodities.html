@@ -33,31 +33,10 @@
         <div class="performance-section">
             <h2 class="section-title">Major Commodities</h2>
 
-            <div class="market-list">
-                <div class="market-item">
-                    <div class="market-info">
-                        <h3>Gold</h3>
-                        <p>XAU/USD</p>
-                    </div>
-                    <div class="performance positive">+0.45%</div>
-                </div>
-
-                <div class="market-item">
-                    <div class="market-info">
-                        <h3>Crude Oil</h3>
-                        <p>WTI</p>
-                    </div>
-                    <div class="performance negative">-1.20%</div>
-                </div>
-
-                <div class="market-item">
-                    <div class="market-info">
-                        <h3>Silver</h3>
-                        <p>XAG/USD</p>
-                    </div>
-                    <div class="performance positive">+0.18%</div>
-                </div>
+            <div class="market-list" id="commodities-container">
+                <!-- commodities.js will inject live items here -->
             </div>
+            
         </div>
 
         <!-- RIGHT COLUMN -->
@@ -75,6 +54,8 @@
         ⚠️ Disclaimer: Marome Investments provides analytical data for informational purposes only.
     </div>
 </div>
+
+<script src="commodities.js"></script>
 
 </body>
 </html>
