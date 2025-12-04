@@ -344,3 +344,12 @@ body {
   border: 2px solid #2563eb;   /* blue border */
   border-radius: 6px;
 }
+
+/* Summary text styling */
+.summary-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #333;
+  padding: 10px 5px;
+}
+
