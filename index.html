@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
     <!-- Header Section -->
     <header class="header">
         <a href="index.html" class="logo">
@@ -24,15 +25,14 @@
     </header>
 
     <!-- Main Content -->
-    <div class="container">
-        <!-- Dashboard Grid -->
+    <div class="container animate delay-1">
+        
         <div class="dashboard-grid">
 
-            <!-- Left Column - Market Performance -->
-            <div class="performance-section">
+            <!-- Market Performance -->
+            <div class="performance-section animate delay-2">
                 <h2 class="section-title">Top Performing Markets</h2>
                 <div class="market-list" id="market-list">
-                    <!-- Loading state -->
                     <div class="market-item">
                         <div class="market-info">
                             <h3>Loading market data...</h3>
@@ -43,11 +43,10 @@
                 </div>
             </div>
 
-            <!-- Right Column - News Section -->
-            <div class="news-section">
+            <!-- News Section -->
+            <div class="news-section animate delay-3">
                 <h2 class="section-title">Market News</h2>
                 <div id="news-list">
-                    <!-- Loading state -->
                     <div class="news-item">
                         <h4>Loading financial news...</h4>
                         <p>Fetching latest market updates</p>
@@ -58,15 +57,15 @@
 
         </div>
 
-        <!-- Legal Disclaimer -->
-        <div class="disclaimer">
+        <!-- Disclaimer -->
+        <div class="disclaimer animate delay-4">
             ⚠️ Disclaimer: Marome Investments provides analytical data for informational purposes only. 
             This is not financial advice. Past performance is not indicative of future results. 
             Always consult with a qualified financial advisor before making investment decisions.
         </div>
+
     </div>
 
-    <!-- Link to external JavaScript file -->
     <script src="script.js"></script>
 </body>
 </html>
