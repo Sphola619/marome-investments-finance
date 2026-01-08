@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Marome Investments - Financial Advisory</title>
+    <link rel="stylesheet" href="styles.css"/>
+    <link rel="icon" href="images/favicon.ico">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="header">
+      <a href="index.html" class="logo">
+        Marome <br><span>Investments</span>
+      </a>
+    
+      <!-- Hamburger Button (mobile only) -->
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    
+      <!-- Navigation with mobile-menu class -->
+      <nav class="nav-menu" id="navMenu">
+        <ul class="nav-links">
+          <li><a href="stocks.html">Stock Markets</a></li>
+          <li><a href="forex.html">Forex & Commodities</a></li>
+          <li><a href="crypto.html">Cryptocurrency</a></li>
+          <li><a href="analysis.html">Market Analysis</a></li>
+          <li><a href="calendar.html">Economic Calendar</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container animate delay-1">
+        
+      <div class="dashboard-grid">
+
+        <!-- Global Top Movers Section -->
+        <div class="performance-section animate delay-2">
+          <h2 class="section-title">Top Movers (Global Markets)</h2>
+          <div class="market-list" id="movers-list">
+            <div class="market-item">
+              <div class="market-info">
+                  <h3>Loading global movers...</h3>
+                  <p>Fetching real-time movement across all markets</p>
+              </div>
+              <div class="performance">--%</div>
+            </div>
+          </div>
+        </div>
+
+          <!-- News Section -->
+          <div class="news-section animate delay-3">
+              <h2 class="section-title">Market News</h2>
+              <div id="news-list">
+                  <div class="news-item">
+                      <h4>Loading financial news...</h4>
+                      <p>Fetching latest market updates</p>
+                      <div class="news-meta">Just now</div>
+                  </div>
+              </div>
+          </div>
+
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer animate delay-4">
+            ⚠️ Disclaimer: Marome Investments provides analytical data for informational purposes only. 
+            This is not financial advice. Past performance is not indicative of future results. 
+            Always consult with a qualified financial advisor before making investment decisions.
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+    <script src="hamburger.js"></script>
+</body>
+</html>

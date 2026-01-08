@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Analysis - Marome Investments</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/favicon.ico">
+</head>
+<body>
+
+    <header class="header">
+        <a href="index.html" class="logo">
+            Marome <br><span>Investments</span>
+        </a>
+        
+        <!-- ✅ Hamburger Button (mobile only) -->
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
+        <!-- ✅ Navigation with mobile-menu class -->
+        <nav class="nav-menu" id="navMenu">
+            <ul class="nav-links">
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="stocks.html">Stock Markets</a></li>
+                <li><a href="forex.html">Forex & Commodities</a></li>
+                <li><a href="crypto.html">Cryptocurrency</a></li>
+                <li><a href="analysis.html" class="active">Market Analysis</a></li>
+                <li><a href="calendar.html">Economic Calendar</a></li>
+            </ul>
+        </nav>
+    </header>
+
+<div class="container animate delay-1">
+    <h1 class="page-title">Market Analysis</h1>
+
+    <!-- AUTO-GENERATED MARKET SUMMARY -->
+    <div class="performance-section">
+        <h2 class="section-title">📊 Market Summary</h2>
+        <div id="market-summary" class="market-commentary">
+            <p class="placeholder-text">Loading comprehensive market analysis...</p>
+        </div>
+    </div>
+
+    <div class="analysis-grid">
+
+        <!-- TOP MOVERS ACROSS ALL MARKETS -->
+        <div class="performance-section">
+            <h2 class="section-title">🔥 Top Movers (All Markets)</h2>
+            <div id="top-movers-list" class="market-list">
+                <p class="placeholder-text">Loading top performers...</p>
+            </div>
+        </div>
+
+        <!-- MULTI-MARKET PERFORMANCE COMPARISON -->
+        <div class="performance-section">
+            <h2 class="section-title">📈 Market Performance (24H)</h2>
+            <div id="market-comparison" class="market-list">
+                <p class="placeholder-text">Loading market comparison...</p>
+            </div>
+        </div>
+
+        <!-- TREND ANALYSIS -->
+        <div class="performance-section">
+            <h2 class="section-title">Trend Analysis</h2>
+            <div id="trend-analysis" class="market-list">
+                <p class="placeholder-text">Analyzing market trends...</p>
+            </div>
+        </div>
+
+        <!-- VOLATILITY INSIGHTS -->
+        <div class="performance-section">
+            <h2 class="section-title">Volatility Insights</h2>
+            <div id="volatility-insights" class="market-list">
+                <p class="placeholder-text">Calculating volatility metrics...</p>
+            </div>
+        </div>
+
+        <!-- EDUCATIONAL INSIGHTS -->
+        <div class="performance-section">
+            <h2 class="section-title">💡 Educational Insights</h2>
+            <p class="placeholder-text">
+                <strong>Understanding Market Correlations:</strong> When the USD strengthens, 
+                gold typically weakens.  Similarly, risk-on sentiment often sees crypto and stocks rise together.
+                <br><br>
+                <strong>Reading Heatmaps:</strong> Green indicates upward price movement, red shows declines.  
+                Multi-timeframe analysis helps identify short-term vs long-term trends.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="disclaimer">
+        ⚠️ Analysis provided for informational purposes only. Not financial advice. 
+    </div>
+
+</div>
+
+<script src="analysis.js"></script>
+<script src="hamburger.js"></script>
+</body>
+</html>

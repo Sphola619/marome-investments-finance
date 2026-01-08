@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cryptocurrency - Marome Investments</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/favicon.ico">
+</head>
+<body>
+
+    <header class="header">
+        <a href="index.html" class="logo">
+            Marome <br><span>Investments</span>
+        </a>
+        
+        <!-- ✅ Hamburger Button (mobile only) -->
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
+        <!-- ✅ Navigation with mobile-menu class -->
+        <nav class="nav-menu" id="navMenu">
+            <ul class="nav-links">
+                <li><a href="index. html">Dashboard</a></li>
+                <li><a href="stocks.html">Stock Markets</a></li>
+                <li><a href="forex.html">Forex & Commodities</a></li>
+                <li><a href="crypto.html" class="active">Cryptocurrency</a></li>
+                <li><a href="analysis.html">Market Analysis</a></li>
+                <li><a href="calendar.html">Economic Calendar</a></li>
+            </ul>
+        </nav>
+    </header>
+
+<div class="container animate delay-1">
+    <h1 class="page-title">Cryptocurrency Markets</h1>
+
+    <!-- ⭐ NEW CRYPTO HEATMAP -->
+    <div class="performance-section">
+        <h2 class="section-title">Crypto Heat Map (Multi-Timeframe)</h2>
+
+        <div class="heatmap-table-wrapper">
+            <table class="heatmap-table" id="crypto-heatmap-table">
+                <thead>
+                    <tr>
+                        <th>Crypto</th>
+                        <th>1H</th>
+                        <th>4H</th>
+                        <th>1D</th>
+                        <th>1W</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td colspan="5" style="text-align: center;">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+
+        <!-- LEFT:  LIVE CRYPTO -->
+        <div class="performance-section">
+            <h2 class="section-title">Top Cryptocurrencies</h2>
+
+            <div id="crypto-list" class="market-list">
+                <!-- Dynamic content from crypto.js -->
+                <p>Loading... </p>
+            </div>
+        </div>
+
+        <!-- RIGHT: Market Overview with Auto-Generated Commentary -->
+        <div class="performance-section">
+            <h2 class="section-title">Market Overview</h2>
+            <div id="market-commentary" class="market-commentary">
+                <p class="placeholder-text">Loading market analysis...</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="disclaimer">
+        ⚠️ Cryptocurrency markets are highly volatile.  Ensure proper risk management. 
+    </div>
+</div>
+
+<script src="crypto.js"></script>
+<script src="hamburger.js"></script>
+</body>
+</html>

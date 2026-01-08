@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Markets - Marome Investments</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/favicon.ico">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+      <a href="index.html" class="logo">
+          Marome <br><span>Investments</span>
+      </a>
+      
+      <!-- ✅ Hamburger Button (mobile only) -->
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+      </button>
+      
+      <!-- ✅ Navigation with mobile-menu class -->
+      <nav class="nav-menu" id="navMenu">
+          <ul class="nav-links">
+              <li><a href="index.html">Dashboard</a></li>
+              <li><a href="stocks.html" class="active">Stock Markets</a></li>
+              <li><a href="forex.html">Forex & Commodities</a></li>
+              <li><a href="crypto.html">Cryptocurrency</a></li>
+              <li><a href="analysis.html">Market Analysis</a></li>
+              <li><a href="calendar.html">Economic Calendar</a></li>
+          </ul>
+      </nav>
+  </header>
+
+    <div class="container animate delay-1">
+      <h1>Stock Markets</h1>
+
+      <div class="dashboard-grid">
+
+        <!-- Major Indices Section -->
+        <div class="performance-section">
+            <h2 class="section-title">Major Indices</h2>
+
+            <!-- where JS injects index cards -->
+            <div id="indices-list" class="market-list">
+                <div class="market-item">
+                    <div class="market-info">
+                        <h3>Loading Indices...</h3>
+                        <p>Please wait</p>
+                    </div>
+                    <div class="performance">--%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Market News -->
+        <div class="news-section">
+            <h2 class="section-title">Global Market Summary</h2>
+            <div id="news-list"></div>
+        </div>
+
+      </div>
+
+      <div class="disclaimer">
+        ⚠️ Disclaimer: Marome Investments provides analytical data for informational purposes only.
+      </div>
+    </div>
+
+    <script src="stocks.js"></script>
+    <script src="hamburger.js"></script>
+</body>
+</html>
