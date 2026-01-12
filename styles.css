@@ -1081,3 +1081,174 @@ body {
     font-size: 0.75rem;
   }
 }
+
+/* ============================================
+   THEME TOGGLE IN NAVIGATION
+============================================ */
+
+.theme-toggle-item {
+  margin-left: auto; /* Push to the right on desktop */
+}
+
+.theme-toggle {
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 25px;
+  padding: 8px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.theme-label {
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.theme-icon {
+  font-size: 18px;
+  display: inline-block;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .theme-toggle-item {
+    margin-left:  0;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .theme-toggle {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 20px;
+    font-size: 16px;
+  }
+}
+
+/* ============================================
+   DARK MODE CSS VARIABLES
+============================================ */
+
+:root {
+  /* Light Mode (Default) */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --text-primary:  #1e293b;
+  --text-secondary: #64748b;
+  --border-color: #e2e8f0;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --card-bg: #ffffff;
+  --header-bg: #2563eb;
+  --hover-bg: #f1f5f9;
+}
+
+body.dark-mode {
+  /* Dark Mode Colors */
+  --bg-primary: #0f172a;
+  --bg-secondary:  #1e293b;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --border-color: #334155;
+  --shadow: rgba(0, 0, 0, 0.5);
+  --card-bg: #1e293b;
+  --header-bg: #1e40af;
+  --hover-bg: #334155;
+}
+
+/* Apply Variables to Elements */
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.container {
+  background: var(--bg-secondary);
+}
+
+.performance-section,
+.news-section,
+.analysis-section,
+.market-item {
+  background: var(--card-bg);
+  border-color: var(--border-color);
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.section-title {
+  color: var(--text-primary);
+}
+
+.summary-text,
+.disclaimer {
+  color: var(--text-secondary);
+}
+
+h1, h2, h3 {
+  color: var(--text-primary);
+}
+
+.market-info h3 {
+  color: var(--text-primary);
+}
+
+.market-info p {
+  color: var(--text-secondary);
+}
+
+/* Heatmap cells in dark mode */
+body.dark-mode .heatmap-cell {
+  border-color: var(--border-color);
+}
+
+/* Table styles in dark mode */
+body.dark-mode table {
+  background: var(--card-bg);
+}
+
+body.dark-mode th {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+body.dark-mode td {
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+body.dark-mode tr:hover {
+  background: var(--hover-bg);
+}
+
+/* News items in dark mode */
+body.dark-mode .news-item {
+  background: var(--card-bg);
+  border-color: var(--border-color);
+}
+
+body.dark-mode .news-item:hover {
+  background: var(--hover-bg);
+}
+
+/* Input fields in dark mode (if you have any) */
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}

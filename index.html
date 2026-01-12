@@ -6,6 +6,8 @@
     <title>Marome Investments - Financial Advisory</title>
     <link rel="stylesheet" href="styles.css"/>
     <link rel="icon" href="images/favicon.ico">
+    
+    <script src="theme.js"></script> <!-- Theme toggle script -->
 </head>
 <body>
 
@@ -14,14 +16,14 @@
       <a href="index.html" class="logo">
         Marome <br><span>Investments</span>
       </a>
-    
+
       <!-- Hamburger Button (mobile only) -->
       <button class="hamburger" id="hamburger" aria-label="Toggle menu">
         <span></span>
         <span></span>
         <span></span>
       </button>
-    
+
       <!-- Navigation with mobile-menu class -->
       <nav class="nav-menu" id="navMenu">
         <ul class="nav-links">
@@ -30,6 +32,14 @@
           <li><a href="crypto.html">Cryptocurrency</a></li>
           <li><a href="analysis.html">Market Analysis</a></li>
           <li><a href="calendar.html">Economic Calendar</a></li>
+          
+          <!-- ✅ Theme Toggle as last nav item -->
+          <li class="theme-toggle-item">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+              <span class="theme-label" id="themeLabel">Dark Mode</span>
+              <span class="theme-icon" id="themeIcon">🌙</span>
+            </button>
+          </li>
         </ul>
       </nav>
     </header>
