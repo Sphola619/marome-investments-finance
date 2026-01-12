@@ -6,9 +6,52 @@
 }
 
 body {
-  background-color: #f8f9fa;
-  color:   #333;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   line-height: 1.6;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ============================================
+   DARK MODE CSS VARIABLES
+============================================ */
+
+:root {
+  /* Light Mode (Default) */
+  --bg-primary: #f8f9fa;
+  --bg-secondary: #ffffff;
+  --text-primary:  #1e293b;
+  --text-secondary: #64748b;
+  --border-color: #e2e8f0;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --card-bg: #ffffff;
+  --header-bg: #ffffff;
+  --hover-bg:  #f1f5f9;
+  --nav-text: #4b5563;
+  --nav-hover-bg: #2563eb;
+  --nav-hover-text: #ffffff;
+  --logo-color: #1a1a1a;
+  --logo-span-color: #005555;
+  --hamburger-color: #1a1a1a;
+}
+
+body.dark-mode {
+  /* Dark Mode Colors */
+  --bg-primary: #0f172a;          /* Darkest - body background */
+  --bg-secondary: #1e293b;        /* Dark - secondary background */
+  --text-primary: #f1f5f9;        /* Light text */
+  --text-secondary: #94a3b8;      /* Muted text */
+  --border-color: #334155;        /* Dark borders */
+  --shadow: rgba(0, 0, 0, 0.5);   /* Darker shadows */
+  --card-bg:  #1e293b;             /* Card background */
+  --header-bg: #334155;           /* ✅ Header - lighter than body */
+  --hover-bg: #475569;            /* Hover state */
+  --nav-text:  #e2e8f0;            /* Light nav text */
+  --nav-hover-bg: #475569;        /* Nav hover background */
+  --nav-hover-text: #ffffff;      /* Nav hover text */
+  --logo-color: #60a5fa;          /* Lighter blue logo */
+  --logo-span-color: #93c5fd;     /* Even lighter for span */
+  --hamburger-color: #f1f5f9;     /* Light hamburger */
 }
 
 /* Header Styles */
@@ -17,34 +60,42 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background: var(--header-bg);
+  box-shadow: 0 2px 10px var(--shadow);
   position: sticky;
-  top: 0;
+  top:  0;
   z-index: 100;
+  transition:  background 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Add subtle border in dark mode */
+body.dark-mode .header {
+  border-bottom: 1px solid #475569;
 }
 
 .logo {
   font-family: 'Montserrat', sans-serif;
-  font-size: 2.5rem;
+  font-size: 2. 5rem;
   font-weight: 700;
-  color: #1a1a1a;
+  color:  var(--logo-color);
   text-transform: uppercase;
   letter-spacing: 2px;
   display: inline-block;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   text-decoration: none;
   text-align: left;
+  transition: color 0.3s ease;
 }
 
 .logo br + span {
   font-size: 1.2rem;
   font-weight: 400;
-  color: #005555;
+  color: var(--logo-span-color);
   display: block;
   text-align: center;
   width: 100%;
   margin-top: -5px;
+  transition: color 0.3s ease;
 }
 
 /* Navigation Styles */
@@ -56,7 +107,7 @@ body {
 
 .nav-links a {
   text-decoration: none;
-  color: #4b5563;
+  color: var(--nav-text);
   font-weight: 500;
   padding: 0.5rem 1rem;
   border-radius: 6px;
@@ -64,15 +115,15 @@ body {
 }
 
 .nav-links a:hover {
-  background-color: #2563eb;
-  color: white;
+  background-color: var(--nav-hover-bg);
+  color: var(--nav-hover-text);
 }
 
 /* Highlight active link */
 .nav-links a.active {
-  background-color: #2563eb;
-  color: white;
-  border:    2px solid #2563eb;
+  background-color: var(--nav-hover-bg);
+  color: var(--nav-hover-text);
+  border:  2px solid var(--nav-hover-bg);
   border-radius: 6px;
 }
 
@@ -92,44 +143,46 @@ body {
 .hamburger span {
   width: 25px;
   height: 3px;
-  background-color: #1a1a1a;
+  background-color: var(--hamburger-color);
   border-radius: 3px;
   transition: all 0.3s ease;
 }
 
 .hamburger.active span {
-  background-color: #2563eb;
+  background-color: var(--nav-hover-bg);
 }
 
 /* Main Content Styles */
 .container {
   max-width: 1200px;
-  margin:   2rem auto;
+  margin:  2rem auto;
   padding: 0 2rem;
 }
 
 .dashboard-grid {
-  display:    grid;
-  grid-template-columns: 2fr 1fr;
-  gap:  2rem;
+  display: grid;
+  grid-template-columns:  2fr 1fr;
+  gap: 2rem;
   margin-top: 2rem;
 }
 
 /* Market Performance Section */
 
 .performance-section {
-  background:   white;
+  background: var(--card-bg);
   padding: 1.5rem;
   border-radius: 10px;
-  box-shadow:   0 2px 15px rgba(0, 0, 0, 0.1);
+  box-shadow:  0 2px 15px var(--shadow);
+  transition: background 0.3s ease;
 }
 
 .section-title {
   font-size: 1.4rem;
-  margin-bottom:   1.5rem;
-  color: #1f2937;
+  margin-bottom:  1.5rem;
+  color: var(--text-primary);
   border-bottom: 2px solid #2563eb;
   padding-bottom: 0.5rem;
+  transition: color 0.3s ease;
 }
 
 .market-list {
@@ -143,34 +196,37 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 1.2rem;
-  background-color:    #ffffff;
+  background-color: var(--card-bg);
   border-radius: 10px;
-  border-left:    4px solid #2563eb;
-  transition: transform 0.15s ease, box-shadow 0.2s ease;
+  border-left: 4px solid #2563eb;
+  transition:  transform 0.15s ease, box-shadow 0.2s ease, background 0.3s ease;
   cursor: pointer;
 }
 
 .market-item:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.10);
+  box-shadow: 0 8px 20px var(--shadow);
 }
 
 .market-info h3 {
   font-size: 1.1rem;
-  margin-bottom:  0.3rem;
+  margin-bottom: 0.3rem;
   font-weight: 600;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
 }
 
 .market-info p {
-  color: #6b7280;
+  color: var(--text-secondary);
   font-size: 0.9rem;
+  transition: color 0.3s ease;
 }
 
 .performance {
   font-weight: bold;
   font-size: 1.1rem;
   width: 80px;
-  text-align:  right;
+  text-align: right;
 }
 
 .positive {
@@ -184,96 +240,105 @@ body {
 /* Trend Indicator Styles */
 .trend-info {
   margin-top: 6px;
-  font-size:   0.9rem;
-  display:  flex;
-  align-items:  center;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
   gap: 6px;
-  color: #374151;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
 }
 
 .trend-badge {
-  font-size: 1. 3rem;
+  font-size: 1.3rem;
 }
 
 /* Strength Meter Cards */
 .strength-card {
-  background: #ffffff;
+  background: var(--card-bg);
   padding: 1rem;
   border-radius: 10px;
   border-left: 4px solid #8b5cf6;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: background 0.3s ease;
 }
 
 /* News Section Improvements */
 .news-section {
-  background: #ffffff;
+  background: var(--card-bg);
   border-radius: 12px;
   padding: 20px 25px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 15px var(--shadow);
+  transition: background 0.3s ease;
 }
 
 .news-item {
   padding: 12px 0;
-  border-bottom: 1px solid #e9e9e9;
+  border-bottom: 1px solid var(--border-color);
+  transition: border-color 0.3s ease;
 }
 
 .news-item:last-child {
-  border-bottom:  none;
+  border-bottom: none;
 }
 
 .news-item a {
-  font-size:    16px;
-  font-weight:    600;
-  color: #1a1a1a;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
   text-decoration: none;
   display: inline-block;
   margin-bottom: 6px;
+  transition: color 0.3s ease;
 }
 
 .news-item a:hover {
-  color: #0056b3;
+  color: #2563eb;
   text-decoration: underline;
 }
 
 .news-source {
   font-size: 13px;
-  color: #7a7a7a;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
 }
 
 .news-meta {
   font-size: 12px;
-  color: #9a9a9a;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
 }
 
 /* News Card Styling */
 .news-card {
-  background: #ffffff;
+  background: var(--card-bg);
   padding: 18px 22px;
   border-radius:  12px;
   margin-bottom: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 10px var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
   cursor: pointer;
 }
 
 .news-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+  box-shadow: 0 6px 20px var(--shadow);
 }
 
 .news-card a.news-link {
   text-decoration: none;
-  color: #1a1a1a;
+  color: var(--text-primary);
   display: block;
+  transition: color 0.3s ease;
 }
 
 .news-title {
   font-size: 17px;
-  font-weight:    600;
+  font-weight:  600;
   margin-bottom: 8px;
-  color: #1a1a1a;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
 }
 
 .news-card a {
@@ -283,42 +348,52 @@ body {
 /* Disclaimer */
 .disclaimer {
   background-color: #fef2f2;
-  border:  1px solid #fecaca;
-  border-radius:    8px;
-  padding:   1rem;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 1rem;
   margin-top: 2rem;
-  font-size: 0.8rem;
+  font-size:  0.8rem;
   color: #dc2626;
   text-align: center;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark-mode .disclaimer {
+  background-color: rgba(220, 38, 38, 0.1);
+  border-color: rgba(220, 38, 38, 0.3);
+  color: #fca5a5;
 }
 
 /* Shared Layout */
 .page-title {
   font-size: 2rem;
   font-weight: 700;
-  margin-bottom:  1.5rem;
-  color: #1f2937;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
 }
 
 .placeholder-text {
   font-size: 0.95rem;
-  color: #666;
+  color: var(--text-secondary);
   line-height: 1.6;
+  transition: color 0.3s ease;
 }
 
 /* Summary text styling */
 .summary-text {
   font-size: 1.1rem;
   line-height: 1.6;
-  color: #333;
+  color: var(--text-primary);
   padding: 10px 5px;
+  transition: color 0.3s ease;
 }
 
 /* ===== PAGE LOAD ANIMATIONS ===== */
 @keyframes fadeUp {
   0% {
     opacity: 0;
-    transform:  translateY(25px);
+    transform: translateY(25px);
   }
   100% {
     opacity: 1;
@@ -336,9 +411,9 @@ body {
   animation:  fadeUp 0.8s ease forwards;
 }
 
-.delay-1 { animation-delay:   0.2s; }
+.delay-1 { animation-delay: 0.2s; }
 .delay-2 { animation-delay: 0.4s; }
-.delay-3 { animation-delay:    0.6s; }
+.delay-3 { animation-delay:  0.6s; }
 .delay-4 { animation-delay: 0.8s; }
 .delay-5 { animation-delay: 1.0s; }
 
@@ -346,15 +421,15 @@ body {
    HEATMAP GRID (OLD STYLE)
    ===================== */
 .heatmap-grid {
-  display:   grid;
+  display: grid;
   grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
   gap: 12px;
-  margin-bottom:   2rem;
+  margin-bottom: 2rem;
 }
 
 .heatmap-tile {
-  padding:  12px;
-  border-radius: 8px;
+  padding: 12px;
+  border-radius:  8px;
   color: white;
   font-weight: 600;
   text-align: center;
@@ -387,23 +462,27 @@ body {
 .heatmap-table {
   width: 100%;
   border-collapse: collapse;
-  background:    white;
-  border-radius:    10px;
-  overflow:  hidden;
+  background: var(--card-bg);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: background 0.3s ease;
 }
 
 .heatmap-table th {
-  background:  #f3f4f6;
+  background: var(--bg-secondary);
   padding: 10px;
-  font-weight:   600;
-  color: #1f2937;
+  font-weight: 600;
+  color: var(--text-primary);
   border-bottom: 2px solid #2563eb;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .heatmap-table td {
-  padding: 10px;
+  padding:  10px;
   text-align: center;
   font-weight: 600;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
 }
 
 .green-cell {
@@ -417,16 +496,29 @@ body {
 }
 
 .heatmap-table tr:nth-child(even) {
-  background:    #f9fafb;
+  background:  var(--hover-bg);
+  transition: background 0.3s ease;
+}
+
+body.dark-mode .heatmap-table tr:hover {
+  background: var(--hover-bg);
 }
 
 /* =====================
    ANALYSIS GRID
    ===================== */
 .analysis-grid {
-  display:   grid;
+  display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
+}
+
+.analysis-section {
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 15px var(--shadow);
+  transition: background 0.3s ease;
 }
 
 @media(max-width: 900px) {
@@ -440,21 +532,23 @@ body {
    ===================== */
 .market-commentary {
   padding: 1rem;
-  background:  #f8f9fa;
+  background: var(--hover-bg);
   border-radius: 8px;
   border-left: 4px solid #2563eb;
+  transition:  background 0.3s ease;
 }
 
 .commentary-line {
   font-size: 0.95rem;
-  line-height:    1.8;
-  color: #374151;
-  margin-bottom:    0.8rem;
-  padding-left:   0.5rem;
+  line-height: 1.8;
+  color: var(--text-primary);
+  margin-bottom: 0.8rem;
+  padding-left: 0.5rem;
+  transition: color 0.3s ease;
 }
 
 .commentary-line:last-child {
-  margin-bottom:   0;
+  margin-bottom: 0;
 }
 
 /* =====================
@@ -464,11 +558,11 @@ body {
   display: inline-block;
   margin-bottom: 1. 5rem;
   padding: 0.5rem 1rem;
-  background:  #2563eb;
-  color: white;
-  text-decoration: none;
-  border-radius: 6px;
-  font-weight:    500;
+  background: #2563eb;
+  color:  white;
+  text-decoration:  none;
+  border-radius:  6px;
+  font-weight: 500;
   transition: background 0.3s ease;
 }
 
@@ -482,8 +576,9 @@ body {
 
 .subtitle {
   font-size: 1.1rem;
-  color: #6b7280;
+  color: var(--text-secondary);
   margin-top: 0.5rem;
+  transition: color 0.3s ease;
 }
 
 .current-price-box {
@@ -492,31 +587,35 @@ body {
   gap: 1rem;
   margin-top: 1rem;
   padding: 1rem;
-  background: #f8f9fa;
+  background: var(--hover-bg);
   border-radius: 8px;
   border-left: 4px solid #2563eb;
+  transition: background 0.3s ease;
 }
 
 .label {
   font-weight: 600;
-  color:  #374151;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
 }
 
 .price-value {
   font-size: 1.5rem;
-  font-weight:   700;
-  color: #1f2937;
+  font-weight: 700;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
 }
 
 .price-change {
   font-size: 1.2rem;
-  font-weight:   600;
+  font-weight: 600;
 }
 
 .chart-wrapper {
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 10px var(--shadow);
+  transition: box-shadow 0.3s ease;
 }
 
 /* =============================================
@@ -524,9 +623,10 @@ body {
    ============================================= */
 
 .calendar-container {
-  background:  white;
-  border-radius:  10px;
+  background: var(--card-bg);
+  border-radius: 10px;
   padding: 1rem;
+  transition: background 0.3s ease;
 }
 
 .calendar-date-header {
@@ -534,7 +634,7 @@ body {
   color: white;
   padding: 0.75rem 1rem;
   border-radius: 8px;
-  margin:  1.5rem 0 0.5rem 0;
+  margin:  1. 5rem 0 0.5rem 0;
 }
 
 .calendar-date-header:first-child {
@@ -544,37 +644,37 @@ body {
 .calendar-date-header h3 {
   margin: 0;
   font-size: 1.1rem;
-  font-weight:  600;
+  font-weight: 600;
 }
 
 .calendar-event {
-  background: #f8f9fa;
+  background: var(--hover-bg);
   border-left: 4px solid #2563eb;
   padding: 1rem;
   margin: 0.5rem 0;
   border-radius: 5px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
 }
 
 .calendar-event:hover {
   transform: translateX(5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px var(--shadow);
 }
 
 /* Enhanced calendar event styling by importance */
 .calendar-event.importance-high {
   border-left-color: #dc3545;
-  background: #fff5f5;
+  background: rgba(220, 53, 69, 0.1);
 }
 
 .calendar-event.importance-medium {
   border-left-color: #ffc107;
-  background:  #fffbf0;
+  background: rgba(255, 193, 7, 0.1);
 }
 
 .calendar-event.importance-low {
   border-left-color: #6c757d;
-  background:  #f8f9fa;
+  background:  var(--hover-bg);
 }
 
 .event-header {
@@ -594,7 +694,8 @@ body {
 
 .event-country {
   font-size: 0.9rem;
-  color: #666;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
 }
 
 .event-importance {
@@ -605,8 +706,9 @@ body {
 .event-name {
   font-size: 1rem;
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--text-primary);
   margin:  0.5rem 0;
+  transition: color 0.3s ease;
 }
 
 .event-data {
@@ -618,11 +720,13 @@ body {
 
 .data-item {
   font-size: 0.85rem;
-  color: #555;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
 }
 
 .data-item strong {
-  color: #333;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
 }
 
 .data-item.has-value {
@@ -632,6 +736,57 @@ body {
 
 .calendar-warning {
   animation: fadeIn 0.5s ease-in;
+}
+
+/* ============================================
+   THEME TOGGLE IN NAVIGATION
+============================================ */
+
+.theme-toggle-item {
+  margin-left: auto; /* Push to the right on desktop */
+}
+
+.theme-toggle {
+  background: rgba(37, 99, 235, 0.15);
+  border: 2px solid rgba(37, 99, 235, 0.3);
+  border-radius: 25px;
+  padding: 8px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--nav-text);
+  transition: all 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.theme-toggle:hover {
+  background: rgba(37, 99, 235, 0.25);
+  transform: scale(1.05);
+  border-color: rgba(37, 99, 235, 0.5);
+}
+
+body.dark-mode .theme-toggle {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--nav-text);
+}
+
+body.dark-mode .theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.theme-label {
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.theme-icon {
+  font-size: 18px;
+  display: inline-block;
 }
 
 /* =============================================
@@ -644,7 +799,7 @@ body {
   /* Header */
   .header {
     flex-direction: row;
-    justify-content:   space-between;
+    justify-content: space-between;
     padding: 1rem;
   }
 
@@ -667,12 +822,12 @@ body {
     position: fixed;
     top: 0;
     right: -100%;
-    width: 70%;
+    width:  70%;
     max-width: 300px;
     height: 100vh;
-    background:    white;
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
-    transition: right 0.3s ease;
+    background: var(--header-bg);
+    box-shadow: -2px 0 10px var(--shadow);
+    transition: right 0.3s ease, background 0.3s ease;
     z-index: 100;
     padding-top: 4rem;
   }
@@ -691,7 +846,7 @@ body {
 
   .nav-links li {
     width: 100%;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--border-color);
   }
 
   .nav-links li:last-child {
@@ -705,10 +860,25 @@ body {
     border-radius: 0;
   }
 
+  /* Theme toggle in mobile menu */
+  .theme-toggle-item {
+    margin-left:  0;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+  }
+  
+  .theme-toggle {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 20px;
+    font-size: 16px;
+  }
+
   /* Container */
   .container {
     padding: 0 1rem;
-    margin: 1rem auto;
+    margin:  1rem auto;
   }
 
   /* Dashboard Grid */
@@ -746,8 +916,8 @@ body {
   }
 
   .performance {
-    font-size:    1rem;
-    width:  70px;
+    font-size: 1rem;
+    width: 70px;
   }
 
   /* Heatmap Grid */
@@ -761,7 +931,7 @@ body {
   }
 
   .heatmap-symbol {
-    font-size:    13px;
+    font-size: 13px;
   }
 
   .heatmap-change {
@@ -843,7 +1013,7 @@ body {
   }
 
   .logo {
-    font-size:   1.6rem;
+    font-size:  1.6rem;
     letter-spacing: 1px;
   }
 
@@ -895,7 +1065,7 @@ body {
   }
 
   .performance {
-    font-size:   0.95rem;
+    font-size:  0.95rem;
     width: auto;
     align-self: flex-end;
   }
@@ -911,7 +1081,7 @@ body {
   }
 
   .heatmap-symbol {
-    font-size:   11px;
+    font-size: 11px;
   }
 
   .heatmap-change {
@@ -930,11 +1100,11 @@ body {
 
   /* News Cards */
   .news-card {
-    padding:   12px 14px;
+    padding: 12px 14px;
   }
 
   .news-title {
-    font-size: 14px;
+    font-size:  14px;
   }
 
   .news-source {
@@ -953,11 +1123,11 @@ body {
   }
 
   .asset-header h1 {
-    font-size:    1.5rem;
+    font-size:  1.5rem;
   }
 
   .subtitle {
-    font-size:    0.95rem;
+    font-size:  0.95rem;
   }
 
   .current-price-box {
@@ -967,7 +1137,7 @@ body {
   }
 
   .price-value {
-    font-size:   1.2rem;
+    font-size:  1.2rem;
   }
 
   .price-change {
@@ -975,7 +1145,7 @@ body {
   }
 
   .chart-wrapper {
-    height:    300px;
+    height:  300px;
   }
 
   /* Commentary */
@@ -1008,7 +1178,7 @@ body {
 
   .calendar-date-header {
     padding: 0.6rem 0.8rem;
-    margin:  1rem 0 0.4rem 0;
+    margin: 1rem 0 0.4rem 0;
   }
 
   .calendar-date-header h3 {
@@ -1016,7 +1186,7 @@ body {
   }
 
   .calendar-event {
-    padding: 0.8rem;
+    padding:  0.8rem;
   }
 
   .event-time {
@@ -1032,7 +1202,7 @@ body {
   }
 
   .event-name {
-    font-size:  0.9rem;
+    font-size: 0.9rem;
   }
 
   .data-item {
@@ -1041,10 +1211,10 @@ body {
 }
 
 /* Extra Small - 360px and below */
-@media (max-width:   360px) {
+@media (max-width: 360px) {
   
   .logo {
-    font-size:   1.4rem;
+    font-size: 1.4rem;
   }
 
   .logo br + span {
@@ -1060,7 +1230,7 @@ body {
   }
 
   .chart-wrapper {
-    height:  250px;
+    height: 250px;
   }
 
   /* Menu full width on tiny screens */
@@ -1080,175 +1250,4 @@ body {
   .data-item {
     font-size: 0.75rem;
   }
-}
-
-/* ============================================
-   THEME TOGGLE IN NAVIGATION
-============================================ */
-
-.theme-toggle-item {
-  margin-left: auto; /* Push to the right on desktop */
-}
-
-.theme-toggle {
-  background: rgba(255, 255, 255, 0.15);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 25px;
-  padding: 8px 16px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  color: white;
-  transition: all 0.3s ease;
-  font-family: 'Poppins', sans-serif;
-}
-
-.theme-toggle:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: scale(1.05);
-  border-color: rgba(255, 255, 255, 0.5);
-}
-
-.theme-label {
-  font-weight: 500;
-  letter-spacing: 0.5px;
-}
-
-.theme-icon {
-  font-size: 18px;
-  display: inline-block;
-}
-
-/* Mobile Styles */
-@media (max-width: 768px) {
-  .theme-toggle-item {
-    margin-left:  0;
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-  }
-  
-  .theme-toggle {
-    width: 100%;
-    justify-content: center;
-    padding: 12px 20px;
-    font-size: 16px;
-  }
-}
-
-/* ============================================
-   DARK MODE CSS VARIABLES
-============================================ */
-
-:root {
-  /* Light Mode (Default) */
-  --bg-primary: #f8fafc;
-  --bg-secondary: #ffffff;
-  --text-primary:  #1e293b;
-  --text-secondary: #64748b;
-  --border-color: #e2e8f0;
-  --shadow: rgba(0, 0, 0, 0.1);
-  --card-bg: #ffffff;
-  --header-bg: #2563eb;
-  --hover-bg: #f1f5f9;
-}
-
-body.dark-mode {
-  /* Dark Mode Colors */
-  --bg-primary: #0f172a;
-  --bg-secondary:  #1e293b;
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
-  --border-color: #334155;
-  --shadow: rgba(0, 0, 0, 0.5);
-  --card-bg: #1e293b;
-  --header-bg: #1e40af;
-  --hover-bg: #334155;
-}
-
-/* Apply Variables to Elements */
-body {
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-.container {
-  background: var(--bg-secondary);
-}
-
-.performance-section,
-.news-section,
-.analysis-section,
-.market-item {
-  background: var(--card-bg);
-  border-color: var(--border-color);
-  box-shadow: 0 2px 8px var(--shadow);
-}
-
-.section-title {
-  color: var(--text-primary);
-}
-
-.summary-text,
-.disclaimer {
-  color: var(--text-secondary);
-}
-
-h1, h2, h3 {
-  color: var(--text-primary);
-}
-
-.market-info h3 {
-  color: var(--text-primary);
-}
-
-.market-info p {
-  color: var(--text-secondary);
-}
-
-/* Heatmap cells in dark mode */
-body.dark-mode .heatmap-cell {
-  border-color: var(--border-color);
-}
-
-/* Table styles in dark mode */
-body.dark-mode table {
-  background: var(--card-bg);
-}
-
-body.dark-mode th {
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-}
-
-body.dark-mode td {
-  border-color: var(--border-color);
-  color: var(--text-primary);
-}
-
-body.dark-mode tr:hover {
-  background: var(--hover-bg);
-}
-
-/* News items in dark mode */
-body.dark-mode .news-item {
-  background: var(--card-bg);
-  border-color: var(--border-color);
-}
-
-body.dark-mode .news-item:hover {
-  background: var(--hover-bg);
-}
-
-/* Input fields in dark mode (if you have any) */
-body.dark-mode input,
-body.dark-mode select,
-body.dark-mode textarea {
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  border-color: var(--border-color);
 }
