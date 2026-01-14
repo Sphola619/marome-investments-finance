@@ -8,41 +8,41 @@ const ASSET_CONFIG = {
     // Forex Pairs
     "eurusd": { 
         name: "EUR/USD", 
-        description:    "Euro vs US Dollar", 
-        tvSymbol:  "OANDA:EURUSD",
+        description: "Euro vs US Dollar", 
+        tvSymbol: "OANDA:EURUSD",
         keywords: ["EUR", "USD", "Euro", "Dollar", "Federal Reserve", "ECB"],
-        type:    "forex"
+        type: "forex"
     },
     "gbpusd": { 
         name: "GBP/USD", 
-        description:    "British Pound vs US Dollar", 
-        tvSymbol:   "OANDA:GBPUSD",
+        description: "British Pound vs US Dollar", 
+        tvSymbol: "OANDA:GBPUSD",
         keywords: ["GBP", "USD", "Pound", "Dollar", "Bank of England"],
-        type:  "forex"
+        type: "forex"
     },
     "usdjpy": { 
         name: "USD/JPY", 
-        description:  "US Dollar vs Japanese Yen", 
-        tvSymbol:  "OANDA:USDJPY",
-        keywords:    ["USD", "JPY", "Yen", "Dollar", "Bank of Japan"],
-        type:    "forex"
+        description: "US Dollar vs Japanese Yen", 
+        tvSymbol: "OANDA: USDJPY",
+        keywords:  ["USD", "JPY", "Yen", "Dollar", "Bank of Japan"],
+        type: "forex"
     },
     "usdzar": { 
-        name:   "USD/ZAR", 
+        name: "USD/ZAR", 
         description: "US Dollar vs South African Rand", 
-        tvSymbol:  "OANDA:USDZAR",
+        tvSymbol: "OANDA:USDZAR",
         keywords: ["USD", "ZAR", "Rand", "South Africa"],
-        type:  "forex"
+        type: "forex"
     },
     "audusd": { 
-        name:  "AUD/USD", 
+        name: "AUD/USD", 
         description: "Australian Dollar vs US Dollar", 
-        tvSymbol:    "OANDA:AUDUSD",
-        keywords: ["AUD", "USD", "Australia", "Dollar"],
-        type:   "forex"
+        tvSymbol: "OANDA: AUDUSD",
+        keywords:  ["AUD", "USD", "Australia", "Dollar"],
+        type: "forex"
     },
     "usdchf": { 
-        name:    "USD/CHF", 
+        name:  "USD/CHF", 
         description: "US Dollar vs Swiss Franc", 
         tvSymbol: "OANDA: USDCHF",
         keywords: ["USD", "CHF", "Franc", "Switzerland"],
@@ -51,45 +51,45 @@ const ASSET_CONFIG = {
 
     // Commodities
     "gold": { 
-        name:    "Gold", 
-        description:    "Gold Futures (XAU/USD)", 
+        name:  "Gold", 
+        description: "Gold Futures (XAU/USD)", 
         tvSymbol: "OANDA:XAUUSD",
-        keywords: ["Gold", "XAU", "precious metals", "safe haven"],
+        keywords:  ["Gold", "XAU", "precious metals", "safe haven"],
         type: "commodity"
     },
     "silver": { 
-        name:  "Silver", 
-        description:   "Silver Futures (XAG/USD)", 
+        name: "Silver", 
+        description: "Silver Futures (XAG/USD)", 
         tvSymbol: "OANDA:XAGUSD",
-        keywords:   ["Silver", "XAG", "precious metals"],
+        keywords: ["Silver", "XAG", "precious metals"],
         type: "commodity"
     },
     "crude-oil": { 
         name:  "Crude Oil", 
-        description:  "WTI Crude Oil Futures", 
+        description: "WTI Crude Oil Futures", 
         tvSymbol: "TVC:USOIL",
         keywords: ["Oil", "WTI", "Crude", "energy", "petroleum"],
         type: "commodity"
     },
 
     // Stock Indices
-    "sp-500":  { 
-        name:   "S&P 500", 
+    "sp-500": { 
+        name:  "S&P 500", 
         description: "S&P 500 Index tracked via SPY ETF", 
         tvSymbol: "AMEX:SPY",
         keywords: ["S&P", "SPX", "SPY", "stocks", "equity", "US market"],
         type: "stock"
     },
     "nasdaq-100": { 
-        name:   "NASDAQ 100", 
+        name:  "NASDAQ 100", 
         description: "NASDAQ 100 Index tracked via QQQ ETF", 
-        tvSymbol:    "NASDAQ:QQQ",
-        keywords:    ["NASDAQ", "NDX", "QQQ", "tech", "technology", "stocks"],
+        tvSymbol: "NASDAQ:QQQ",
+        keywords: ["NASDAQ", "NDX", "QQQ", "tech", "technology", "stocks"],
         type: "stock"
     },
     "dow-jones": { 
-        name:  "Dow Jones", 
-        description:  "Dow Jones Industrial Average tracked via DIA ETF", 
+        name: "Dow Jones", 
+        description: "Dow Jones Industrial Average tracked via DIA ETF", 
         tvSymbol: "AMEX:DIA",
         keywords: ["Dow", "DJI", "DJIA", "DIA", "industrials", "stocks"],
         type: "stock"
@@ -102,68 +102,68 @@ const ASSET_CONFIG = {
         type: "stock"
     },
 
-    // Cryptocurrencies - MATCH BACKEND TICKERS
-    "btc": {  // ✅ Changed from "bitcoin" to "btc"
-        name:  "BTC",  // ✅ Matches backend
-        description:   "Bitcoin (BTC/USD) - Digital Gold", 
-        tvSymbol:     "BINANCE:BTCUSD",
-        keywords:  ["Bitcoin", "BTC", "crypto", "cryptocurrency", "digital currency"],
-        type:    "crypto"
+    // Cryptocurrencies
+    "btc": {
+        name: "BTC",
+        description: "Bitcoin (BTC/USD) - Digital Gold", 
+        tvSymbol: "BINANCE:BTCUSD",
+        keywords: ["Bitcoin", "BTC", "crypto", "cryptocurrency", "digital currency"],
+        type: "crypto"
     },
-    "eth": {  // ✅ Changed from "ethereum" to "eth"
-        name:  "ETH",  // ✅ Matches backend
-        description:   "Ethereum (ETH/USD) - Smart Contract Platform", 
-        tvSymbol: "BINANCE:ETHUSD",
-        keywords:    ["Ethereum", "ETH", "crypto", "smart contracts", "DeFi"],
+    "eth":  {
+        name: "ETH",
+        description: "Ethereum (ETH/USD) - Smart Contract Platform", 
+        tvSymbol: "BINANCE: ETHUSD",
+        keywords:  ["Ethereum", "ETH", "crypto", "smart contracts", "DeFi"],
         type: "crypto"
     },
     "xrp": { 
-        name:   "XRP",  // ✅ Already matches backend
+        name: "XRP",
         description: "Ripple (XRP/USD) - Digital Payment Protocol", 
-        tvSymbol: "BINANCE:XRPUSD",
-        keywords: ["XRP", "Ripple", "crypto", "payments"],
-        type:  "crypto"
+        tvSymbol:  "BINANCE:XRPUSD",
+        keywords:  ["XRP", "Ripple", "crypto", "payments"],
+        type: "crypto"
     },
-    "ada": {  // ✅ Changed from "cardano" to "ada"
-        name:    "ADA",  // ✅ Matches backend
+    "ada": {
+        name: "ADA",
         description: "Cardano (ADA/USD) - Proof-of-Stake Blockchain", 
         tvSymbol: "BINANCE:ADAUSD",
-        keywords:  ["Cardano", "ADA", "crypto", "proof of stake"],
-        type:  "crypto"
+        keywords: ["Cardano", "ADA", "crypto", "proof of stake"],
+        type: "crypto"
     },
-    "sol": {  // ✅ Changed from "solana" to "sol"
-        name:   "SOL",  // ✅ Matches backend
+    "sol": {
+        name: "SOL",
         description: "Solana (SOL/USD) - High-Speed Blockchain", 
-        tvSymbol: "BINANCE:SOLUSD",
+        tvSymbol: "BINANCE: SOLUSD",
         keywords: ["Solana", "SOL", "crypto", "blockchain"],
         type: "crypto"
     },
-    "doge": {  // ✅ Changed from "dogecoin" to "doge"
-        name:  "DOGE",  // ✅ Matches backend
-        description: "Dogecoin (DOGE/USD) - Meme Cryptocurrency", 
-        tvSymbol: "BINANCE:DOGEUSD",
+    "doge": {
+        name: "DOGE",
+        description:  "Dogecoin (DOGE/USD) - Meme Cryptocurrency", 
+        tvSymbol: "BINANCE: DOGEUSD",
         keywords: ["Dogecoin", "DOGE", "crypto", "meme coin"],
         type: "crypto"
     },
-    "avax": {  // ✅ Added (backend has it)
+    "avax": {
         name: "AVAX",
         description: "Avalanche (AVAX/USD) - High-Speed Smart Contract Platform",
         tvSymbol: "BINANCE:AVAXUSD",
         keywords: ["Avalanche", "AVAX", "crypto", "DeFi"],
         type: "crypto"
     },
-    "bnb": {  // ✅ Added (backend has it)
+    "bnb": {
         name: "BNB",
         description: "Binance Coin (BNB/USD) - Exchange Token",
-        tvSymbol: "BINANCE:BNBUSD",
-        keywords: ["Binance", "BNB", "crypto", "exchange"],
+        tvSymbol: "BINANCE: BNBUSD",
+        keywords:  ["Binance", "BNB", "crypto", "exchange"],
         type: "crypto"
     },
-    "ltc": {  // ✅ Changed from "litecoin" to "ltc"
-        name:  "LTC",  // ✅ Matches backend
-        description: "Litecoin (LTC/USD) - Silver to Bitcoin's Gold", 
-        tvSymbol:     "BINANCE:LTCUSD",
-        keywords:    ["Litecoin", "LTC", "crypto", "digital silver"],
+    "ltc": {
+        name:  "LTC",
+        description:  "Litecoin (LTC/USD) - Silver to Bitcoin's Gold", 
+        tvSymbol: "BINANCE:LTCUSD",
+        keywords: ["Litecoin", "LTC", "crypto", "digital silver"],
         type: "crypto"
     }
 };
@@ -220,23 +220,11 @@ async function loadAssetPage() {
                  asset.type === "crypto" ? "₿" : 
                  "📊";
     
-    document.getElementById("asset-title").textContent = `${icon} ${asset.name}`;
+    document. getElementById("asset-title").textContent = `${icon} ${asset.name}`;
     document.getElementById("asset-description").textContent = asset.description;
 
-    // Update back button based on type
-    const backButton = document.querySelector(".back-button");
-    if (backButton) {
-        if (asset.type === "stock") {
-            backButton.href = "stocks.html";
-            backButton.textContent = "← Back to Stock Markets";
-        } else if (asset.type === "crypto") {
-            backButton.href = "crypto.html";
-            backButton.textContent = "← Back to Cryptocurrency";
-        } else {
-            backButton.href = "forex.html";
-            backButton.textContent = "← Back to Forex & Commodities";
-        }
-    }
+    // ✅ REMOVED:  Back button modification - it already uses window.history.back()
+    console.log("✅ Back button using smart navigation (window.history.back())");
 
     // Load TradingView chart
     console.log("📊 Loading chart for:", asset.tvSymbol);
@@ -314,14 +302,14 @@ async function loadCurrentPrice(assetSlug, asset) {
             console.log("📦 Commodities data:", data);
             findAsset = data.find(item => item.name === asset.name);
             
-        } else if (asset.type === "forex") {
+        } else if (asset. type === "forex") {
             apiEndpoint = "/forex";
             const response = await fetch(`${API_BASE_URL}${apiEndpoint}`);
             const data = await response. json();
             console.log("💱 Forex data:", data);
             findAsset = data. find(item => item.pair === asset.name);
             
-        } else if (asset. type === "stock") {
+        } else if (asset.type === "stock") {
             apiEndpoint = "/indices";
             const response = await fetch(`${API_BASE_URL}${apiEndpoint}`);
             const data = await response.json();
@@ -345,7 +333,7 @@ async function loadCurrentPrice(assetSlug, asset) {
 
             document.getElementById("price-value").textContent = price;
             document.getElementById("price-change").textContent = change;
-            document.getElementById("price-change").className = `price-change ${isPositive ? "positive" : "negative"}`;
+            document.getElementById("price-change").className = `price-change ${isPositive ?  "positive" : "negative"}`;
             
             console.log("✅ Price loaded:", price, change);
         } else {
@@ -387,7 +375,7 @@ async function loadAssetNews(keywords) {
         }
 
         if (filteredNews.length === 0) {
-            newsContainer. innerHTML = '<p class="placeholder-text">No recent news available for this asset.</p>';
+            newsContainer. innerHTML = '<p class="placeholder-text">No recent news available for this asset. </p>';
             return;
         }
 
