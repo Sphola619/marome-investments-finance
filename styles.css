@@ -554,20 +554,33 @@ body.dark-mode .heatmap-table tr:hover {
 /* =====================
    ASSET DETAIL PAGES
    ===================== */
-.back-button {
+  .back-button {
   display: inline-block;
-  margin-bottom: 1. 5rem;
+  margin-bottom: 1.5rem;
   padding: 0.5rem 1rem;
-  background: #2563eb;
-  color:  white;
-  text-decoration:  none;
+  background:  #2563eb;
+  color: white;
+  text-decoration: none;
+  border:  none;              /* ✅ Added for button */
   border-radius:  6px;
   font-weight: 500;
+  font-size: 1rem;           /* ✅ Added for button */
+  font-family: inherit;      /* ✅ Added for button */
+  cursor: pointer;           /* ✅ Added for button */
   transition: background 0.3s ease;
 }
 
 .back-button:hover {
   background: #1d4ed8;
+}
+
+/* ✅ Dark mode support */
+body.dark-mode .back-button {
+  background: #3b82f6;
+}
+
+body.dark-mode .back-button:hover {
+  background:  #2563eb;
 }
 
 .asset-header {
