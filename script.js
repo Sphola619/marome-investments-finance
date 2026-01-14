@@ -1,5 +1,5 @@
 // =====================
-// CONFIGIGURATION
+// CONFIGURATION
 // =====================
 const API_BASE_URL = CONFIG.API_BASE_URL;
 
@@ -9,11 +9,94 @@ const API_BASE_URL = CONFIG.API_BASE_URL;
 function getTypeIcon(type) {
     switch (type) {
         case "Forex": return "💱";
-        case "Crypto": return "🪙";
+        case "Crypto":  return "🪙";
         case "Stock": return "📈";
-        case "Commodity": return "🛢";
+        case "Commodity":  return "🛢";
         case "Index": return "🌍";
         default: return "🔹";
+    }
+}
+
+// =====================
+// GENERATE DETAIL PAGE URL
+// =====================
+function generateDetailUrl(mover) {
+    const { type, symbol, name } = mover;
+    
+    // Clean up symbol/name for URL
+    const cleanSymbol = symbol.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
+    const cleanName = name.toLowerCase()
+        .replace(/&/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9-]/g, '');
+    
+    switch (type) {
+        case "Forex":
+            // e.g., pair-eurusd. html
+            return `pair-${cleanSymbol}.html`;
+            
+        case "Commodity":
+            // e.g., commodity-gold.html
+            return `commodity-${cleanName}.html`;
+            
+        case "Crypto":
+            // e.g., crypto-btc.html or crypto-bitcoin.html
+            return `crypto-${cleanName}.html`;
+            
+        case "Stock":
+            // e. g., stock-aapl. html
+            return `stock-${cleanSymbol}.html`;
+            
+        case "Index":
+            // e.g., stock-sp-500.html (indices on stocks page)
+            return `stock-${cleanName}.html`;
+            
+        default:
+            return "#";
+    }
+}
+
+// =====================
+// GET TRADINGVIEW SYMBOL
+// =====================
+function getTradingViewSymbol(mover) {
+    const { type, symbol, name } = mover;
+    
+    switch (type) {
+        case "Forex":
+            // e.g., "EUR/USD" → "FX:EURUSD"
+            return `FX:${symbol.replace('/', '')}`;
+            
+        case "Commodity":
+            // Map commodity names to TradingView symbols
+            const commodityMap = {
+                "Gold": "TVC:GOLD",
+                "Silver": "TVC:SILVER",
+                "Crude Oil": "TVC:USOIL"
+            };
+            return commodityMap[name] || `COMEX:${symbol}`;
+            
+        case "Crypto": 
+            // e.g., "BTC" → "BINANCE: BTCUSDT"
+            const cryptoSymbol = symbol.replace('-USD', '');
+            return `BINANCE:${cryptoSymbol}USDT`;
+            
+        case "Stock":
+            // e. g., "AAPL" → "NASDAQ:AAPL"
+            return `NASDAQ:${symbol}`;
+            
+        case "Index":
+            // Map index names to TradingView symbols
+            const indexMap = {
+                "S&P 500": "SP:SPX",
+                "NASDAQ 100": "NASDAQ:NDX",
+                "Dow Jones": "DJ:DJI",
+                "JSE Top 40": "JSE:TOP40"
+            };
+            return indexMap[name] || `INDEX:${symbol}`;
+            
+        default:
+            return symbol;
     }
 }
 
@@ -29,6 +112,7 @@ async function fetchTopMovers() {
 
         return data.map(item => ({
             name: item.name,
+            symbol: item.symbol,
             description: `${item.type} • ${item.symbol}`,
             performance: item.performance,
             rawChange: item.rawChange,
@@ -57,27 +141,35 @@ async function fetchNews() {
 }
 
 // =====================
-// POPULATE GLOBAL MOVERS LIST
+// POPULATE GLOBAL MOVERS LIST (WITH LINKS)
 // =====================
 function populateMoverList(movers) {
-    const container = document.getElementById("movers-list");
+    const container = document. getElementById("movers-list");
     container.innerHTML = "";
 
     movers.forEach(mover => {
+        const detailUrl = generateDetailUrl(mover);
+        
         const div = document.createElement("div");
         div.className = "market-item";
+        div.style.cursor = "pointer";
 
-        div.innerHTML = `
-            <div class="market-info">
-                <h3>${getTypeIcon(mover.type)} ${mover.name}</h3>
-                <p>${mover.description}</p>
-            </div>
-            <div class="performance ${mover.trend}">
-                ${mover.performance}
-            </div>
+        div. innerHTML = `
+            <a href="${detailUrl}" 
+               style="text-decoration:  none; color: inherit; display:  flex; align-items: center; justify-content: space-between; width: 100%;">
+                <div class="market-info">
+                    <h3>${getTypeIcon(mover.type)} ${mover.name}</h3>
+                    <p>${mover.description}</p>
+                </div>
+                <div class="performance ${mover.trend}">
+                    ${mover.performance}
+                </div>
+            </a>
         `;
 
         container.appendChild(div);
+        
+        console.log(`🔗 ${mover.name} → ${detailUrl}`);
     });
 }
 
@@ -92,7 +184,7 @@ function populateNewsList(news) {
         const div = document.createElement("div");
         div.className = "news-card";
 
-        div.innerHTML = `
+        div. innerHTML = `
             <a href="${article.url}" target="_blank" class="news-link">
                 <h3 class="news-title">${article.headline}</h3>
                 <p class="news-source">
@@ -117,14 +209,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else {
         document.getElementById("movers-list").innerHTML = `
             <div style="text-align:center;color:#777;padding:1rem;">
-                ❌ Unable to load global movers. Please try again later.
+                ❌ Unable to load global movers. Please try again later. 
             </div>
         `;
     }
 
     populateNewsList(news);
 });
-
-// =====================
-// AUTO REFRESH REMOVED
-// =====================
