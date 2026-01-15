@@ -1264,3 +1264,192 @@ body.dark-mode .theme-toggle:hover {
     font-size: 0.75rem;
   }
 }
+
+/* =============================================
+   SENTIMENT WIDGET STYLES
+============================================= */
+
+.sentiment-widget {
+  padding: 1. 5rem;
+  border-radius: 10px;
+  background: var(--card-bg);
+  border-left: 4px solid #2563eb;
+  transition: all 0.3s ease;
+}
+
+.sentiment-widget.very-bullish {
+  border-left-color: #10b981;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, var(--card-bg) 100%);
+}
+
+.sentiment-widget.bullish {
+  border-left-color: #34d399;
+  background: linear-gradient(135deg, rgba(52, 211, 153, 0.05) 0%, var(--card-bg) 100%);
+}
+
+.sentiment-widget.neutral {
+  border-left-color: #6b7280;
+  background: linear-gradient(135deg, rgba(107, 114, 128, 0.05) 0%, var(--card-bg) 100%);
+}
+
+.sentiment-widget.bearish {
+  border-left-color: #ef4444;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, var(--card-bg) 100%);
+}
+
+.sentiment-widget.very-bearish {
+  border-left-color: #dc2626;
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, var(--card-bg) 100%);
+}
+
+.sentiment-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.sentiment-emoji {
+  font-size: 2. 5rem;
+}
+
+.sentiment-label {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 1px;
+}
+
+.sentiment-score {
+  margin-bottom: 1rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height:  20px;
+  background:  var(--hover-bg);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+  height:  100%;
+  transition: width 0.5s ease;
+  border-radius: 10px;
+}
+
+.progress-fill.very-bullish {
+  background:  linear-gradient(90deg, #10b981 0%, #34d399 100%);
+}
+
+.progress-fill.bullish {
+  background: linear-gradient(90deg, #34d399 0%, #6ee7b7 100%);
+}
+
+.progress-fill.neutral {
+  background: linear-gradient(90deg, #6b7280 0%, #9ca3af 100%);
+}
+
+.progress-fill.bearish {
+  background: linear-gradient(90deg, #ef4444 0%, #f87171 100%);
+}
+
+.progress-fill.very-bearish {
+  background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
+}
+
+.score-text {
+  text-align: right;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.sentiment-stats {
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background: var(--hover-bg);
+  border-radius: 5px;
+  text-align: center;
+}
+
+.sentiment-performers,
+.sentiment-laggards {
+  margin-bottom: 1rem;
+}
+
+.performers-label,
+.laggards-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.performers-list,
+.laggards-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.performer-item,
+.laggard-item {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  background: var(--hover-bg);
+  color: var(--text-primary);
+}
+
+.performer-item strong {
+  color: #10b981;
+  margin-left: 0.3rem;
+}
+
+.laggard-item strong {
+  color: #ef4444;
+  margin-left: 0.3rem;
+}
+
+.sentiment-interpretation {
+  padding: 1rem;
+  background: var(--hover-bg);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  border-left: 3px solid #2563eb;
+  margin-bottom: 1rem;
+}
+
+.sentiment-updated {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-align: right;
+  margin-top: 0.5rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .sentiment-emoji {
+    font-size: 2rem;
+  }
+
+  .sentiment-label {
+    font-size: 1.2rem;
+  }
+
+  .sentiment-interpretation {
+    font-size: 0.85rem;
+  }
+
+  .performers-list,
+  .laggards-list {
+    flex-direction: column;
+  }
+}

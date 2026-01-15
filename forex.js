@@ -1,12 +1,15 @@
 const API_BASE_URL = CONFIG.API_BASE_URL;
 
+// Store commodity data globally for sentiment calculation
+let commodityData = [];
+
 /* ===========================================================
-      REAL MULTI-TIMEFRAME HEATMAP (Yahoo Finance)
+      REAL MULTI-TIMEFRAME HEATMAP
    =========================================================== */
 
 function colorCell(pct) {
     if (pct === null || pct === undefined || isNaN(pct)) {
-        return ""; // neutral cell
+        return "";
     }
     return pct >= 0 ? "green-cell" : "red-cell";
 }
@@ -20,13 +23,13 @@ function formatPct(pct) {
 
 async function loadHeatmapTable() {
     const tableBody = document.querySelector("#heatmap-table tbody");
-    tableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Loading...</td></tr>`;
+    tableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Loading... </td></tr>`;
 
     try {
         const response = await fetch(`${API_BASE_URL}/forex-heatmap`);
         const data = await response.json();
 
-        tableBody.innerHTML = "";  // Clear old rows
+        tableBody.innerHTML = "";
 
         Object.entries(data).forEach(([symbol, tf]) => {
             const row = document.createElement("tr");
@@ -44,7 +47,7 @@ async function loadHeatmapTable() {
 
     } catch (err) {
         console.error("Heatmap error:", err);
-        tableBody.innerHTML = `
+        tableBody. innerHTML = `
             <tr><td colspan="5" style="text-align:center;color:red;">
                 Failed to load heatmap. 
             </td></tr>
@@ -53,7 +56,7 @@ async function loadHeatmapTable() {
 }
 
 /* ===========================================================
-      FOREX LIST (Yahoo) - NOW CLICKABLE
+      FOREX LIST - CLICKABLE
    =========================================================== */
 
 async function loadForex() {
@@ -64,17 +67,16 @@ async function loadForex() {
         const container = document.getElementById("forex-list");
         container.innerHTML = "";
 
-        data. forEach(item => {
+        data.forEach(item => {
             const div = document.createElement("div");
             div.className = "market-item forex-card";
 
-            // 🔧 Generate page URL (e.g., EUR/USD → pair-eurusd.html)
-            const pairSlug = item.pair.replace("/", "").toLowerCase(); // EURUSD → eurusd
+            const pairSlug = item.pair.replace("/", "").toLowerCase();
             const pairUrl = `pair-${pairSlug}.html`;
 
             div.innerHTML = `
                 <a href="${pairUrl}" 
-                   style="text-decoration: none;color:inherit;display:flex;align-items:center;justify-content:space-between;width:100%;">
+                   style="text-decoration:  none;color:inherit;display: flex;align-items:center;justify-content:space-between;width:100%;">
                     <div class="market-info">
                         <h3>${item.pair}</h3>
                         <p>${item.name}</p>
@@ -94,7 +96,7 @@ async function loadForex() {
 }
 
 /* ===========================================================
-      FOREX STRENGTH METER
+      FOREX STRENGTH METER (KEEP AS-IS)
    =========================================================== */
 
 async function loadStrength() {
@@ -107,8 +109,8 @@ async function loadStrength() {
 
         Object.entries(data).forEach(([currency, status]) => {
             const icon =
-                status === "Strong" ? "🔥" : 
-                status === "Weak"   ? "🔻" :
+                status === "Strong" ? "🔥" :  
+                status === "Weak"   ? "🔻" : 
                                       "⚪";
 
             const div = document. createElement("div");
@@ -134,13 +136,16 @@ async function loadStrength() {
 }
 
 /* ===========================================================
-      COMMODITIES - NOW CLICKABLE
+      COMMODITIES - CLICKABLE + SENTIMENT DATA
    =========================================================== */
 
 async function loadCommodities() {
     try {
         const response = await fetch(`${API_BASE_URL}/commodities`);
         const data = await response.json();
+
+        // Store for sentiment calculation
+        commodityData = data;
 
         const container = document.getElementById("commodities-list");
         container.innerHTML = "";
@@ -149,8 +154,7 @@ async function loadCommodities() {
             const pct = parseFloat(item.change);
             const trendClass = pct >= 0 ? "positive" : "negative";
 
-            // 🔧 Generate page URL (e.g., Gold → commodity-gold.html)
-            const commoditySlug = item.name.toLowerCase().replace(/\s+/g, "-"); // "Crude Oil" → "crude-oil"
+            const commoditySlug = item.name. toLowerCase().replace(/\s+/g, "-");
             const commodityUrl = `commodity-${commoditySlug}.html`;
 
             const div = document.createElement("div");
@@ -158,7 +162,7 @@ async function loadCommodities() {
 
             div.innerHTML = `
                 <a href="${commodityUrl}" 
-                   style="text-decoration:none;color:inherit;display:flex;align-items:center;justify-content:space-between;width:100%;">
+                   style="text-decoration: none;color:inherit;display: flex;align-items:center;justify-content:space-between;width:100%;">
                     <div class="market-info">
                         <h3>${item.name}</h3>
                         <p>${item.symbol}</p>
@@ -172,9 +176,21 @@ async function loadCommodities() {
             container.appendChild(div);
         });
 
+        // ✨ Calculate and display commodity sentiment
+        loadCommoditySentiment(data);
+
     } catch (err) {
         console.error("Commodities error:", err);
     }
+}
+
+/* ===========================================================
+      COMMODITY SENTIMENT WIDGET
+   =========================================================== */
+
+function loadCommoditySentiment(data) {
+    const widget = new SentimentWidget('commodity-sentiment');
+    widget.calculate(data, 'Commodity', 'name');
 }
 
 /* ===========================================================
@@ -182,7 +198,7 @@ async function loadCommodities() {
    =========================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
-    loadHeatmapTable();   // ⭐ REAL YAHOO HEATMAP
+    loadHeatmapTable();
     loadForex();
     loadStrength();
     loadCommodities();

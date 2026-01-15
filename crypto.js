@@ -1,12 +1,15 @@
 const API_BASE_URL = CONFIG.API_BASE_URL;
 
+// Store crypto data globally for sentiment calculation
+let cryptoData = [];
+
 /* ===========================================================
-      CRYPTO HEATMAP (Yahoo Finance Multi-Timeframe)
+      CRYPTO HEATMAP
    =========================================================== */
 
 function colorCell(pct) {
     if (pct === null || pct === undefined || isNaN(pct)) {
-        return ""; // neutral cell
+        return "";
     }
     return pct >= 0 ? "green-cell" : "red-cell";
 }
@@ -15,7 +18,7 @@ function formatPct(pct) {
     if (pct === null || pct === undefined || isNaN(pct)) {
         return "--";
     }
-    return `${pct >= 0 ? "+" : ""}${pct. toFixed(2)}%`;
+    return `${pct >= 0 ? "+" : ""}${pct.toFixed(2)}%`;
 }
 
 async function loadCryptoHeatmap() {
@@ -26,10 +29,10 @@ async function loadCryptoHeatmap() {
         const response = await fetch(`${API_BASE_URL}/crypto-heatmap`);
         const data = await response.json();
 
-        tableBody. innerHTML = "";  // Clear old rows
+        tableBody.innerHTML = "";
 
         Object.entries(data).forEach(([crypto, tf]) => {
-            const row = document. createElement("tr");
+            const row = document.createElement("tr");
 
             row.innerHTML = `
                 <td>${crypto}</td>
@@ -42,7 +45,6 @@ async function loadCryptoHeatmap() {
             tableBody.appendChild(row);
         });
 
-        // 🔧 Generate commentary after heatmap loads
         generateMarketCommentary(data);
 
     } catch (err) {
@@ -62,7 +64,6 @@ async function loadCryptoHeatmap() {
 function generateMarketCommentary(heatmapData) {
     const commentary = [];
     
-    // Analyze Bitcoin
     const btc = heatmapData.BTC;
     if (btc) {
         const btc1h = btc["1h"] || 0;
@@ -71,19 +72,18 @@ function generateMarketCommentary(heatmapData) {
         const btc1w = btc["1w"] || 0;
 
         if (btc1h < 0 && btc4h < 0) {
-            commentary. push("Bitcoin shows short-term weakness on the 1H and 4H charts as momentum cools near resistance.");
+            commentary.push("Bitcoin shows short-term weakness on the 1H and 4H charts as momentum cools near resistance.");
         } else if (btc1h > 0 && btc4h > 0) {
             commentary.push("Bitcoin demonstrates strong short-term momentum with positive performance across 1H and 4H timeframes.");
         } else if (btc1d < -2) {
             commentary.push("Bitcoin faces significant daily pressure with a decline exceeding 2%.");
         } else if (btc1w > 5) {
-            commentary. push("Bitcoin maintains strong weekly bullish momentum with gains above 5%.");
+            commentary.push("Bitcoin maintains strong weekly bullish momentum with gains above 5%.");
         } else {
             commentary.push("Bitcoin remains range-bound with mixed signals across timeframes.");
         }
     }
 
-    // Analyze Ethereum
     const eth = heatmapData.ETH;
     if (eth) {
         const eth1d = eth["1d"] || 0;
@@ -95,22 +95,21 @@ function generateMarketCommentary(heatmapData) {
         } else if (eth1d > btc1d) {
             commentary.push("Ethereum outperforms Bitcoin on the daily chart, showing relative strength.");
         } else if (eth1d < -3) {
-            commentary. push("Ethereum faces selling pressure with notable daily declines.");
+            commentary.push("Ethereum faces selling pressure with notable daily declines.");
         } else {
             commentary.push("Ethereum tracks broader market trends with moderate volatility.");
         }
     }
 
-    // Analyze Altcoins (SOL, ADA, XRP, DOGE, AVAX, BNB, LTC)
     const altcoins = ["SOL", "ADA", "XRP", "DOGE", "AVAX", "BNB", "LTC"];
     const altcoinData = altcoins.map(coin => heatmapData[coin]).filter(Boolean);
     
-    if (altcoinData. length > 0) {
+    if (altcoinData.length > 0) {
         const avg1d = altcoinData.reduce((sum, coin) => sum + (coin["1d"] || 0), 0) / altcoinData.length;
         const negativeCount = altcoinData.filter(coin => (coin["1d"] || 0) < -2).length;
 
         if (negativeCount >= 4) {
-            commentary. push("Altcoins continue to trade with elevated volatility, with several major assets showing deeper pullbacks.");
+            commentary.push("Altcoins continue to trade with elevated volatility, with several major assets showing deeper pullbacks.");
         } else if (avg1d > 2) {
             commentary.push("Altcoins display strong momentum with broad-based gains across the board.");
         } else if (avg1d < -2) {
@@ -120,7 +119,6 @@ function generateMarketCommentary(heatmapData) {
         }
     }
 
-    // Overall sentiment
     const allCoins = Object.values(heatmapData);
     const overall1d = allCoins.reduce((sum, coin) => sum + (coin["1d"] || 0), 0) / allCoins.length;
 
@@ -132,48 +130,47 @@ function generateMarketCommentary(heatmapData) {
         commentary.push("Overall sentiment remains cautious as traders await clearer direction from broader market trends.");
     }
 
-    // Display commentary
     const container = document.getElementById("market-commentary");
     if (container) {
-        container.innerHTML = commentary. map(text => 
+        container. innerHTML = commentary.map(text => 
             `<p class="commentary-line">• ${text}</p>`
         ).join("");
     }
 }
 
 /* ===========================================================
-      CRYPTO LIST - NOW CLICKABLE
+      CRYPTO LIST - CLICKABLE + SENTIMENT DATA
    =========================================================== */
 
 async function loadCrypto() {
     const container = document.getElementById("crypto-list");
-    container.innerHTML = "<p>Loading...</p>";
+    container.innerHTML = "<p>Loading... </p>";
 
     try {
         const resp = await fetch(`${API_BASE_URL}/crypto`);
         const data = await resp.json();
 
+        // Store for sentiment calculation
+        cryptoData = data;
+
         container.innerHTML = "";
 
-        data. forEach(item => {
-            // 🔧 Generate page URL (e.g., "Bitcoin" → crypto-bitcoin.html)
+        data.forEach(item => {
             const cryptoSlug = item.name.toLowerCase().replace(/\s+/g, "-");
             const cryptoUrl = `crypto-${cryptoSlug}.html`;
-
-            console.log(`₿ ${item.name} → ${cryptoUrl}`); // Debug log
 
             const div = document.createElement("div");
             div.className = "market-item animate delay-1";
 
             div.innerHTML = `
                 <a href="${cryptoUrl}" 
-                   style="text-decoration: none;color: inherit;display:flex;align-items:center;justify-content:space-between;width:100%;">
+                   style="text-decoration:  none;color: inherit;display: flex;align-items:center;justify-content:space-between;width:100%;">
                     <div class="market-info">
                         <h3>${item.name}</h3>
                         <p>${item.symbol}</p>
                     </div>
                     <div class="performance ${item.trend}">
-                        ${item. change}
+                        ${item.change}
                     </div>
                 </a>
             `;
@@ -181,10 +178,22 @@ async function loadCrypto() {
             container.appendChild(div);
         });
 
+        // ✨ Calculate and display crypto sentiment
+        loadCryptoSentiment(data);
+
     } catch (err) {
         console.error("Crypto load error:", err);
-        container. innerHTML = "<p>Failed to load crypto data.</p>";
+        container. innerHTML = "<p>Failed to load crypto data. </p>";
     }
+}
+
+/* ===========================================================
+      CRYPTO SENTIMENT WIDGET
+   =========================================================== */
+
+function loadCryptoSentiment(data) {
+    const widget = new SentimentWidget('crypto-sentiment');
+    widget.calculate(data, 'Crypto', 'name');
 }
 
 /* ===========================================================
@@ -192,6 +201,6 @@ async function loadCrypto() {
    =========================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
-    loadCryptoHeatmap();   // ⭐ Load heatmap + auto-generate commentary
-    loadCrypto();          // Load crypto list (now clickable!)
+    loadCryptoHeatmap();
+    loadCrypto();
 });

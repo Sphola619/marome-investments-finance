@@ -1,7 +1,10 @@
 const API_BASE_URL = CONFIG.API_BASE_URL;
 
+// Store stock data globally for sentiment calculation
+let stockData = [];
+
 /* ===========================================================
-      LOAD INDICES - NOW CLICKABLE
+      LOAD INDICES - CLICKABLE + SENTIMENT DATA
    =========================================================== */
 
 async function loadIndices() {
@@ -15,28 +18,28 @@ async function loadIndices() {
         const response = await fetch(`${API_BASE_URL}/indices`);
         const indices = await response.json();
 
-        // Render index cards - NOW CLICKABLE
+        // Store for sentiment calculation
+        stockData = indices;
+
+        // Render index cards - CLICKABLE
         indices.forEach(item => {
             const pct = parseFloat(item.change);
-            const trendClass = pct >= 0 ?  "positive" : "negative";
+            const trendClass = pct >= 0 ? "positive" : "negative";
 
-            // 🔧 Generate page URL (e.g., "S&P 500" → stock-sp-500.html)
             const stockSlug = item.name
                 .toLowerCase()
-                .replace(/&/g, "")           // Remove &
-                .replace(/\s+/g, "-")        // Spaces to dashes
-                .replace(/[^a-z0-9-]/g, ""); // Remove special chars
+                .replace(/&/g, "")
+                .replace(/\s+/g, "-")
+                .replace(/[^a-z0-9-]/g, "");
             
             const stockUrl = `stock-${stockSlug}.html`;
-
-            console.log(`📊 ${item.name} → ${stockUrl}`); // Debug log
 
             const div = document.createElement("div");
             div.className = "market-item";
 
             div.innerHTML = `
                 <a href="${stockUrl}" 
-                   style="text-decoration: none;color:inherit;display:flex;align-items:center;justify-content:space-between;width:100%;">
+                   style="text-decoration: none;color: inherit;display:flex;align-items:center;justify-content: space-between;width:100%;">
                     <div class="market-info">
                         <h3>${item.name}</h3>
                         <p>${item.symbol}</p>
@@ -53,6 +56,9 @@ async function loadIndices() {
         // Generate + Display Summary
         const summary = generateMarketSummary(indices);
         summaryBox.innerHTML = `<p class="summary-text">${summary}</p>`;
+
+        // ✨ Calculate and display stock sentiment
+        loadStockSentiment(indices);
 
     } catch (err) {
         console.error("Error loading indices:", err);
@@ -79,13 +85,11 @@ function generateMarketSummary(indices) {
 
     let summary = "Global markets update:  ";
 
-    // Collect US directional signals
     const usIndices = [sp500, nasdaq, dow]. filter(Boolean);
 
     let upCount = usIndices.filter(i => parseFloat(i.change) >= 0).length;
     let downCount = usIndices.filter(i => parseFloat(i. change) < 0).length;
 
-    // Determine US market mood
     if (upCount === usIndices.length) {
         summary += `US markets are broadly higher today.  `;
     } 
@@ -96,12 +100,10 @@ function generateMarketSummary(indices) {
         summary += `US markets are showing a mixed performance. `;
     }
 
-    // Add percentage details
     if (sp500 && nasdaq && dow) {
         summary += `S&P 500 ${sp500.change}, NASDAQ ${nasdaq.change}, Dow Jones ${dow.change}.  `;
     }
 
-    // JSE Top 40 performance
     if (jse) {
         const jPct = parseFloat(jse. change);
         if (jPct >= 0) {
@@ -112,6 +114,15 @@ function generateMarketSummary(indices) {
     }
 
     return summary;
+}
+
+/* ===========================================================
+      STOCK SENTIMENT WIDGET
+   =========================================================== */
+
+function loadStockSentiment(data) {
+    const widget = new SentimentWidget('stock-sentiment');
+    widget.calculate(data, 'Stock', 'name');
 }
 
 /* ===========================================================
