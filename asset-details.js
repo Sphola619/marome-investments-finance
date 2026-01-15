@@ -23,7 +23,7 @@ const ASSET_CONFIG = {
     "usdjpy": { 
         name: "USD/JPY", 
         description: "US Dollar vs Japanese Yen", 
-        tvSymbol: "OANDA: USDJPY",
+        tvSymbol: "OANDA:USDJPY",
         keywords:  ["USD", "JPY", "Yen", "Dollar", "Bank of Japan"],
         type: "forex"
     },
@@ -37,14 +37,14 @@ const ASSET_CONFIG = {
     "audusd": { 
         name: "AUD/USD", 
         description: "Australian Dollar vs US Dollar", 
-        tvSymbol: "OANDA: AUDUSD",
+        tvSymbol: "OANDA:AUDUSD",
         keywords:  ["AUD", "USD", "Australia", "Dollar"],
         type: "forex"
     },
     "usdchf": { 
         name:  "USD/CHF", 
         description: "US Dollar vs Swiss Franc", 
-        tvSymbol: "OANDA: USDCHF",
+        tvSymbol: "OANDA:USDCHF",
         keywords: ["USD", "CHF", "Franc", "Switzerland"],
         type: "forex"
     },
@@ -113,7 +113,7 @@ const ASSET_CONFIG = {
     "eth":  {
         name: "ETH",
         description: "Ethereum (ETH/USD) - Smart Contract Platform", 
-        tvSymbol: "BINANCE: ETHUSD",
+        tvSymbol: "BINANCE:ETHUSD",
         keywords:  ["Ethereum", "ETH", "crypto", "smart contracts", "DeFi"],
         type: "crypto"
     },
@@ -134,14 +134,14 @@ const ASSET_CONFIG = {
     "sol": {
         name: "SOL",
         description: "Solana (SOL/USD) - High-Speed Blockchain", 
-        tvSymbol: "BINANCE: SOLUSD",
+        tvSymbol: "BINANCE:SOLUSD",
         keywords: ["Solana", "SOL", "crypto", "blockchain"],
         type: "crypto"
     },
     "doge": {
         name: "DOGE",
         description:  "Dogecoin (DOGE/USD) - Meme Cryptocurrency", 
-        tvSymbol: "BINANCE: DOGEUSD",
+        tvSymbol: "BINANCE:DOGEUSD",
         keywords: ["Dogecoin", "DOGE", "crypto", "meme coin"],
         type: "crypto"
     },
@@ -155,7 +155,7 @@ const ASSET_CONFIG = {
     "bnb": {
         name: "BNB",
         description: "Binance Coin (BNB/USD) - Exchange Token",
-        tvSymbol: "BINANCE: BNBUSD",
+        tvSymbol: "BINANCE:BNBUSD",
         keywords:  ["Binance", "BNB", "crypto", "exchange"],
         type: "crypto"
     },
