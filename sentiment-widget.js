@@ -4,7 +4,7 @@
 
    class SentimentWidget {
     constructor(containerId) {
-        this.container = document.getElementById(containerId);
+        this.container = document. getElementById(containerId);
     }
 
     /**
@@ -18,33 +18,38 @@
             return this.renderError();
         }
 
-        // Count positive vs total
-        let positiveCount = 0;
-        let totalCount = assets.length;
-        
+        // Parse all assets
         const performers = assets.map(asset => {
             const changeStr = asset. change || '0%';
-            const changeNum = parseFloat(changeStr. replace('%', ''));
-            
-            if (changeNum > 0) positiveCount++;
+            const changeNum = parseFloat(changeStr.replace('%', ''));
             
             return {
-                name: asset[nameProp] || asset.name,
+                name:  asset[nameProp] || asset.name,
                 change: changeNum,
                 changeStr: changeStr
             };
         });
 
-        // Calculate sentiment score (0-100)
+        // Sort by performance (best to worst)
+        const sorted = [... performers].sort((a, b) => b.change - a.change);
+
+        // ✅ SIMPLE LOGIC:  Separate positive from negative
+        const positiveAssets = sorted.filter(asset => asset.change > 0);
+        const negativeAssets = sorted.filter(asset => asset.change < 0);
+
+        // Top performers = up to top 3 positive assets
+        const topPerformers = positiveAssets.slice(0, 3);
+
+        // Laggards = worst 3 negative assets (reversed to show worst first)
+        const laggards = negativeAssets.slice(-3).reverse();
+
+        // Calculate sentiment score
+        const positiveCount = positiveAssets. length;
+        const totalCount = assets.length;
         const sentimentScore = Math.round((positiveCount / totalCount) * 100);
 
         // Determine sentiment level
-        const sentiment = this.getSentimentLevel(sentimentScore);
-
-        // Get top 3 performers and bottom 2 laggards
-        const sorted = [... performers].sort((a, b) => b.change - a.change);
-        const topPerformers = sorted.slice(0, 3);
-        const laggards = sorted.slice(-2).reverse();
+        const sentiment = this. getSentimentLevel(sentimentScore);
 
         // Generate interpretation
         const interpretation = this.generateInterpretation(
@@ -52,11 +57,19 @@
             assetType, 
             positiveCount, 
             totalCount,
-            topPerformers[0]
+            sorted[0]
         );
 
         // Render widget
-        this.render(sentiment, sentimentScore, topPerformers, laggards, interpretation, positiveCount, totalCount);
+        this.render(
+            sentiment, 
+            sentimentScore, 
+            topPerformers, 
+            laggards, 
+            interpretation, 
+            positiveCount, 
+            totalCount
+        );
     }
 
     /**
@@ -64,11 +77,11 @@
      */
     getSentimentLevel(score) {
         if (score >= 80) {
-            return { label: 'VERY BULLISH', emoji: '🚀', class: 'very-bullish' };
+            return { label:  'VERY BULLISH', emoji: '🚀', class: 'very-bullish' };
         } else if (score >= 60) {
             return { label: 'BULLISH', emoji: '😃', class: 'bullish' };
         } else if (score >= 40) {
-            return { label: 'NEUTRAL', emoji: '😐', class:  'neutral' };
+            return { label: 'NEUTRAL', emoji:  '😐', class: 'neutral' };
         } else if (score >= 20) {
             return { label: 'BEARISH', emoji: '😟', class: 'bearish' };
         } else {
@@ -80,18 +93,22 @@
      * Generate interpretation text
      */
     generateInterpretation(score, assetType, positive, total, topPerformer) {
-        const assetTypeLower = assetType.toLowerCase();
+        const assetTypeLower = assetType. toLowerCase();
         
-        if (score >= 80) {
-            return `Extremely strong momentum in ${assetTypeLower} markets with ${topPerformer.name} leading at ${topPerformer.changeStr}.  High risk appetite detected.`;
+        if (score === 100) {
+            return `All ${assetTypeLower} assets are rising today.  Strong across-the-board buying pressure with ${topPerformer.name} leading at ${topPerformer. changeStr}. `;
+        } else if (score === 0) {
+            return `All ${assetTypeLower} assets are declining today. Widespread selling pressure with ${topPerformer.name} showing the smallest loss at ${topPerformer.changeStr}.`;
+        } else if (score >= 80) {
+            return `Extremely strong momentum in ${assetTypeLower} markets with ${topPerformer.name} leading at ${topPerformer.changeStr}. High risk appetite detected.`;
         } else if (score >= 60) {
-            return `Positive sentiment dominates ${assetTypeLower} markets.  ${positive} out of ${total} assets are rising with healthy buying pressure.`;
+            return `Positive sentiment dominates ${assetTypeLower} markets. ${positive} out of ${total} assets are rising with healthy buying pressure.`;
         } else if (score >= 40) {
-            return `Mixed signals in ${assetTypeLower} markets.  Traders are cautious as sentiment remains balanced between bulls and bears.`;
+            return `Mixed signals in ${assetTypeLower} markets. Traders are cautious as sentiment remains balanced between bulls and bears.`;
         } else if (score >= 20) {
-            return `Selling pressure evident in ${assetTypeLower} markets. Risk-off sentiment as ${total - positive} out of ${total} assets decline.`;
+            return `Selling pressure evident in ${assetTypeLower} markets.  Risk-off sentiment as ${total - positive} out of ${total} assets decline.`;
         } else {
-            return `Severe weakness across ${assetTypeLower} markets.  Widespread selling with only ${positive} out of ${total} assets holding gains.`;
+            return `Severe weakness across ${assetTypeLower} markets. Widespread selling with only ${positive} out of ${total} assets holding gains.`;
         }
     }
 
@@ -121,24 +138,24 @@
                     ${positive} out of ${total} assets are rising
                 </div>
 
-                ${topPerformers.length > 0 ? `
+                ${topPerformers.length > 0 ?  `
                     <div class="sentiment-performers">
                         <div class="performers-label">📈 Top Performers:</div>
                         <div class="performers-list">
                             ${topPerformers.map(p => `
                                 <span class="performer-item positive">
-                                    ${p.name} <strong>${p.changeStr}</strong>
+                                    ${p.name} <strong>${p. changeStr}</strong>
                                 </span>
                             `).join('')}
                         </div>
                     </div>
                 ` : ''}
 
-                ${laggards.length > 0 && laggards[0].change < 0 ? `
+                ${laggards.length > 0 ? `
                     <div class="sentiment-laggards">
                         <div class="laggards-label">📉 Laggards:</div>
                         <div class="laggards-list">
-                            ${laggards.filter(l => l.change < 0).map(l => `
+                            ${laggards.map(l => `
                                 <span class="laggard-item negative">
                                     ${l.name} <strong>${l.changeStr}</strong>
                                 </span>
