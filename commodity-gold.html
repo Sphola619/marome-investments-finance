@@ -9,43 +9,44 @@
 
     <script src="theme.js"></script> <!-- Theme toggle script -->
 </head>
+
 <body>
 
-    <!-- Header Section -->
-    <header class="header">
-        <a href="index.html" class="logo">
-          Marome <br><span>Investments</span>
-        </a>
-  
-        <!-- Hamburger Button (mobile only) -->
-        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-  
-        <!-- Navigation with mobile-menu class -->
-        <nav class="nav-menu" id="navMenu">
-          <ul class="nav-links">
-            <li><a href="stocks.html">Stock Markets</a></li>
-            <li><a href="forex.html" class="active">Forex & Commodities</a></li>
-            <li><a href="crypto.html">Cryptocurrency</a></li>
-            <li><a href="analysis.html">Market Analysis</a></li>
-            <li><a href="calendar.html">Economic Calendar</a></li>
-            
-            <!-- ✅ Theme Toggle as last nav item -->
-            <li class="theme-toggle-item">
-              <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                <span class="theme-label" id="themeLabel">Dark Mode</span>
-                <span class="theme-icon" id="themeIcon">🌙</span>
-              </button>
-            </li>
-          </ul>
-        </nav>
-      </header>
+  <!-- Header Section -->
+  <header class="header">
+    <a href="index.html" class="logo">
+      Marome <br><span>Investments</span>
+    </a>
 
-<div class="container animate delay-1">
-    
+    <!-- Hamburger Button (mobile only) -->
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- Navigation with mobile-menu class -->
+    <nav class="nav-menu" id="navMenu">
+      <ul class="nav-links">
+        <li><a href="stocks.html">Stock Markets</a></li>
+        <li><a href="forex.html" class="active">Forex & Commodities</a></li>
+        <li><a href="crypto.html">Cryptocurrency</a></li>
+        <li><a href="analysis.html">Market Analysis</a></li>
+        <li><a href="calendar.html">Economic Calendar</a></li>
+        
+        <!-- ✅ Theme Toggle as last nav item -->
+        <li class="theme-toggle-item">
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span class="theme-label" id="themeLabel">Dark Mode</span>
+            <span class="theme-icon" id="themeIcon">🌙</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container animate delay-1">
+
     <!-- Back Button -->
     <button onclick="window.history.back()" class="back-button">← Back</button>
 
@@ -74,6 +75,11 @@
                 scrolling="no">
             </iframe>
         </div>
+        
+        <!-- ✅ NEW: TradingView Attribution -->
+        <div class="chart-attribution">
+            Powered by <a href="https://www.tradingview.com/" target="_blank" rel="noopener">TradingView</a>
+        </div>
     </div>
 
     <!-- Related News -->
@@ -84,11 +90,13 @@
         </div>
     </div>
 
+    <!-- Disclaimer -->
     <div class="disclaimer">
-        ⚠️ Prices are indicative and may be delayed. Not financial advice.
+        ⚠️ Prices are indicative and may be delayed.  Not financial advice.
     </div>
 
-</div>
+  </div>
+
   
   <script src="config.js"></script>
   <script src="asset-details.js"></script>
