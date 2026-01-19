@@ -1565,3 +1565,10 @@ body.dark-mode .chart-attribution {
   }
 }
 
+/* =============================================
+   STOCK SECTIONS SPACING
+============================================= */
+
+.performance-section.stock-section {
+  margin-top: 2rem;
+}
