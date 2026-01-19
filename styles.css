@@ -6,7 +6,7 @@
 }
 
 body {
-  background: var(--bg-primary);
+  background:  var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.6;
   transition: background 0.3s ease, color 0.3s ease;
@@ -20,14 +20,14 @@ body {
   /* Light Mode (Default) */
   --bg-primary: #f8f9fa;
   --bg-secondary: #ffffff;
-  --text-primary:   #1e293b;
+  --text-primary:    #1e293b;
   --text-secondary: #64748b;
-  --border-color: #e2e8f0;
-  --shadow: rgba(0, 0, 0, 0.1);
+  --border-color:  #e2e8f0;
+  --shadow:  rgba(0, 0, 0, 0.1);
   --card-bg: #ffffff;
   --header-bg: #ffffff;
-  --hover-bg:   #f1f5f9;
-  --nav-text: #4b5563;
+  --hover-bg:    #f1f5f9;
+  --nav-text:  #4b5563;
   --nav-hover-bg: #2563eb;
   --nav-hover-text: #ffffff;
   --logo-color: #1a1a1a;
@@ -37,16 +37,16 @@ body {
 
 body.dark-mode {
   /* Dark Mode Colors */
-  --bg-primary:  #0f172a;          /* Darkest - body background */
-  --bg-secondary: #1e293b;        /* Dark - secondary background */
+  --bg-primary:   #0f172a;          /* Darkest - body background */
+  --bg-secondary:  #1e293b;        /* Dark - secondary background */
   --text-primary: #f1f5f9;        /* Light text */
-  --text-secondary: #94a3b8;      /* Muted text */
+  --text-secondary:  #94a3b8;      /* Muted text */
   --border-color: #334155;        /* Dark borders */
   --shadow: rgba(0, 0, 0, 0.5);   /* Darker shadows */
   --card-bg:   #1e293b;             /* Card background */
   --header-bg: #334155;           /* ✅ Header - lighter than body */
   --hover-bg: #475569;            /* Hover state */
-  --nav-text:   #e2e8f0;            /* Light nav text */
+  --nav-text:    #e2e8f0;            /* Light nav text */
   --nav-hover-bg: #475569;        /* Nav hover background */
   --nav-hover-text: #ffffff;      /* Nav hover text */
   --logo-color: #60a5fa;          /* Lighter blue logo */
@@ -60,12 +60,12 @@ body.dark-mode {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: var(--header-bg);
+  background:  var(--header-bg);
   box-shadow: 0 2px 10px var(--shadow);
   position: sticky;
-  top:   0;
-  z-index: 100;
-  transition:   background 0.3s ease, box-shadow 0.3s ease;
+  top:    0;
+  z-index:  100;
+  transition:    background 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Add subtle border in dark mode */
@@ -75,9 +75,9 @@ body.dark-mode .header {
 
 .logo {
   font-family: 'Montserrat', sans-serif;
-  font-size: 2.  5rem;
+  font-size: 2.   5rem;
   font-weight: 700;
-  color:   var(--logo-color);
+  color:    var(--logo-color);
   text-transform: uppercase;
   letter-spacing: 2px;
   display: inline-block;
@@ -110,7 +110,7 @@ body.dark-mode .header {
   color: var(--nav-text);
   font-weight: 500;
   padding: 0.5rem 1rem;
-  border-radius:  6px;
+  border-radius:   6px;
   transition: all 0.3s ease;
 }
 
@@ -123,7 +123,7 @@ body.dark-mode .header {
 .nav-links a.active {
   background-color: var(--nav-hover-bg);
   color: var(--nav-hover-text);
-  border:   2px solid var(--nav-hover-bg);
+  border:    2px solid var(--nav-hover-bg);
   border-radius: 6px;
 }
 
@@ -131,8 +131,8 @@ body.dark-mode .header {
 
 .hamburger {
   display: none;
-  flex-direction:   column;
-  gap: 5px;
+  flex-direction:    column;
+  gap:  5px;
   background: none;
   border: none;
   cursor: pointer;
@@ -155,13 +155,13 @@ body.dark-mode .header {
 /* Main Content Styles */
 .container {
   max-width: 1200px;
-  margin:   2rem auto;
-  padding:  0 2rem;
+  margin:    2rem auto;
+  padding:   0 2rem;
 }
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns:   2fr 1fr;
+  grid-template-columns:    2fr 1fr;
   gap: 2rem;
   margin-top: 2rem;
 }
@@ -172,7 +172,7 @@ body.dark-mode .header {
   background: var(--card-bg);
   padding: 1.5rem;
   border-radius: 10px;
-  box-shadow:   0 2px 15px var(--shadow);
+  box-shadow:    0 2px 15px var(--shadow);
   transition: background 0.3s ease;
 }
 
@@ -183,7 +183,7 @@ body.dark-mode .header {
 
 .section-title {
   font-size: 1.4rem;
-  margin-bottom:   1.5rem;
+  margin-bottom:    1.5rem;
   color: var(--text-primary);
   border-bottom: 2px solid #2563eb;
   padding-bottom: 0.5rem;
@@ -204,7 +204,7 @@ body.dark-mode .header {
   background-color: var(--card-bg);
   border-radius: 10px;
   border-left: 4px solid #2563eb;
-  transition:   transform 0.15s ease, box-shadow 0.2s ease, background 0.3s ease;
+  transition:    transform 0.15s ease, box-shadow 0.2s ease, background 0.3s ease;
   cursor: pointer;
 }
 
@@ -254,7 +254,7 @@ body.dark-mode .header {
 }
 
 .trend-badge {
-  font-size: 1. 3rem;
+  font-size: 1.3rem;
 }
 
 /* Strength Meter Cards */
@@ -319,7 +319,7 @@ body.dark-mode .header {
 .news-card {
   background: var(--card-bg);
   padding: 18px 22px;
-  border-radius:   12px;
+  border-radius:    12px;
   margin-bottom: 15px;
   box-shadow: 0 4px 10px var(--shadow);
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
@@ -340,7 +340,7 @@ body.dark-mode .header {
 
 .news-title {
   font-size: 17px;
-  font-weight:   600;
+  font-weight:    600;
   margin-bottom: 8px;
   color: var(--text-primary);
   transition: color 0.3s ease;
@@ -353,12 +353,12 @@ body.dark-mode .header {
 /* Disclaimer */
 .disclaimer {
   background-color: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius:  8px;
-  padding:  1rem;
-  margin-top:  2rem;
-  font-size:   0.8rem;
-  color: #dc2626;
+  border:  1px solid #fecaca;
+  border-radius:   8px;
+  padding:   1rem;
+  margin-top:   2rem;
+  font-size:    0.8rem;
+  color:  #dc2626;
   text-align: center;
   transition: background 0.3s ease, border-color 0.3s ease;
 }
@@ -373,13 +373,13 @@ body.dark-mode .disclaimer {
 .page-title {
   font-size: 2rem;
   font-weight: 700;
-  margin-bottom:  1.5rem;
+  margin-bottom:   1.5rem;
   color: var(--text-primary);
   transition: color 0.3s ease;
 }
 
 .placeholder-text {
-  font-size: 0.95rem;
+  font-size:  0.95rem;
   color: var(--text-secondary);
   line-height: 1.6;
   transition: color 0.3s ease;
@@ -413,13 +413,13 @@ body.dark-mode .disclaimer {
 
 .animate {
   opacity: 0;
-  animation:   fadeUp 0.8s ease forwards;
+  animation:    fadeUp 0.8s ease forwards;
 }
 
 .delay-1 { animation-delay: 0.2s; }
 .delay-2 { animation-delay: 0.4s; }
-.delay-3 { animation-delay:   0.6s; }
-.delay-4 { animation-delay: 0.8s; }
+.delay-3 { animation-delay:    0.6s; }
+.delay-4 { animation-delay:  0.8s; }
 .delay-5 { animation-delay: 1.0s; }
 
 /* =====================
@@ -434,7 +434,7 @@ body.dark-mode .disclaimer {
 
 .heatmap-tile {
   padding: 12px;
-  border-radius:   8px;
+  border-radius:    8px;
   color: white;
   font-weight: 600;
   text-align: center;
@@ -453,7 +453,7 @@ body.dark-mode .disclaimer {
 
 .heatmap-change {
   font-size: 14px;
-  font-weight:   bold;
+  font-weight:    bold;
   margin-top: 5px;
 }
 
@@ -468,7 +468,7 @@ body.dark-mode .disclaimer {
   width: 100%;
   border-collapse: collapse;
   background: var(--card-bg);
-  border-radius:  10px;
+  border-radius:   10px;
   overflow: hidden;
   transition: background 0.3s ease;
 }
@@ -483,8 +483,8 @@ body.dark-mode .disclaimer {
 }
 
 .heatmap-table td {
-  padding:   10px;
-  text-align: center;
+  padding:    10px;
+  text-align:  center;
   font-weight: 600;
   color: var(--text-primary);
   transition: color 0.3s ease;
@@ -501,12 +501,12 @@ body.dark-mode .disclaimer {
 }
 
 .heatmap-table tr:nth-child(even) {
-  background:   var(--hover-bg);
+  background:    var(--hover-bg);
   transition: background 0.3s ease;
 }
 
 body.dark-mode .heatmap-table tr:hover {
-  background:  var(--hover-bg);
+  background:   var(--hover-bg);
 }
 
 /* =====================
@@ -522,7 +522,7 @@ body.dark-mode .heatmap-table tr:hover {
   background: var(--card-bg);
   padding: 1.5rem;
   border-radius: 10px;
-  box-shadow:  0 2px 15px var(--shadow);
+  box-shadow:   0 2px 15px var(--shadow);
   transition: background 0.3s ease;
 }
 
@@ -540,7 +540,7 @@ body.dark-mode .heatmap-table tr:hover {
   background: var(--hover-bg);
   border-radius: 8px;
   border-left: 4px solid #2563eb;
-  transition:   background 0.3s ease;
+  transition:    background 0.3s ease;
 }
 
 .commentary-line {
@@ -563,11 +563,11 @@ body.dark-mode .heatmap-table tr:hover {
   display: inline-block;
   margin-bottom: 1. 5rem;
   padding: 0.5rem 1rem;
-  background:   #2563eb;
-  color:  white;
-  text-decoration:  none;
-  border:   none;              /* ✅ Added for button */
-  border-radius:   6px;
+  background:    #2563eb;
+  color:   white;
+  text-decoration:   none;
+  border:    none;              /* ✅ Added for button */
+  border-radius:    6px;
   font-weight: 500;
   font-size: 1rem;           /* ✅ Added for button */
   font-family: inherit;      /* ✅ Added for button */
@@ -585,7 +585,7 @@ body.dark-mode .back-button {
 }
 
 body.dark-mode .back-button:hover {
-  background:   #2563eb;
+  background:    #2563eb;
 }
 
 .asset-header {
@@ -613,7 +613,7 @@ body.dark-mode .back-button:hover {
 
 .label {
   font-weight: 600;
-  color:  var(--text-primary);
+  color:   var(--text-primary);
   transition: color 0.3s ease;
 }
 
@@ -652,7 +652,7 @@ body.dark-mode .back-button:hover {
   color: white;
   padding: 0.75rem 1rem;
   border-radius: 8px;
-  margin:   1. 5rem 0 0. 5rem 0;
+  margin:    1.5rem 0 0.5rem 0;
 }
 
 .calendar-date-header:first-child {
@@ -669,7 +669,7 @@ body.dark-mode .back-button:hover {
   background: var(--hover-bg);
   border-left: 4px solid #2563eb;
   padding: 1rem;
-  margin:  0.5rem 0;
+  margin:   0.5rem 0;
   border-radius: 5px;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
 }
@@ -692,7 +692,7 @@ body.dark-mode .back-button:hover {
 
 .calendar-event.importance-low {
   border-left-color: #6c757d;
-  background:   var(--hover-bg);
+  background:    var(--hover-bg);
 }
 
 .event-header {
@@ -725,13 +725,13 @@ body.dark-mode .back-button:hover {
   font-size: 1rem;
   font-weight: 600;
   color: var(--text-primary);
-  margin:   0.5rem 0;
+  margin:    0.5rem 0;
   transition: color 0.3s ease;
 }
 
 .event-data {
   display: flex;
-  gap: 1.  5rem;
+  gap: 1. 5rem;
   margin-top: 0.75rem;
   flex-wrap: wrap;
 }
@@ -840,7 +840,7 @@ body.dark-mode .theme-toggle:hover {
     position: fixed;
     top: 0;
     right: -100%;
-    width:   70%;
+    width:    70%;
     max-width: 300px;
     height: 100vh;
     background: var(--header-bg);
@@ -880,9 +880,9 @@ body.dark-mode .theme-toggle:hover {
 
   /* Theme toggle in mobile menu */
   .theme-toggle-item {
-    margin-left:   0;
-    margin-top: 10px;
-    padding-top: 10px;
+    margin-left:    0;
+    margin-top:  10px;
+    padding-top:  10px;
     border-top: 1px solid var(--border-color);
   }
   
@@ -890,18 +890,18 @@ body.dark-mode .theme-toggle:hover {
     width: 100%;
     justify-content: center;
     padding: 12px 20px;
-    font-size: 16px;
+    font-size:  16px;
   }
 
   /* Container */
   .container {
     padding: 0 1rem;
-    margin:   1rem auto;
+    margin:    1rem auto;
   }
 
   /* Dashboard Grid */
   .dashboard-grid {
-    grid-template-columns:   1fr;
+    grid-template-columns:    1fr;
     gap: 1.5rem;
   }
 
@@ -930,7 +930,7 @@ body.dark-mode .theme-toggle:hover {
   }
 
   .market-info p {
-    font-size: 0.85rem;
+    font-size:  0.85rem;
   }
 
   .performance {
@@ -949,7 +949,7 @@ body.dark-mode .theme-toggle:hover {
   }
 
   .heatmap-symbol {
-    font-size: 13px;
+    font-size:  13px;
   }
 
   .heatmap-change {
@@ -1031,7 +1031,7 @@ body.dark-mode .theme-toggle:hover {
   }
 
   .logo {
-    font-size:   1.6rem;
+    font-size:    1.6rem;
     letter-spacing: 1px;
   }
 
@@ -1068,7 +1068,7 @@ body.dark-mode .theme-toggle:hover {
 
   /* Market Items */
   .market-item {
-    padding: 0.7rem;
+    padding:  0.7rem;
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
@@ -1083,7 +1083,7 @@ body.dark-mode .theme-toggle:hover {
   }
 
   .performance {
-    font-size:   0.95rem;
+    font-size:    0.95rem;
     width: auto;
     align-self: flex-end;
   }
@@ -1122,7 +1122,7 @@ body.dark-mode .theme-toggle:hover {
   }
 
   .news-title {
-    font-size:   14px;
+    font-size:    14px;
   }
 
   .news-source {
@@ -1141,29 +1141,29 @@ body.dark-mode .theme-toggle:hover {
   }
 
   .asset-header h1 {
-    font-size:   1.5rem;
+    font-size:    1.5rem;
   }
 
   .subtitle {
-    font-size:   0.95rem;
+    font-size:    0.95rem;
   }
 
   .current-price-box {
-    flex-direction: column;
+    flex-direction:  column;
     align-items: flex-start;
     gap: 0.5rem;
   }
 
   .price-value {
-    font-size:   1.2rem;
+    font-size:    1.2rem;
   }
 
   .price-change {
-    font-size: 1rem;
+    font-size:  1rem;
   }
 
   .chart-wrapper {
-    height:   300px;
+    height:    300px;
   }
 
   /* Commentary */
@@ -1196,7 +1196,7 @@ body.dark-mode .theme-toggle:hover {
 
   .calendar-date-header {
     padding: 0.6rem 0.8rem;
-    margin:  1rem 0 0.4rem 0;
+    margin:   1rem 0 0.4rem 0;
   }
 
   .calendar-date-header h3 {
@@ -1204,7 +1204,7 @@ body.dark-mode .theme-toggle:hover {
   }
 
   .calendar-event {
-    padding:   0.8rem;
+    padding:    0.8rem;
   }
 
   .event-time {
@@ -1220,7 +1220,7 @@ body.dark-mode .theme-toggle:hover {
   }
 
   .event-name {
-    font-size:  0.9rem;
+    font-size:   0.9rem;
   }
 
   .data-item {
@@ -1248,7 +1248,7 @@ body.dark-mode .theme-toggle:hover {
   }
 
   .chart-wrapper {
-    height: 250px;
+    height:  250px;
   }
 
   /* Menu full width on tiny screens */
@@ -1275,7 +1275,7 @@ body.dark-mode .theme-toggle:hover {
 ============================================= */
 
 .sentiment-widget {
-  padding: 1. 5rem;
+  padding: 1.5rem;
   border-radius: 10px;
   background: var(--card-bg);
   border-left: 4px solid #2563eb;
@@ -1303,7 +1303,7 @@ body.dark-mode .theme-toggle:hover {
 }
 
 .sentiment-widget.very-bearish {
-  border-left-color:  #dc2626;
+  border-left-color:   #dc2626;
   background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, var(--card-bg) 100%);
 }
 
@@ -1319,8 +1319,8 @@ body.dark-mode .theme-toggle:hover {
 }
 
 .sentiment-label {
-  font-size: 1. 5rem;
-  font-weight:  700;
+  font-size: 1.5rem;
+  font-weight:   700;
   color: var(--text-primary);
   letter-spacing: 1px;
 }
@@ -1331,21 +1331,21 @@ body.dark-mode .theme-toggle:hover {
 
 .progress-bar {
   width: 100%;
-  height:   20px;
-  background:   var(--hover-bg);
+  height:    20px;
+  background:    var(--hover-bg);
   border-radius: 10px;
   overflow: hidden;
   margin-bottom: 0.5rem;
 }
 
 .progress-fill {
-  height:   100%;
+  height:    100%;
   transition: width 0.5s ease;
   border-radius: 10px;
 }
 
 .progress-fill.very-bullish {
-  background:   linear-gradient(90deg, #10b981 0%, #34d399 100%);
+  background:    linear-gradient(90deg, #10b981 0%, #34d399 100%);
 }
 
 .progress-fill.bullish {
@@ -1353,11 +1353,11 @@ body.dark-mode .theme-toggle:hover {
 }
 
 .progress-fill.neutral {
-  background: linear-gradient(90deg, #6b7280 0%, #9ca3af 100%);
+  background:  linear-gradient(90deg, #6b7280 0%, #9ca3af 100%);
 }
 
 .progress-fill.bearish {
-  background: linear-gradient(90deg, #ef4444 0%, #f87171 100%);
+  background:  linear-gradient(90deg, #ef4444 0%, #f87171 100%);
 }
 
 .progress-fill.very-bearish {
@@ -1375,7 +1375,7 @@ body.dark-mode .theme-toggle:hover {
   font-size: 1rem;
   color: var(--text-primary);
   margin-bottom: 1rem;
-  padding:  0.5rem;
+  padding:   0.5rem;
   background: var(--hover-bg);
   border-radius: 5px;
   text-align: center;
@@ -1466,7 +1466,7 @@ body.dark-mode .theme-toggle:hover {
 .chart-attribution {
   text-align: right;
   margin-top: 0.5rem;
-  padding:   0.5rem;
+  padding:    0.5rem;
   font-size: 0.85rem;
   color: var(--text-secondary);
   border-top: 1px solid var(--border-color);
@@ -1504,9 +1504,64 @@ body.dark-mode .chart-attribution {
 }
 
 /* Mobile */
-@media (max-width:   768px) {
+@media (max-width:    768px) {
   .chart-attribution {
     text-align: center;
     font-size: 0.8rem;
   }
 }
+
+/* =============================================
+   STOCK CARDS
+============================================= */
+
+.stock-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.stock-price-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.3rem;
+}
+
+.stock-price {
+  font-size:   1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+.stock-price-info .performance {
+  font-size: 0.95rem;
+  width: auto;
+}
+
+/* Mobile adjustments for stock cards */
+@media (max-width: 480px) {
+  .stock-card {
+    flex-direction:   column;
+    align-items:  flex-start;
+    gap: 0.5rem;
+  }
+
+  .stock-price-info {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .stock-price {
+    font-size:  0.9rem;
+  }
+
+  .stock-price-info.performance {
+    font-size:  0.9rem;
+  }
+}
+
