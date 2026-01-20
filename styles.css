@@ -1572,3 +1572,151 @@ body.dark-mode .chart-attribution {
 .performance-section.stock-section {
   margin-top: 2rem;
 }
+
+/* =============================================
+   SA MARKETS SECTION
+============================================= */
+
+.sa-markets-section {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.sa-markets-grid {
+  display:  grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.sa-market-card {
+  background: var(--hover-bg);
+  padding: 1.5rem;
+  border-radius: 10px;
+  border-left: 4px solid #007749; /* SA flag green */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sa-market-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.sa-card-title {
+  font-size:  1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sa-data-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sa-data-item {
+  display:  flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.sa-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.sa-value {
+  display: flex;
+  align-items: center;
+  gap:  0.5rem;
+}
+
+.sa-price {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.sa-change {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius:  4px;
+}
+
+.sa-change.positive {
+  color: #059669;
+  background: rgba(5, 150, 105, 0.1);
+}
+
+.sa-change.negative {
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.1);
+}
+
+/* Event Card */
+.sa-event-card {
+  border-left-color: #de3831; /* SA flag red */
+}
+
+.sa-event-name {
+  font-size: 0.95rem;
+  font-weight:  600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.sa-event-date {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.sa-event-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Footer */
+.sa-markets-footer {
+  text-align: center;
+  padding-top: 1rem;
+  border-top:  1px solid var(--border-color);
+}
+
+.sa-view-more {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.sa-view-more:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .sa-markets-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .sa-market-card {
+    padding: 1rem;
+  }
+
+  .sa-card-title {
+    font-size: 0.95rem;
+  }
+
+  .sa-data-item {
+    font-size: 0.85rem;
+  }
+}

@@ -216,3 +216,152 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     populateNewsList(news);
 });
+
+// =====================
+// FETCH SA MARKETS DATA
+// =====================
+async function fetchSAMarkets() {
+    try {
+        const resp = await fetch(`${API_BASE_URL}/sa-markets`);
+        if (!resp.ok) return null;
+        return await resp.json();
+    } catch (err) {
+        console.error("❌ SA Markets fetch error:", err);
+        return null;
+    }
+}
+
+// =====================
+// POPULATE SA INDICES
+// =====================
+function populateSAIndices(indices) {
+    const container = document.getElementById("sa-indices-list");
+    container.innerHTML = "";
+
+    indices.forEach(index => {
+        const div = document.createElement("div");
+        div.className = "sa-data-item";
+        
+        const trendClass = index.rawChange >= 0 ? "positive" : "negative";
+        
+        div.innerHTML = `
+            <span class="sa-label">${index.name}</span>
+            <span class="sa-value">
+                <span class="sa-price">${index.latest}</span>
+                <span class="sa-change ${trendClass}">${index.change}</span>
+            </span>
+        `;
+        
+        container.appendChild(div);
+    });
+}
+
+// =====================
+// POPULATE SA FOREX
+// =====================
+function populateSAForex(forex) {
+    const container = document.getElementById("sa-forex-list");
+    container.innerHTML = "";
+
+    forex.forEach(pair => {
+        const div = document.createElement("div");
+        div.className = "sa-data-item";
+        
+        const trendClass = pair.rawChange >= 0 ? "positive" :  "negative";
+        
+        div.innerHTML = `
+            <span class="sa-label">${pair.pair}</span>
+            <span class="sa-value">
+                <span class="sa-price">${pair.price. toFixed(2)}</span>
+                <span class="sa-change ${trendClass}">${pair.change}</span>
+            </span>
+        `;
+        
+        container.appendChild(div);
+    });
+}
+
+// =====================
+// POPULATE SA COMMODITIES
+// =====================
+function populateSACommodities(commodities) {
+    const container = document.getElementById("sa-commodities-list");
+    container.innerHTML = "";
+
+    commodities.forEach(commodity => {
+        const div = document.createElement("div");
+        div.className = "sa-data-item";
+        
+        const trendClass = commodity.rawChange >= 0 ? "positive" : "negative";
+        
+        div.innerHTML = `
+            <span class="sa-label">${commodity.name}</span>
+            <span class="sa-value">
+                <span class="sa-price">${commodity.priceZAR}</span>
+                <span class="sa-change ${trendClass}">${commodity.change}</span>
+            </span>
+        `;
+        
+        container.appendChild(div);
+    });
+}
+
+// =====================
+// POPULATE NEXT SARB EVENT
+// =====================
+function populateNextEvent(event) {
+    const container = document.getElementById("sa-next-event");
+    
+    if (event) {
+        container.innerHTML = `
+            <p class="sa-event-name">${event.name}</p>
+            <p class="sa-event-date">${event.date}</p>
+        `;
+    } else {
+        container.innerHTML = `<p class="sa-event-text">No upcoming events</p>`;
+    }
+}
+
+// =====================
+// LOAD SA MARKETS
+// =====================
+async function loadSAMarkets() {
+    const saData = await fetchSAMarkets();
+    
+    if (saData) {
+        populateSAIndices(saData.indices);
+        populateSAForex(saData.forex);
+        populateSACommodities(saData.commodities);
+        populateNextEvent(saData.nextEvent);
+    } else {
+        document.querySelector(".sa-markets-section").innerHTML = `
+            <h2 class="section-title">🇿🇦 South African Markets</h2>
+            <div style="text-align:center;color:#777;padding:2rem;">
+                ❌ Unable to load SA market data. Please try again later. 
+            </div>
+        `;
+    }
+}
+
+// =====================
+// UPDATE INITIAL LOAD
+// =====================
+document.addEventListener("DOMContentLoaded", async () => {
+    const movers = await fetchTopMovers();
+    const news = await fetchNews();
+
+    if (movers) {
+        populateMoverList(movers);
+    } else {
+        document.getElementById("movers-list").innerHTML = `
+            <div style="text-align:center;color:#777;padding:1rem;">
+                ❌ Unable to load global movers. Please try again later.  
+            </div>
+        `;
+    }
+
+    populateNewsList(news);
+    
+    // ✅ Load SA Markets
+    loadSAMarkets();
+});
