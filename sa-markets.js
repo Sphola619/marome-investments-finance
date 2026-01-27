@@ -375,3 +375,75 @@ document.addEventListener("DOMContentLoaded", () => {
     loadSARBEvent();
     loadSANews();
 });
+
+/* ===========================================================
+   RAND FOREX (ZAR PAIRS) - WITH CLICKABLE LINKS
+   =========================================================== */
+
+   async function loadRandForex() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/forex`);
+        const data = await response.json();
+
+        const container = document.getElementById("rand-forex-list");
+        container.innerHTML = "";
+
+        // Filter only ZAR pairs
+        const zarPairs = data.filter(fx => fx.pair.includes("ZAR"));
+
+        if (zarPairs.length === 0) {
+            container.innerHTML = `
+                <div class="market-item">
+                    <div class="market-info">
+                        <h3>⚠️ No Rand data available</h3>
+                        <p>Please check back later</p>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        zarPairs.forEach(pair => {
+            const pct = parseFloat(pair.change);
+            const trendClass = pct >= 0 ? "positive" : "negative";
+
+            // Generate detail page URL (e.g., "USD/ZAR" → "pair-usdzar.html")
+            const pairSlug = pair.pair.toLowerCase().replace('/', '');
+            const pairUrl = `pair-${pairSlug}.html`;
+
+            const div = document.createElement("div");
+            div.className = "market-item";
+            div.style.cursor = "pointer";
+
+            // Make entire card clickable
+            div.innerHTML = `
+                <a href="${pairUrl}" 
+                   style="text-decoration: none; color: inherit; display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                    <div class="market-info">
+                        <h3>${pair.pair}</h3>
+                        <p>${pair.price.toFixed(4)}</p>
+                    </div>
+                    <div class="performance ${trendClass}">
+                        ${pair.change}
+                    </div>
+                </a>
+            `;
+
+            container.appendChild(div);
+        });
+
+        console.log(`✅ Loaded ${zarPairs.length} ZAR pairs (clickable)`);
+
+    } catch (err) {
+        console.error("❌ Rand forex error:", err);
+        const container = document.getElementById("rand-forex-list");
+        container.innerHTML = `
+            <div class="market-item">
+                <div class="market-info">
+                    <h3>❌ Failed to load Rand rates</h3>
+                    <p>Please refresh the page</p>
+                </div>
+            </div>
+        `;
+    }
+};
