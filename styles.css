@@ -1720,3 +1720,70 @@ body.dark-mode .chart-attribution {
     font-size: 0.85rem;
   }
 }
+
+/* =============================================
+   SARB EVENT CARD
+============================================= */
+
+.sarb-event-container {
+  padding: 1rem 0;
+}
+
+.sarb-event-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: var(--hover-bg);
+  border-radius: 10px;
+  border-left: 4px solid #de3831; /* SA flag red */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sarb-event-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.sarb-event-icon {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.sarb-event-content {
+  flex: 1;
+}
+
+.sarb-event-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.sarb-event-date {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .sarb-event-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .sarb-event-icon {
+    font-size: 2.5rem;
+  }
+
+  .sarb-event-name {
+    font-size: 1.1rem;
+  }
+
+  .sarb-event-date {
+    font-size: 0.9rem;
+  }
+}
