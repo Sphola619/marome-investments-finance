@@ -65,15 +65,15 @@ const ASSET_CONFIG = {
 
     // Commodities
     "gold": { 
-        name: "Gold", 
-        description: "Gold Futures (XAU/USD)", 
-        tvSymbol: "OANDA:XAUUSD",
-        keywords: ["Gold", "XAU", "precious metals", "safe haven"],
-        type: "commodity"
+    name: "Gold", 
+    description: "Spot Gold (XAU/USD) - Price per Troy Ounce",  // ✅ Fixed
+    tvSymbol: "OANDA:XAUUSD",
+    keywords: ["Gold", "XAU", "precious metals", "safe haven"],
+    type: "commodity"
     },
     "silver": { 
         name: "Silver", 
-        description: "Silver Futures (XAG/USD)", 
+        description: "Spot Silver (XAG/USD) - Price per Troy Ounce",  // ✅ Fixed
         tvSymbol: "OANDA:XAGUSD",
         keywords: ["Silver", "XAG", "precious metals"],
         type: "commodity"
