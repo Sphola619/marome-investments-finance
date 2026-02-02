@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economic Calendar - Marome Investments</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/favicon.ico">
+
+    <script src="theme.js"></script> <!-- Theme toggle script -->
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="header">
+        <a href="index.html" class="logo">
+          Marome <br><span>Investments</span>
+        </a>
+  
+        <!-- Hamburger Button (mobile only) -->
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+  
+        <!-- Navigation with mobile-menu class -->
+        <nav class="nav-menu" id="navMenu">
+          <ul class="nav-links">
+            <li><a href="stocks.html">Stock Markets</a></li>
+            <li><a href="sa-markets.html">SA Markets</a></li>
+            <li><a href="forex.html">Forex & Commodities</a></li>
+            <li><a href="crypto.html">Cryptocurrency</a></li>
+            <li><a href="analysis.html">Market Analysis</a></li>
+            <li><a href="calendar.html" class="active">Economic Calendar</a></li>
+            
+            <!-- ✅ Theme Toggle as last nav item -->
+            <li class="theme-toggle-item">
+              <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <span class="theme-label" id="themeLabel">Dark Mode</span>
+                <span class="theme-icon" id="themeIcon">🌙</span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+    <div class="container animate delay-1">
+
+        <h1 class="page-title">📅 Economic Calendar</h1>
+
+        <p class="summary-text">
+            Track major economic events that impact global financial markets.   
+            This calendar shows upcoming data releases, central bank meetings, 
+            and other market-moving events across major economies.
+        </p>
+
+        <!-- Economic Calendar Widget -->
+        <div class="performance-section" style="margin-top:  2rem;">
+            <h2 class="section-title">📅 Upcoming Economic Events</h2>
+            
+            <p style="margin-bottom: 1rem; color: #666; font-size: 0.95rem;">
+                Live economic calendar with real-time updates on global market events.  
+                Click on any event for detailed information and historical data. 
+            </p>
+            
+            <!-- TradingView Economic Calendar Widget -->
+            <div class="tradingview-widget-container" style="background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); overflow: hidden;">
+              <div class="tradingview-widget-container__widget"></div>
+              <div class="tradingview-widget-copyright" style="padding: 10px; text-align: center; font-size: 13px; color: #888;">
+                <a href="https://www.tradingview.com/economic-calendar/" rel="noopener nofollow" target="_blank" style="color: #2563eb; text-decoration: none;">
+                  <span class="blue-text">Economic Calendar</span>
+                </a> powered by TradingView
+              </div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-economic-calendar.js" async>
+              {
+              "colorTheme": "light",
+              "isTransparent":  false,
+              "width": "100%",
+              "height":  "600",
+              "locale":  "en",
+              "importanceFilter": "-1,0,1",
+              "countryFilter":  "us,eu,gb,jp,za,au,ch,cn,ca"
+              }
+              </script>
+            </div>
+        </div>
+
+        <!-- How to Use the Calendar -->
+        <div class="performance-section" style="margin-top: 2rem;">
+            <h2 class="section-title">📊 How to Use the Calendar</h2>
+            
+            <div class="market-commentary">
+                <div class="commentary-line">
+                    <strong>🔍 Click Events:</strong> Click any event to see detailed historical data, charts, and analysis
+                </div>
+                <div class="commentary-line">
+                    <strong>🌍 Country Flags:</strong> Shows which country is releasing the economic data
+                </div>
+                <div class="commentary-line">
+                    <strong>📊 Actual vs Forecast:</strong> Compare actual results with market expectations - surprises cause volatility
+                </div>
+                <div class="commentary-line">
+                    <strong>⏰ Time Display:</strong> All times shown in your local timezone
+                </div>
+                <div class="commentary-line">
+                    <strong>💡 Impact Levels:</strong> Higher impact events (marked in the calendar) cause more market movement
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Events to Watch -->
+        <div class="performance-section" style="margin-top:  2rem;">
+            <h2 class="section-title">🎯 Key Events to Watch</h2>
+            
+            <div class="market-commentary">
+                <div class="commentary-line">
+                    <strong>US Non-Farm Payrolls (NFP):</strong> Monthly US jobs report released first Friday of each month - major USD mover
+                </div>
+                <div class="commentary-line">
+                    <strong>🏦 Central Bank Meetings:</strong> Fed (FOMC), ECB, BoE, BoJ, SARB policy decisions affect forex and stock markets
+                </div>
+                <div class="commentary-line">
+                    <strong>📈 CPI (Inflation Data):</strong> Consumer Price Index impacts interest rate expectations and currency strength
+                </div>
+                <div class="commentary-line">
+                    <strong>💼 GDP Reports:</strong> Quarterly economic growth data for major economies (US, EU, UK, China, Japan)
+                </div>
+                <div class="commentary-line">
+                    <strong>ZA SARB Decisions:</strong> South African Reserve Bank interest rate announcements affect ZAR pairs
+                </div>
+                <div class="commentary-line">
+                    <strong>📊 PMI Data: </strong> Manufacturing and Services PMI indicates economic health - above 50 = expansion
+                </div>
+            </div>
+        </div>
+
+        <!-- Trading Tips -->
+        <div class="performance-section" style="margin-top: 2rem;">
+            <h2 class="section-title">💡 Trading Around Economic Events</h2>
+            
+            <div class="market-commentary">
+                <div class="commentary-line">
+                    <strong>Before Event: </strong> Markets may consolidate or show reduced volume as traders await data
+                </div>
+                <div class="commentary-line">
+                    <strong>During Release:</strong> High volatility expected - spreads may widen, slippage can occur
+                </div>
+                <div class="commentary-line">
+                    <strong>After Event: </strong> Initial spike often followed by retracement as market digests the data
+                </div>
+                <div class="commentary-line">
+                    <strong>⚠️ Risk Management:</strong> Consider reducing position sizes or avoiding trades 15-30 minutes before major releases
+                </div>
+                <div class="commentary-line">
+                    <strong>📅 Plan Ahead:</strong> Check the calendar daily to know when high-impact events are scheduled
+                </div>
+            </div>
+        </div>
+
+        <!-- Market Impact Guide -->
+        <div class="performance-section" style="margin-top: 2rem;">
+            <h2 class="section-title">🌪️ What Causes Market Volatility? </h2>
+            
+            <div class="market-commentary">
+                <div class="commentary-line">
+                    <strong>Surprise Data:</strong> When actual results differ significantly from forecasts, markets react strongly
+                </div>
+                <div class="commentary-line">
+                    <strong>Interest Rate Changes:</strong> Central bank rate decisions directly impact currency values and stock markets
+                </div>
+                <div class="commentary-line">
+                    <strong>Employment Data:</strong> Strong job growth typically strengthens currency, weak data weakens it
+                </div>
+                <div class="commentary-line">
+                    <strong>Inflation Reports:</strong> Higher inflation may lead to rate hikes, affecting forex and bonds
+                </div>
+                <div class="commentary-line">
+                    <strong>GDP Growth:</strong> Positive GDP surprises boost equities and currency, negative surprises weaken them
+                </div>
+            </div>
+        </div>
+
+        <div class="disclaimer">
+            ⚠️ Disclaimer:  Economic data releases can cause significant market volatility. 
+            Marome Investments provides this calendar for informational purposes only.  
+            Always use proper risk management when trading around economic events.
+        </div>
+    </div>
+    
+    <script src="config.js"></script>
+    <script src="hamburger.js"></script>
+</body>
+</html>

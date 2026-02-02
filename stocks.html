@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Markets - Marome Investments</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/favicon.ico">
+
+    <script src="theme.js"></script>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="header">
+        <a href="index.html" class="logo">
+          Marome <br><span>Investments</span>
+        </a>
+  
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+  
+        <nav class="nav-menu" id="navMenu">
+          <ul class="nav-links">
+            <li><a href="stocks.html" class="active">Stock Markets</a></li>
+            <li><a href="sa-markets.html">SA Markets</a></li>
+            <li><a href="forex.html">Forex & Commodities</a></li>
+            <li><a href="crypto.html">Cryptocurrency</a></li>
+            <li><a href="analysis.html">Market Analysis</a></li>
+            <li><a href="calendar.html">Economic Calendar</a></li>
+            
+            <li class="theme-toggle-item">
+              <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <span class="theme-label" id="themeLabel">Dark Mode</span>
+                <span class="theme-icon" id="themeIcon">🌙</span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      <div class="container animate delay-1">
+        <h1>Stock Markets</h1>
+    
+        <!-- ✨ STOCK SENTIMENT WIDGET -->
+        <div class="performance-section sentiment-section animate delay-2">
+            <h2 class="section-title">📊 Stock Market Sentiment</h2>
+            <div id="stock-sentiment">
+                <p class="placeholder-text">Loading sentiment... </p>
+            </div>
+        </div>
+    
+        <!-- 🇿🇦 JSE STOCKS (South Africa) -->
+        <div class="performance-section stock-section animate delay-3">
+            <h2 class="section-title">🇿🇦 JSE Top Stocks (South Africa)</h2>
+            <div id="jse-stocks-list" class="market-list">
+                <div class="market-item">
+                    <div class="market-info">
+                        <h3>Loading JSE stocks...</h3>
+                        <p>Please wait</p>
+                    </div>
+                    <div class="performance">--%</div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- 🇺🇸 US STOCKS -->
+        <div class="performance-section stock-section animate delay-4">
+            <h2 class="section-title">🇺🇸 US Top Stocks</h2>
+            <div id="us-stocks-list" class="market-list">
+                <div class="market-item">
+                    <div class="market-info">
+                        <h3>Loading US stocks...</h3>
+                        <p>Please wait</p>
+                    </div>
+                    <div class="performance">--%</div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="dashboard-grid">
+    
+            <!-- Major Indices Section (Reference) -->
+            <div class="performance-section">
+                <h2 class="section-title">📊 Major Indices (Reference)</h2>
+                <div id="indices-list" class="market-list">
+                    <div class="market-item">
+                        <div class="market-info">
+                            <h3>Loading Indices...</h3>
+                            <p>Please wait</p>
+                        </div>
+                        <div class="performance">--%</div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Market News -->
+            <div class="news-section">
+                <h2 class="section-title">Global Market Summary</h2>
+                <div id="news-list"></div>
+            </div>
+    
+        </div>
+    
+        <div class="disclaimer">
+            ⚠️ Disclaimer:  Marome Investments provides analytical data for informational purposes only. 
+        </div>
+    </div>
+    
+    <script src="config.js"></script>
+    <script src="sentiment-widget.js"></script>
+    <script src="stocks.js"></script>
+    <script src="hamburger.js"></script>
+</body>
+</html>

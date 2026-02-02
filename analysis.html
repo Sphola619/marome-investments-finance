@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Analysis - Marome Investments</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/favicon.ico">
+
+    <script src="theme.js"></script> <!-- Theme toggle script -->
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="header">
+        <a href="index.html" class="logo">
+          Marome <br><span>Investments</span>
+        </a>
+  
+        <!-- Hamburger Button (mobile only) -->
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+  
+        <!-- Navigation with mobile-menu class -->
+        <nav class="nav-menu" id="navMenu">
+          <ul class="nav-links">
+            <li><a href="stocks.html">Stock Markets</a></li>
+            <li><a href="sa-markets.html">SA Markets</a></li>
+            <li><a href="forex.html">Forex & Commodities</a></li>
+            <li><a href="crypto.html">Cryptocurrency</a></li>
+            <li><a href="analysis.html" class="active">Market Analysis</a></li>
+            <li><a href="calendar.html">Economic Calendar</a></li>
+            
+            <!-- ✅ Theme Toggle as last nav item -->
+            <li class="theme-toggle-item">
+              <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <span class="theme-label" id="themeLabel">Dark Mode</span>
+                <span class="theme-icon" id="themeIcon">🌙</span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+<div class="container animate delay-1">
+    <h1 class="page-title">Market Analysis</h1>
+
+    <!-- AUTO-GENERATED MARKET SUMMARY -->
+    <div class="performance-section">
+        <h2 class="section-title">📊 Market Summary</h2>
+        <div id="market-summary" class="market-commentary">
+            <p class="placeholder-text">Loading comprehensive market analysis...</p>
+        </div>
+    </div>
+
+    <!-- ✅ NEW: CORRELATION MATRIX SECTION -->
+    <div class="performance-section">
+        <h2 class="section-title">🔗 Multi-Asset Correlation Matrix</h2>
+        <p class="section-subtitle">Understand how different assets move together over time</p>
+        
+        <!-- Time Period Selector -->
+        <div class="correlation-controls">
+            <button class="period-btn active" data-period="7">7 Days</button>
+            <button class="period-btn" data-period="30">30 Days</button>
+            <button class="period-btn" data-period="90">90 Days</button>
+            <button class="period-btn" data-period="365">1 Year</button>
+        </div>
+
+        <!-- Correlation Heatmap -->
+        <div id="correlation-matrix" class="correlation-container">
+            <p class="placeholder-text">Loading correlation data...</p>
+        </div>
+
+        <!-- Legend -->
+        <div class="correlation-legend">
+            <div class="legend-item">
+                <span class="legend-color strong-positive"></span>
+                <span>Strong Positive (0.7 to 1.0)</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color moderate-positive"></span>
+                <span>Moderate Positive (0.3 to 0.7)</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color neutral"></span>
+                <span>Weak/None (-0.3 to 0.3)</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color moderate-negative"></span>
+                <span>Moderate Negative (-0.7 to -0.3)</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color strong-negative"></span>
+                <span>Strong Negative (-1.0 to -0.7)</span>
+            </div>
+        </div>
+
+        <!-- Interpretation Guide -->
+        <div class="correlation-guide">
+            <h3>💡 How to Read the Matrix:</h3>
+            <ul>
+                <li><strong>Positive Correlation:</strong> Assets move in the same direction (e.g., Gold ↑ → Silver ↑)</li>
+                <li><strong>Negative Correlation:</strong> Assets move in opposite directions (e.g., USD ↑ → Gold ↓)</li>
+                <li><strong>Use for Diversification:</strong> Mix negatively correlated assets to reduce portfolio risk</li>
+                <li><strong>Use for Hedging:</strong> Pair negatively correlated assets to protect against losses</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="analysis-grid">
+
+        <!-- TOP MOVERS ACROSS ALL MARKETS -->
+        <div class="performance-section">
+            <h2 class="section-title">🔥 Top Movers (All Markets)</h2>
+            <div id="top-movers-list" class="market-list">
+                <p class="placeholder-text">Loading top performers...</p>
+            </div>
+        </div>
+
+        <!-- MULTI-MARKET PERFORMANCE COMPARISON -->
+        <div class="performance-section">
+            <h2 class="section-title">📈 Market Performance (24H)</h2>
+            <div id="market-comparison" class="market-list">
+                <p class="placeholder-text">Loading market comparison...</p>
+            </div>
+        </div>
+
+        <!-- TREND ANALYSIS -->
+        <div class="performance-section">
+            <h2 class="section-title">Trend Analysis</h2>
+            <div id="trend-analysis" class="market-list">
+                <p class="placeholder-text">Analyzing market trends...</p>
+            </div>
+        </div>
+
+        <!-- VOLATILITY INSIGHTS -->
+        <div class="performance-section">
+            <h2 class="section-title">Volatility Insights</h2>
+            <div id="volatility-insights" class="market-list">
+                <p class="placeholder-text">Calculating volatility metrics...</p>
+            </div>
+        </div>
+
+        <!-- EDUCATIONAL INSIGHTS -->
+        <div class="performance-section">
+            <h2 class="section-title">💡 Educational Insights</h2>
+            <p class="placeholder-text">
+                <strong>Understanding Market Correlations:</strong> When the USD strengthens, 
+                gold typically weakens. Similarly, risk-on sentiment often sees crypto and stocks rise together.
+                <br><br>
+                <strong>Reading Heatmaps:</strong> Green indicates upward price movement, red shows declines.  
+                Multi-timeframe analysis helps identify short-term vs long-term trends.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="disclaimer">
+        ⚠️ Analysis provided for informational purposes only. Not financial advice. 
+    </div>
+
+</div>
+
+<script src="config.js"></script>
+<script src="analysis.js"></script>
+<script src="hamburger.js"></script>
+</body>
+</html>

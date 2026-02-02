@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Loading...  - Marome Investments</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/favicon.ico">
+
+    <script src="theme.js"></script> <!-- Theme toggle script -->
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="header">
+        <a href="index.html" class="logo">
+          Marome <br><span>Investments</span>
+        </a>
+  
+        <!-- Hamburger Button (mobile only) -->
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+  
+        <!-- Navigation with mobile-menu class -->
+        <nav class="nav-menu" id="navMenu">
+          <ul class="nav-links">
+            <li><a href="stocks.html">Stock Markets</a></li>
+            <li><a href="sa-markets.html">SA Markets</a></li>
+            <li><a href="forex.html" class="active">Forex & Commodities</a></li>
+            <li><a href="crypto.html">Cryptocurrency</a></li>
+            <li><a href="analysis.html">Market Analysis</a></li>
+            <li><a href="calendar.html">Economic Calendar</a></li>
+            
+            <!-- ✅ Theme Toggle as last nav item -->
+            <li class="theme-toggle-item">
+              <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <span class="theme-label" id="themeLabel">Dark Mode</span>
+                <span class="theme-icon" id="themeIcon">🌙</span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+<div class="container animate delay-1">
+    
+    <!-- Back Button -->
+    <button onclick="window.history.back()" class="back-button">← Back</button>
+
+    <!-- Asset Header -->
+    <div class="asset-header">
+        <h1 id="asset-title">💱 Loading...</h1>
+        <p id="asset-description" class="subtitle">Loading commodity information...</p>
+        <div id="current-price" class="current-price-box">
+            <span class="label">Current Price: </span>
+            <span id="price-value" class="price-value">--</span>
+            <span id="price-change" class="price-change">--</span>
+        </div>
+    </div>
+
+    <!-- TradingView Chart -->
+    <div class="performance-section">
+        <h2 class="section-title">📈 Live Chart</h2>
+        <div class="chart-wrapper">
+            <iframe 
+                id="tradingview-chart"
+                src=""
+                width="100%" 
+                height="500"
+                frameborder="0"
+                allowtransparency="true"
+                scrolling="no">
+            </iframe>
+        </div>
+        
+        <!-- ✅ NEW: TradingView Attribution -->
+        <div class="chart-attribution">
+            Powered by <a href="https://www.tradingview.com/" target="_blank" rel="noopener">TradingView</a>
+        </div>
+    </div>
+
+    <!-- Related News -->
+    <div class="performance-section">
+        <h2 class="section-title">📰 Related News</h2>
+        <div id="asset-news" class="news-section">
+            <p class="placeholder-text">Loading news...</p>
+        </div>
+    </div>
+
+    <div class="disclaimer">
+        ⚠️ Prices are indicative and may be delayed. Not financial advice. 
+    </div>
+
+</div>
+
+<script src="config.js"></script>
+<script src="asset-details.js"></script>
+<script src="hamburger.js"></script>
+</body>
+</html>

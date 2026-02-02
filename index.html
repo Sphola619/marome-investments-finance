@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Marome Investments - Financial Advisory</title>
+    <link rel="stylesheet" href="styles.css"/>
+    <link rel="icon" href="images/favicon.ico">
+    
+    <script src="theme.js"></script>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="header">
+      <a href="index.html" class="logo">
+        Marome <br><span>Investments</span>
+      </a>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="nav-menu" id="navMenu">
+        <ul class="nav-links">
+          <li><a href="stocks.html">Stock Markets</a></li>
+          <li><a href="sa-markets.html">SA Markets</a></li>
+          <li><a href="forex.html">Forex & Commodities</a></li>
+          <li><a href="crypto.html">Cryptocurrency</a></li>
+          <li><a href="analysis.html">Market Analysis</a></li>
+          <li><a href="calendar.html">Economic Calendar</a></li>
+          
+          <li class="theme-toggle-item">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+              <span class="theme-label" id="themeLabel">Dark Mode</span>
+              <span class="theme-icon" id="themeIcon">🌙</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container animate delay-1">
+        
+      <div class="dashboard-grid">
+
+        <!-- Global Top Movers Section -->
+        <div class="performance-section animate delay-2">
+          <h2 class="section-title">Top Movers (Global Markets)</h2>
+          <div class="market-list" id="movers-list">
+            <div class="market-item">
+              <div class="market-info">
+                  <h3>Loading global movers...</h3>
+                  <p>Fetching real-time movement across all markets</p>
+              </div>
+              <div class="performance">--%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- News Section -->
+        <div class="news-section animate delay-3">
+            <h2 class="section-title">Market News</h2>
+            <div id="news-list">
+                <div class="news-item">
+                    <h4>Loading financial news...</h4>
+                    <p>Fetching latest market updates</p>
+                    <div class="news-meta">Just now</div>
+                </div>
+            </div>
+        </div>
+
+      </div>
+
+      <!-- ✨ NEW:  SOUTH AFRICAN MARKETS SECTION -->
+      <div class="performance-section sa-markets-section animate delay-4">
+        <h2 class="section-title">🇿🇦 South African Markets</h2>
+        
+        <div class="sa-markets-grid">
+          
+          <!-- JSE Indices -->
+          <div class="sa-market-card">
+            <h3 class="sa-card-title">📊 JSE Indices</h3>
+            <div id="sa-indices-list" class="sa-data-list">
+              <div class="sa-data-item">
+                <span class="sa-label">Loading...</span>
+                <span class="sa-value">--</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rand Exchange Rates -->
+          <div class="sa-market-card">
+            <h3 class="sa-card-title">💱 South African Rand</h3>
+            <div id="sa-forex-list" class="sa-data-list">
+              <div class="sa-data-item">
+                <span class="sa-label">Loading...</span>
+                <span class="sa-value">--</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- SA Commodities -->
+          <div class="sa-market-card">
+            <h3 class="sa-card-title">🪙 Commodities (ZAR)</h3>
+            <div id="sa-commodities-list" class="sa-data-list">
+              <div class="sa-data-item">
+                <span class="sa-label">Loading...</span>
+                <span class="sa-value">--</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Next SARB Event -->
+          <div class="sa-market-card sa-event-card">
+            <h3 class="sa-card-title">📅 Upcoming Event</h3>
+            <div id="sa-next-event">
+              <p class="sa-event-text">Loading...</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="sa-markets-footer">
+          <a href="sa-markets.html" class="sa-view-more">View Full SA Markets →</a>
+        </div>
+      </div>
+
+      <!-- Disclaimer -->
+      <div class="disclaimer animate delay-5">
+          ⚠️ Disclaimer: Marome Investments provides analytical data for informational purposes only. 
+          This is not financial advice.  Past performance is not indicative of future results. 
+          Always consult with a qualified financial advisor before making investment decisions.
+      </div>
+
+    </div>
+    
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+    <script src="hamburger.js"></script>
+    
+</body>
+</html>
