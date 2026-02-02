@@ -207,6 +207,10 @@ class MaromeChat {
             this.conversationHistory = this.conversationHistory.slice(-8);
         }
 
+        // Get current page info
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        const pageTitle = document.title || 'Marome Investments';
+
         const response = await fetch(`${this.backendUrl}/api/chat`, {
             method: 'POST',
             headers: {
@@ -214,7 +218,11 @@ class MaromeChat {
             },
             body: JSON.stringify({
                 message: userMessage,
-                history: this.conversationHistory
+                history: this.conversationHistory,
+                context: {
+                    currentPage: currentPage,
+                    pageTitle: pageTitle
+                }
             })
         });
 
