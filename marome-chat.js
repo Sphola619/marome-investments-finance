@@ -7,6 +7,9 @@ class MaromeChat {
             ? 'http://localhost:5000'
             : 'https://finance-backend-5xk5.onrender.com';
         this.conversationHistory = [];
+        console.log('🤖 Marome Chat initialized');
+        console.log('🌐 Backend URL:', this.backendUrl);
+        console.log('📍 Current hostname:', window.location.hostname);
         this.init();
     }
 
@@ -140,11 +143,11 @@ class MaromeChat {
         } catch (error) {
             this.removeTypingIndicator();
             console.error('Marome Chat Error Details:', error);
-            this.addMessage(
-                "I'm sorry, I encountered an error. Please make sure the backend server is running on port 5000.",
-                'bot',
-                true
-            );
+            const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+            const errorMsg = isProduction 
+                ? `I'm sorry, I encountered an error connecting to the backend. The server might be starting up (Render can take ~30 seconds on first request).`
+                : `I'm sorry, I encountered an error. Please make sure the backend server is running on port 5000.`;
+            this.addMessage(errorMsg, 'bot', true);
         }
     }
 
@@ -228,6 +231,8 @@ class MaromeChat {
                 }
             })
         });
+
+        console.log('📡 Chat API Response Status:', response.status);
 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
