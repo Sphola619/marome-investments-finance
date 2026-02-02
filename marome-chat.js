@@ -2,7 +2,10 @@
 class MaromeChat {
     constructor() {
         this.isOpen = false;
-        this.backendUrl = 'http://localhost:5000'; // Your backend URL
+        // Use production backend if deployed, otherwise localhost
+        this.backendUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:5000'
+            : 'https://finance-backend-5xk5.onrender.com';
         this.conversationHistory = [];
         this.init();
     }
