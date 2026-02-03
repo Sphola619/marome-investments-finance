@@ -56,19 +56,30 @@
     
         <!-- 🇿🇦 JSE STOCKS (South Africa) -->
         <div class="performance-section stock-section animate delay-3">
-            <h2 class="section-title">🇿🇦 JSE Top Stocks (South Africa)</h2>
-            <div id="jse-stocks-list" class="market-list">
-                <div class="market-item">
-                    <div class="market-info">
-                        <h3>Loading JSE stocks...</h3>
-                        <p>Please wait</p>
-                    </div>
-                    <div class="performance">--%</div>
+        <h2 class="section-title">🇿🇦 JSE Stocks by Sector (South Africa)</h2>
+        
+        <!-- Search Bar -->
+        <div style="margin-bottom: 1rem;">
+            <input 
+                type="text" 
+                id="jse-search-stocks" 
+                placeholder="🔍 Search JSE stocks by name or ticker..."
+                style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color); font-size: 1rem;"
+            />
+        </div>
+        
+        <!-- Sector Accordion -->
+        <div id="jse-stocks-accordion">
+            <div class="market-item">
+                <div class="market-info">
+                    <h3>Loading JSE stocks...</h3>
+                    <p>Please wait</p>
                 </div>
             </div>
         </div>
-    
-        <!-- 🇺🇸 US STOCKS -->
+    </div>
+
+    <!-- 🇺🇸 US STOCKS -->
         <div class="performance-section stock-section animate delay-4">
             <h2 class="section-title">🇺🇸 US Top Stocks</h2>
             <div id="us-stocks-list" class="market-list">

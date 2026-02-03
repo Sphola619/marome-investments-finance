@@ -60,16 +60,27 @@
             </div>
         </div>
 
-        <!-- JSE Top Stocks Section -->
+        <!-- JSE All Stocks Section -->
         <div class="performance-section animate delay-3" style="margin-top: 2rem;">
-            <h2 class="section-title">📈 Top JSE Stocks</h2>
-            <div id="jse-stocks-list" class="market-list">
+            <h2 class="section-title">📈 JSE Stocks by Sector</h2>
+            
+            <!-- Search Bar -->
+            <div style="margin-bottom: 1rem;">
+                <input 
+                    type="text" 
+                    id="jse-search" 
+                    placeholder="🔍 Search by company name or ticker..."
+                    style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color); font-size: 1rem;"
+                />
+            </div>
+            
+            <!-- Sector Accordion -->
+            <div id="jse-stocks-accordion">
                 <div class="market-item">
                     <div class="market-info">
                         <h3>Loading JSE stocks...</h3>
                         <p>Please wait</p>
                     </div>
-                    <div class="performance">--%</div>
                 </div>
             </div>
         </div>
