@@ -4,6 +4,39 @@
 const API_BASE_URL = CONFIG.API_BASE_URL;
 
 // =====================
+// CENTRAL BANK RATES (HARDCODED)
+// =====================
+const CENTRAL_BANK_RATES = [
+    { currency: 'USD', country: 'United States', bank: 'Federal Reserve', rate: 3.75, flag: '🇺🇸' },
+    { currency: 'EUR', country: 'Eurozone', bank: 'ECB', rate: 2.15, flag: '🇪🇺' },
+    { currency: 'GBP', country: 'United Kingdom', bank: 'Bank of England', rate: 3.75, flag: '🇬🇧' },
+    { currency: 'JPY', country: 'Japan', bank: 'Bank of Japan', rate: 0.75, flag: '🇯🇵' },
+    { currency: 'AUD', country: 'Australia', bank: 'RBA', rate: 3.85, flag: '🇦🇺' },
+    { currency: 'CAD', country: 'Canada', bank: 'Bank of Canada', rate: 2.25, flag: '🇨🇦' },
+    { currency: 'CHF', country: 'Switzerland', bank: 'SNB', rate: 0.00, flag: '🇨🇭' },
+    { currency: 'NZD', country: 'New Zealand', bank: 'RBNZ', rate: 2.25, flag: '🇳🇿' },
+    { currency: 'ZAR', country: 'South Africa', bank: 'SARB', rate: 6.75, flag: '🇿🇦' }
+];
+
+function displayCentralBankRates() {
+    const container = document.getElementById('central-bank-rates');
+    if (!container) return;
+
+    container.innerHTML = CENTRAL_BANK_RATES.map(bank => `
+        <div class="bank-rate-card">
+            <div class="bank-info">
+                <span class="bank-flag">${bank.flag}</span>
+                <div class="bank-details">
+                    <span class="bank-currency">${bank.currency}</span>
+                    <span class="bank-name">${bank.bank}</span>
+                </div>
+            </div>
+            <div class="rate-value">${bank.rate.toFixed(2)}%</div>
+        </div>
+    `).join('');
+}
+
+// =====================
 // ICON HELPER
 // =====================
 function getTypeIcon(type) {
@@ -361,6 +394,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     populateNewsList(news);
+    
+    // ✅ Load Central Bank Rates
+    displayCentralBankRates();
     
     // ✅ Load SA Markets
     loadSAMarkets();

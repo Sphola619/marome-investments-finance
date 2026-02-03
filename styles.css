@@ -1574,6 +1574,72 @@ body.dark-mode .chart-attribution {
 }
 
 /* =============================================
+   CENTRAL BANK RATES SECTION
+============================================= */
+
+.central-bank-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.bank-rate-card {
+  background: var(--hover-bg);
+  padding: 1.25rem;
+  border-radius: 8px;
+  border-left: 4px solid #2563eb;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.bank-rate-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.bank-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.bank-flag {
+  font-size: 2rem;
+}
+
+.bank-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.bank-currency {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.bank-name {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.rate-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #2563eb;
+  text-align: center;
+  padding: 0.5rem;
+  background: var(--bg-secondary);
+  border-radius: 6px;
+}
+
+/* =============================================
    SA MARKETS SECTION
 ============================================= */
 
