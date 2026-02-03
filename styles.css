@@ -2142,6 +2142,235 @@ body.dark-mode .chart-attribution {
   }
 }
 
+/* =============================================
+   CENTRAL BANK MODAL
+============================================= */
+
+.bank-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.7);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.bank-modal-content {
+  background-color: var(--card-bg);
+  margin: 3% auto;
+  padding: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  width: 90%;
+  max-width: 800px;
+  box-shadow: 0 8px 32px var(--shadow);
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.bank-modal-close {
+  color: var(--text-secondary);
+  float: right;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.bank-modal-close:hover,
+.bank-modal-close:focus {
+  color: var(--text-primary);
+}
+
+#bank-modal-body {
+  padding: 2rem;
+}
+
+.bank-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.bank-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.bank-modal-flag {
+  font-size: 3rem;
+}
+
+.bank-modal-title h2 {
+  font-size: 1.75rem;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.bank-modal-country {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin: 0.25rem 0 0 0;
+}
+
+.bank-modal-rate {
+  text-align: right;
+}
+
+.modal-rate-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2563eb;
+  line-height: 1;
+}
+
+.modal-rate-trend {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+.modal-rate-trend.hiking {
+  color: #ef4444;
+}
+
+.modal-rate-trend.cutting {
+  color: #10b981;
+}
+
+.modal-rate-trend.neutral {
+  color: var(--text-secondary);
+}
+
+.bank-modal-section {
+  margin-bottom: 2rem;
+}
+
+.bank-modal-section h3 {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.bank-modal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.bank-modal-item {
+  background: var(--hover-bg);
+  padding: 1rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.item-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.item-value {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.item-sublabel {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.bank-modal-comment {
+  background: var(--hover-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid #2563eb;
+}
+
+.bank-modal-comment p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin: 0 0 1rem 0;
+  font-style: italic;
+}
+
+.comment-author {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+/* Responsive modal */
+@media (max-width: 768px) {
+  .bank-modal-content {
+    width: 95%;
+    margin: 5% auto;
+  }
+
+  #bank-modal-body {
+    padding: 1.5rem;
+  }
+
+  .bank-modal-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bank-modal-rate {
+    text-align: left;
+  }
+
+  .modal-rate-value {
+    font-size: 2rem;
+  }
+
+  .bank-modal-flag {
+    font-size: 2.5rem;
+  }
+
+  .bank-modal-title h2 {
+    font-size: 1.5rem;
+  }
+
+  .bank-modal-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 480px) {
   .correlation-controls {
     gap: 0.5rem;

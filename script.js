@@ -7,23 +7,174 @@ const API_BASE_URL = CONFIG.API_BASE_URL;
 // CENTRAL BANK RATES (HARDCODED)
 // =====================
 const CENTRAL_BANK_RATES = [
-    { currency: 'USD', country: 'United States', bank: 'Federal Reserve', rate: 3.75, flag: '🇺🇸' },
-    { currency: 'EUR', country: 'Eurozone', bank: 'ECB', rate: 2.15, flag: '🇪🇺' },
-    { currency: 'GBP', country: 'United Kingdom', bank: 'Bank of England', rate: 3.75, flag: '🇬🇧' },
-    { currency: 'JPY', country: 'Japan', bank: 'Bank of Japan', rate: 0.75, flag: '🇯🇵' },
-    { currency: 'AUD', country: 'Australia', bank: 'RBA', rate: 3.85, flag: '🇦🇺' },
-    { currency: 'CAD', country: 'Canada', bank: 'Bank of Canada', rate: 2.25, flag: '🇨🇦' },
-    { currency: 'CHF', country: 'Switzerland', bank: 'SNB', rate: 0.00, flag: '🇨🇭' },
-    { currency: 'NZD', country: 'New Zealand', bank: 'RBNZ', rate: 2.25, flag: '🇳🇿' },
-    { currency: 'ZAR', country: 'South Africa', bank: 'SARB', rate: 6.75, flag: '🇿🇦' }
+    { 
+        currency: 'USD', 
+        country: 'United States', 
+        bank: 'Federal Reserve', 
+        rate: 3.75, 
+        previousRate: 4.00,
+        flag: '🇺🇸',
+        nextMeeting: '2026-03-19',
+        lastMeeting: '2026-01-29',
+        stance: 'Neutral',
+        inflation: { current: 2.4, target: 2.0 },
+        unemployment: 4.1,
+        gdp: 2.8,
+        recentComment: 'The Federal Reserve is monitoring inflation trends closely while maintaining flexibility in policy decisions.',
+        governor: 'Jerome Powell'
+    },
+    { 
+        currency: 'EUR', 
+        country: 'Eurozone', 
+        bank: 'ECB', 
+        rate: 2.15, 
+        previousRate: 2.50,
+        flag: '🇪🇺',
+        nextMeeting: '2026-03-06',
+        lastMeeting: '2026-01-30',
+        stance: 'Dovish',
+        inflation: { current: 2.2, target: 2.0 },
+        unemployment: 6.4,
+        gdp: 0.9,
+        recentComment: 'Inflation is moving toward our target, allowing for gradual policy normalization.',
+        governor: 'Christine Lagarde'
+    },
+    { 
+        currency: 'GBP', 
+        country: 'United Kingdom', 
+        bank: 'Bank of England', 
+        rate: 3.75, 
+        previousRate: 4.00,
+        flag: '🇬🇧',
+        nextMeeting: '2026-03-20',
+        lastMeeting: '2026-02-06',
+        stance: 'Neutral',
+        inflation: { current: 2.5, target: 2.0 },
+        unemployment: 4.2,
+        gdp: 1.1,
+        recentComment: 'We remain committed to returning inflation sustainably to the 2% target.',
+        governor: 'Andrew Bailey'
+    },
+    { 
+        currency: 'JPY', 
+        country: 'Japan', 
+        bank: 'Bank of Japan', 
+        rate: 0.75, 
+        previousRate: 0.50,
+        flag: '🇯🇵',
+        nextMeeting: '2026-03-18',
+        lastMeeting: '2026-01-23',
+        stance: 'Hawkish',
+        inflation: { current: 2.6, target: 2.0 },
+        unemployment: 2.4,
+        gdp: 1.2,
+        recentComment: 'We will continue to adjust the degree of monetary accommodation as economic conditions evolve.',
+        governor: 'Kazuo Ueda'
+    },
+    { 
+        currency: 'AUD', 
+        country: 'Australia', 
+        bank: 'RBA', 
+        rate: 3.85, 
+        previousRate: 4.10,
+        flag: '🇦🇺',
+        nextMeeting: '2026-03-04',
+        lastMeeting: '2026-02-18',
+        stance: 'Neutral',
+        inflation: { current: 3.4, target: 2.5 },
+        unemployment: 4.0,
+        gdp: 1.8,
+        recentComment: 'The Board remains resolute in its determination to return inflation to target.',
+        governor: 'Michele Bullock'
+    },
+    { 
+        currency: 'CAD', 
+        country: 'Canada', 
+        bank: 'Bank of Canada', 
+        rate: 2.25, 
+        previousRate: 2.75,
+        flag: '🇨🇦',
+        nextMeeting: '2026-03-12',
+        lastMeeting: '2026-01-29',
+        stance: 'Dovish',
+        inflation: { current: 1.8, target: 2.0 },
+        unemployment: 6.7,
+        gdp: 1.3,
+        recentComment: 'With inflation easing, we have room to support economic growth.',
+        governor: 'Tiff Macklem'
+    },
+    { 
+        currency: 'CHF', 
+        country: 'Switzerland', 
+        bank: 'SNB', 
+        rate: 0.00, 
+        previousRate: 0.25,
+        flag: '🇨🇭',
+        nextMeeting: '2026-03-26',
+        lastMeeting: '2025-12-12',
+        stance: 'Dovish',
+        inflation: { current: 0.7, target: 2.0 },
+        unemployment: 2.3,
+        gdp: 1.4,
+        recentComment: 'The SNB is willing to intervene in the foreign exchange market to counter upward pressure on the franc.',
+        governor: 'Thomas Jordan'
+    },
+    { 
+        currency: 'NZD', 
+        country: 'New Zealand', 
+        bank: 'RBNZ', 
+        rate: 2.25, 
+        previousRate: 2.75,
+        flag: '🇳🇿',
+        nextMeeting: '2026-04-09',
+        lastMeeting: '2026-02-19',
+        stance: 'Dovish',
+        inflation: { current: 2.2, target: 2.0 },
+        unemployment: 4.8,
+        gdp: 0.5,
+        recentComment: 'Inflation is within our target range, allowing for policy easing to support growth.',
+        governor: 'Adrian Orr'
+    },
+    { 
+        currency: 'ZAR', 
+        country: 'South Africa', 
+        bank: 'SARB', 
+        rate: 6.75, 
+        previousRate: 7.00,
+        flag: '🇿🇦',
+        nextMeeting: '2026-03-27',
+        lastMeeting: '2026-01-30',
+        stance: 'Neutral',
+        inflation: { current: 3.8, target: 4.5 },
+        unemployment: 32.1,
+        gdp: 1.2,
+        recentComment: 'The MPC will continue to monitor risks to the inflation outlook and act appropriately.',
+        governor: 'Lesetja Kganyago'
+    }
 ];
+
+// Store live economic indicators
+let liveEconomicIndicators = null;
+
+// Fetch live economic indicators from backend
+async function fetchEconomicIndicators() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/economic-indicators`);
+        if (!response.ok) throw new Error('Failed to fetch economic indicators');
+        const data = await response.json();
+        liveEconomicIndicators = data.indicators;
+        console.log('✅ Live economic indicators loaded');
+    } catch (error) {
+        console.error('❌ Error fetching economic indicators:', error);
+    }
+}
 
 function displayCentralBankRates() {
     const container = document.getElementById('central-bank-rates');
     if (!container) return;
 
-    container.innerHTML = CENTRAL_BANK_RATES.map(bank => `
-        <div class="bank-rate-card">
+    container.innerHTML = CENTRAL_BANK_RATES.map((bank, index) => `
+        <div class="bank-rate-card" onclick="openBankModal(${index})">
             <div class="bank-info">
                 <span class="bank-flag">${bank.flag}</span>
                 <div class="bank-details">
@@ -35,6 +186,149 @@ function displayCentralBankRates() {
         </div>
     `).join('');
 }
+
+// =====================
+// CENTRAL BANK MODAL
+// =====================
+function openBankModal(index) {
+    const bank = CENTRAL_BANK_RATES[index];
+    const modal = document.getElementById('bank-modal');
+    const modalBody = document.getElementById('bank-modal-body');
+    
+    // Calculate days until next meeting
+    const today = new Date();
+    const nextMeetingDate = new Date(bank.nextMeeting);
+    const daysUntil = Math.ceil((nextMeetingDate - today) / (1000 * 60 * 60 * 24));
+    
+    // Determine trend
+    const rateChange = bank.rate - bank.previousRate;
+    let trend = '→';
+    let trendClass = 'neutral';
+    let trendText = 'Unchanged';
+    
+    if (rateChange > 0) {
+        trend = '↑';
+        trendClass = 'hiking';
+        trendText = `+${rateChange.toFixed(2)}% increase`;
+    } else if (rateChange < 0) {
+        trend = '↓';
+        trendClass = 'cutting';
+        trendText = `${rateChange.toFixed(2)}% decrease`;
+    }
+    
+    // Stance emoji
+    const stanceEmoji = bank.stance === 'Hawkish' ? '🦅' : bank.stance === 'Dovish' ? '🕊️' : '⚖️';
+    
+    // Get live economic data if available
+    const liveData = liveEconomicIndicators ? liveEconomicIndicators[bank.currency] : null;
+    
+    // Use live data if available, otherwise fallback to hardcoded
+    const inflationValue = liveData?.inflation?.value !== null && liveData?.inflation?.value !== undefined
+        ? liveData.inflation.value.toFixed(2) 
+        : bank.inflation.current.toFixed(2);
+    const inflationDate = liveData?.inflation?.date || null;
+    
+    const unemploymentValue = liveData?.unemployment?.value !== null && liveData?.unemployment?.value !== undefined
+        ? liveData.unemployment.value.toFixed(2) 
+        : bank.unemployment.toFixed(2);
+    const unemploymentDate = liveData?.unemployment?.date || null;
+    
+    const gdpValue = liveData?.gdp?.value !== null && liveData?.gdp?.value !== undefined
+        ? liveData.gdp.value.toFixed(2) 
+        : bank.gdp.toFixed(2);
+    const gdpDate = liveData?.gdp?.date || null;
+    
+    modalBody.innerHTML = `
+        <div class="bank-modal-header">
+            <div class="bank-modal-title">
+                <span class="bank-modal-flag">${bank.flag}</span>
+                <div>
+                    <h2>${bank.bank}</h2>
+                    <p class="bank-modal-country">${bank.country} (${bank.currency})</p>
+                </div>
+            </div>
+            <div class="bank-modal-rate">
+                <div class="modal-rate-value">${bank.rate.toFixed(2)}%</div>
+                <div class="modal-rate-trend ${trendClass}">${trend} ${trendText}</div>
+            </div>
+        </div>
+        
+        <div class="bank-modal-section">
+            <h3>📅 Meeting Schedule</h3>
+            <div class="bank-modal-grid">
+                <div class="bank-modal-item">
+                    <span class="item-label">Next Meeting</span>
+                    <span class="item-value">${new Date(bank.nextMeeting).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                    <span class="item-sublabel">${daysUntil} days away</span>
+                </div>
+                <div class="bank-modal-item">
+                    <span class="item-label">Last Meeting</span>
+                    <span class="item-value">${new Date(bank.lastMeeting).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                </div>
+                <div class="bank-modal-item">
+                    <span class="item-label">Previous Rate</span>
+                    <span class="item-value">${bank.previousRate.toFixed(2)}%</span>
+                </div>
+                <div class="bank-modal-item">
+                    <span class="item-label">Policy Stance</span>
+                    <span class="item-value">${stanceEmoji} ${bank.stance}</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bank-modal-section">
+            <h3>📊 Key Economic Indicators</h3>
+            <div class="bank-modal-grid">
+                <div class="bank-modal-item">
+                    <span class="item-label">Inflation (CPI)</span>
+                    <span class="item-value">${inflationValue}%</span>
+                    <span class="item-sublabel">${inflationDate ? `As of ${new Date(inflationDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}` : `Target: ${bank.inflation.target}%`}</span>
+                </div>
+                <div class="bank-modal-item">
+                    <span class="item-label">Unemployment</span>
+                    <span class="item-value">${unemploymentValue}%</span>
+                    ${unemploymentDate ? `<span class="item-sublabel">As of ${new Date(unemploymentDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>` : ''}
+                </div>
+                <div class="bank-modal-item">
+                    <span class="item-label">GDP Growth</span>
+                    <span class="item-value">${gdpValue}%</span>
+                    ${gdpDate ? `<span class="item-sublabel">As of ${new Date(gdpDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>` : ''}
+                </div>
+            </div>
+        </div>
+        
+        <div class="bank-modal-section">
+            <h3>💬 Latest Commentary</h3>
+            <div class="bank-modal-comment">
+                <p>"${bank.recentComment}"</p>
+                <span class="comment-author">— ${bank.governor}, Governor</span>
+            </div>
+        </div>
+    `;
+    
+    modal.style.display = 'block';
+}
+
+function closeBankModal() {
+    const modal = document.getElementById('bank-modal');
+    modal.style.display = 'none';
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('bank-modal');
+    if (event.target === modal) {
+        closeBankModal();
+    }
+}
+
+// Close button handler
+document.addEventListener('DOMContentLoaded', () => {
+    const closeBtn = document.querySelector('.bank-modal-close');
+    if (closeBtn) {
+        closeBtn.onclick = closeBankModal;
+    }
+});
 
 // =====================
 // ICON HELPER
@@ -394,6 +688,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     populateNewsList(news);
+    
+    // ✅ Load Economic Indicators (for central bank modals)
+    await fetchEconomicIndicators();
     
     // ✅ Load Central Bank Rates
     displayCentralBankRates();
