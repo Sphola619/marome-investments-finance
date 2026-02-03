@@ -223,6 +223,9 @@ async function loadJSEStocks() {
 
         // Setup search functionality
         setupJSESearch();
+        
+        // Display sector sentiment widget
+        displayJSESectorSentiment(sectors, data.stocks);
 
         console.log(`✅ Loaded ${data.stocks.length} JSE stocks grouped into ${sortedSectors.length} sectors`);
 
@@ -238,6 +241,136 @@ async function loadJSEStocks() {
             </div>
         `;
     }
+}
+
+function displayJSESectorSentiment(sectors, allStocks) {
+    const container = document.getElementById('jse-sector-sentiment');
+    if (!container) return;
+
+    // Calculate sector performance
+    const sectorPerformance = Object.keys(sectors).map(sectorName => {
+        const stocks = sectors[sectorName];
+        const totalChange = stocks.reduce((sum, stock) => {
+            return sum + (parseFloat(stock.changePercent) || 0);
+        }, 0);
+        return {
+            name: sectorName,
+            totalChange: totalChange,
+            stockCount: stocks.length,
+            stocks: stocks
+        };
+    });
+
+    // Sort by performance
+    sectorPerformance.sort((a, b) => b.totalChange - a.totalChange);
+    
+    // Calculate overall sentiment
+    const positiveSectors = sectorPerformance.filter(s => s.totalChange > 0).length;
+    const totalSectors = sectorPerformance.length;
+    const sentimentScore = Math.round((positiveSectors / totalSectors) * 100);
+    
+    // Determine sentiment level
+    let sentiment;
+    if (sentimentScore >= 80) {
+        sentiment = { label: 'VERY BULLISH', emoji: '🚀', class: 'very-bullish' };
+    } else if (sentimentScore >= 60) {
+        sentiment = { label: 'BULLISH', emoji: '😃', class: 'bullish' };
+    } else if (sentimentScore >= 40) {
+        sentiment = { label: 'NEUTRAL', emoji: '😐', class: 'neutral' };
+    } else if (sentimentScore >= 20) {
+        sentiment = { label: 'BEARISH', emoji: '😟', class: 'bearish' };
+    } else {
+        sentiment = { label: 'VERY BEARISH', emoji: '💀', class: 'very-bearish' };
+    }
+
+    // Get top 3 sectors (excluding 'Other' from top display if possible)
+    let topSectors = sectorPerformance.filter(s => s.name !== 'Other').slice(0, 3);
+    
+    // If we don't have 3 sectors, include Other
+    if (topSectors.length < 3) {
+        const otherSector = sectorPerformance.find(s => s.name === 'Other');
+        if (otherSector) topSectors.push(otherSector);
+    }
+
+    // Get top 3 individual stocks overall
+    const topStocks = [...allStocks]
+        .filter(s => s && s.name && s.changePercent !== undefined)
+        .sort((a, b) => parseFloat(b.changePercent) - parseFloat(a.changePercent))
+        .slice(0, 3);
+
+    // Render sentiment widget
+    container.innerHTML = `
+        <!-- Overall Sentiment Header -->
+        <div style="padding: 20px; background: var(--card-bg); border-radius: 10px 10px 0 0; border: 1px solid var(--border-color); border-bottom: none; text-align: center;">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px;">
+                <div class="sentiment-emoji" style="font-size: 3rem;">${sentiment.emoji}</div>
+                <div>
+                    <div class="sentiment-label ${sentiment.class}" style="font-size: 1.5rem; font-weight: bold; margin-bottom: 5px;">
+                        ${sentiment.label}
+                    </div>
+                    <div class="sentiment-score" style="font-size: 2rem; font-weight: bold; color: var(--text-color);">
+                        ${sentimentScore}%
+                    </div>
+                </div>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin: 0;">
+                ${positiveSectors} of ${totalSectors} sectors are rising today
+            </p>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 15px; background: var(--card-bg); border-radius: 0 0 10px 10px; border: 1px solid var(--border-color); border-top: none;">
+            
+            <!-- Top Performing Sectors -->
+            <div>
+                <h4 style="margin-bottom: 10px; color: var(--text-color); font-size: 1rem;">🏆 Top Performing Sectors</h4>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    ${topSectors.map((sector, index) => {
+                        const trendClass = sector.totalChange >= 0 ? 'positive' : 'negative';
+                        const arrow = sector.totalChange >= 0 ? '↑' : '↓';
+                        const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉';
+                        return `
+                            <div style="padding: 10px; background: var(--background); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <span style="margin-right: 8px;">${medal}</span>
+                                    <strong style="font-size: 0.95rem;">${sector.name}</strong>
+                                    <span style="color: var(--text-muted); font-size: 0.85rem; margin-left: 6px;">(${sector.stockCount})</span>
+                                </div>
+                                <div class="performance ${trendClass}" style="font-size: 1rem; font-weight: bold;">
+                                    ${arrow} ${Math.abs(sector.totalChange).toFixed(2)}%
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            </div>
+
+            <!-- Top Performing Stocks -->
+            <div>
+                <h4 style="margin-bottom: 10px; color: var(--text-color); font-size: 1rem;">⭐ Top Performing Stocks</h4>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    ${topStocks.map((stock, index) => {
+                        const pct = parseFloat(stock.changePercent);
+                        const trendClass = pct >= 0 ? 'positive' : 'negative';
+                        const arrow = pct >= 0 ? '↑' : '↓';
+                        const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉';
+                        const priceZAR = (stock.price / 100).toFixed(2);
+                        return `
+                            <div style="padding: 10px; background: var(--background); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <span style="margin-right: 8px;">${medal}</span>
+                                    <strong style="font-size: 0.9rem;">${stock.name}</strong>
+                                    <div style="color: var(--text-muted); font-size: 0.8rem; margin-left: 26px;">${stock.ticker} • R${priceZAR}</div>
+                                </div>
+                                <div class="performance ${trendClass}" style="font-size: 1rem; font-weight: bold;">
+                                    ${arrow} ${Math.abs(pct).toFixed(2)}%
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            </div>
+        </div>
+    `;
 }
 
 function setupJSESearch() {

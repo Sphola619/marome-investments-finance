@@ -265,6 +265,9 @@ async function loadUSStocks() {
         });
 
         console.log(`✅ Loaded ${data.length} US stocks`);
+        
+        // Display US sentiment widget
+        displayUSSentiment(data);
 
     } catch (err) {
         console.error("❌ US stocks error:", err);
@@ -278,6 +281,113 @@ async function loadUSStocks() {
             </div>
         `;
     }
+}
+
+function displayUSSentiment(usStocks) {
+    const container = document.getElementById('us-stock-sentiment');
+    if (!container || !usStocks || usStocks.length === 0) return;
+
+    // Calculate sentiment based on positive vs negative stocks
+    const positiveStocks = usStocks.filter(stock => {
+        const change = parseFloat(stock.change);
+        return !isNaN(change) && change > 0;
+    }).length;
+    
+    const totalStocks = usStocks.length;
+    const sentimentScore = Math.round((positiveStocks / totalStocks) * 100);
+    
+    // Determine sentiment level
+    let sentiment;
+    if (sentimentScore >= 80) {
+        sentiment = { label: 'VERY BULLISH', emoji: '🚀', class: 'very-bullish' };
+    } else if (sentimentScore >= 60) {
+        sentiment = { label: 'BULLISH', emoji: '😃', class: 'bullish' };
+    } else if (sentimentScore >= 40) {
+        sentiment = { label: 'NEUTRAL', emoji: '😐', class: 'neutral' };
+    } else if (sentimentScore >= 20) {
+        sentiment = { label: 'BEARISH', emoji: '😟', class: 'bearish' };
+    } else {
+        sentiment = { label: 'VERY BEARISH', emoji: '💀', class: 'very-bearish' };
+    }
+    
+    // Get top performers
+    const topPerformers = [...usStocks]
+        .sort((a, b) => parseFloat(b.change) - parseFloat(a.change))
+        .slice(0, 3);
+    
+    // Get worst performers
+    const worstPerformers = [...usStocks]
+        .sort((a, b) => parseFloat(a.change) - parseFloat(b.change))
+        .slice(0, 3);
+    
+    // Generate interpretation
+    let interpretation;
+    if (sentimentScore === 100) {
+        interpretation = `All US stocks are rising today. Strong across-the-board buying pressure with ${topPerformers[0].name} leading at ${topPerformers[0].change}.`;
+    } else if (sentimentScore === 0) {
+        interpretation = `All US stocks are declining. Broad market sell-off with ${worstPerformers[0].name} down ${worstPerformers[0].change}.`;
+    } else if (sentimentScore >= 60) {
+        interpretation = `${positiveStocks} of ${totalStocks} US stocks are gaining. Bullish momentum with ${topPerformers[0].name} up ${topPerformers[0].change}.`;
+    } else if (sentimentScore >= 40) {
+        interpretation = `Mixed US market with ${positiveStocks} of ${totalStocks} stocks positive. Investors showing caution.`;
+    } else {
+        interpretation = `${totalStocks - positiveStocks} of ${totalStocks} US stocks are declining. Bearish pressure with ${worstPerformers[0].name} down ${worstPerformers[0].change}.`;
+    }
+    
+    // Render widget
+    container.innerHTML = `
+        <div class="sentiment-widget ${sentiment.class}">
+            <div class="sentiment-header">
+                <span class="sentiment-emoji">${sentiment.emoji}</span>
+                <span class="sentiment-label">${sentiment.label}</span>
+            </div>
+            
+            <div class="sentiment-score">
+                <div class="progress-bar">
+                    <div class="progress-fill ${sentiment.class}" style="width: ${sentimentScore}%"></div>
+                </div>
+                <div class="score-text">${sentimentScore}/100</div>
+            </div>
+
+            <div class="sentiment-stats">
+                ${positiveStocks} out of ${totalStocks} US stocks are rising
+            </div>
+
+            ${topPerformers.length > 0 ? `
+                <div class="sentiment-performers">
+                    <div class="performers-label">📈 Top Performers:</div>
+                    <div class="performers-list">
+                        ${topPerformers.map(stock => `
+                            <span class="performer-item positive">
+                                ${stock.name} <strong>${stock.change}</strong>
+                            </span>
+                        `).join('')}
+                    </div>
+                </div>
+            ` : ''}
+
+            ${worstPerformers.length > 0 ? `
+                <div class="sentiment-laggards">
+                    <div class="laggards-label">📉 Laggards:</div>
+                    <div class="laggards-list">
+                        ${worstPerformers.map(stock => `
+                            <span class="laggard-item negative">
+                                ${stock.name} <strong>${stock.change}</strong>
+                            </span>
+                        `).join('')}
+                    </div>
+                </div>
+            ` : ''}
+
+            <div class="sentiment-interpretation">
+                💡 ${interpretation}
+            </div>
+
+            <div class="sentiment-updated">
+                🕐 Updated: ${new Date().toLocaleTimeString()}
+            </div>
+        </div>
+    `;
 }
 
 /* ===========================================================
@@ -434,5 +544,4 @@ document.addEventListener("DOMContentLoaded", () => {
     loadUSStocks();
     loadIndices();
     loadNews();
-    loadStockSentiment();
 });
