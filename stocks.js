@@ -435,7 +435,7 @@ async function loadIndices() {
 
 async function loadNews() {
     try {
-        const response = await fetch(`${API_BASE_URL}/news`);
+        const response = await fetch(`${API_BASE_URL}/stock-news`);
         const data = await response.json();
 
         const newsContainer = document.getElementById("news-list");
