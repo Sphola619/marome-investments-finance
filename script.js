@@ -11,15 +11,15 @@ const CENTRAL_BANK_RATES = [
         currency: 'USD', 
         country: 'United States', 
         bank: 'Federal Reserve', 
-        rate: 3.75, 
-        previousRate: 4.00,
+        rate: 3.75,  // ✅ Accurate range format
+        previousRate: 3.75,
         flag: '🇺🇸',
         nextMeeting: '2026-03-19',
         lastMeeting: '2026-01-29',
         stance: 'Neutral',
-        inflation: { current: 2.4, target: 2.0 },
-        unemployment: 4.1,
-        gdp: 2.8,
+        inflation: { current: 2.7, target: 2.0 },
+        unemployment: 4.4,
+        gdp: 4.4,
         recentComment: 'The Federal Reserve is monitoring inflation trends closely while maintaining flexibility in policy decisions.',
         governor: 'Jerome Powell'
     },
@@ -33,9 +33,9 @@ const CENTRAL_BANK_RATES = [
         nextMeeting: '2026-03-06',
         lastMeeting: '2026-01-30',
         stance: 'Dovish',
-        inflation: { current: 2.2, target: 2.0 },
-        unemployment: 6.4,
-        gdp: 0.9,
+        inflation: { current: 1.9, target: 2.0 },
+        unemployment: 6.2,
+        gdp: 0.3,
         recentComment: 'Inflation is moving toward our target, allowing for gradual policy normalization.',
         governor: 'Christine Lagarde'
     },
@@ -49,9 +49,9 @@ const CENTRAL_BANK_RATES = [
         nextMeeting: '2026-03-20',
         lastMeeting: '2026-02-06',
         stance: 'Neutral',
-        inflation: { current: 2.5, target: 2.0 },
-        unemployment: 4.2,
-        gdp: 1.1,
+        inflation: { current: 3.4, target: 2.0 },
+        unemployment: 5.1,
+        gdp: 0.1,
         recentComment: 'We remain committed to returning inflation sustainably to the 2% target.',
         governor: 'Andrew Bailey'
     },
@@ -60,14 +60,14 @@ const CENTRAL_BANK_RATES = [
         country: 'Japan', 
         bank: 'Bank of Japan', 
         rate: 0.75, 
-        previousRate: 0.50,
+        previousRate: 0.75,
         flag: '🇯🇵',
-        nextMeeting: '2026-03-18',
+        nextMeeting: '2026-03-19',
         lastMeeting: '2026-01-23',
-        stance: 'Hawkish',
-        inflation: { current: 2.6, target: 2.0 },
-        unemployment: 2.4,
-        gdp: 1.2,
+        stance: 'Neutral',
+        inflation: { current: 2.1, target: 2.0 },
+        unemployment: 2.6,
+        gdp: 0.6,
         recentComment: 'We will continue to adjust the degree of monetary accommodation as economic conditions evolve.',
         governor: 'Kazuo Ueda'
     },
@@ -76,14 +76,14 @@ const CENTRAL_BANK_RATES = [
         country: 'Australia', 
         bank: 'RBA', 
         rate: 3.85, 
-        previousRate: 4.10,
+        previousRate: 3.60,
         flag: '🇦🇺',
-        nextMeeting: '2026-03-04',
-        lastMeeting: '2026-02-18',
-        stance: 'Neutral',
-        inflation: { current: 3.4, target: 2.5 },
-        unemployment: 4.0,
-        gdp: 1.8,
+        nextMeeting: '2026-03-17',
+        lastMeeting: '2026-02-03',
+        stance: 'Hawkish',
+        inflation: { current: 3.8, target: '2.0 - 3.0' },
+        unemployment: 4.2,
+        gdp: 0.4,
         recentComment: 'The Board remains resolute in its determination to return inflation to target.',
         governor: 'Michele Bullock'
     },
@@ -92,13 +92,13 @@ const CENTRAL_BANK_RATES = [
         country: 'Canada', 
         bank: 'Bank of Canada', 
         rate: 2.25, 
-        previousRate: 2.75,
+        previousRate: 2.25,
         flag: '🇨🇦',
-        nextMeeting: '2026-03-12',
-        lastMeeting: '2026-01-29',
-        stance: 'Dovish',
-        inflation: { current: 1.8, target: 2.0 },
-        unemployment: 6.7,
+        nextMeeting: '2026-03-18',
+        lastMeeting: '2026-01-28',
+        stance: 'Neutral',
+        inflation: { current: 2.4, target: 2.0 },
+        unemployment: 6.8,
         gdp: 1.3,
         recentComment: 'With inflation easing, we have room to support economic growth.',
         governor: 'Tiff Macklem'
@@ -126,12 +126,12 @@ const CENTRAL_BANK_RATES = [
         rate: 2.25, 
         previousRate: 2.75,
         flag: '🇳🇿',
-        nextMeeting: '2026-04-09',
-        lastMeeting: '2026-02-19',
+        nextMeeting: '2026-02-18',
+        lastMeeting: '2025-11-26',
         stance: 'Dovish',
-        inflation: { current: 2.2, target: 2.0 },
-        unemployment: 4.8,
-        gdp: 0.5,
+        inflation: { current: 3.1, target: 2.0 },
+        unemployment: 5.1,
+        gdp: 1.1,
         recentComment: 'Inflation is within our target range, allowing for policy easing to support growth.',
         governor: 'Adrian Orr'
     },
@@ -140,14 +140,14 @@ const CENTRAL_BANK_RATES = [
         country: 'South Africa', 
         bank: 'SARB', 
         rate: 6.75, 
-        previousRate: 7.00,
+        previousRate: 6.75,
         flag: '🇿🇦',
-        nextMeeting: '2026-03-27',
-        lastMeeting: '2026-01-30',
+        nextMeeting: '2026-03-26',
+        lastMeeting: '2026-01-29',
         stance: 'Neutral',
-        inflation: { current: 3.8, target: 4.5 },
-        unemployment: 32.1,
-        gdp: 1.2,
+        inflation: { current: 3.5, target: 3.0 },
+        unemployment: 31.9,
+        gdp: 0.5,
         recentComment: 'The MPC will continue to monitor risks to the inflation outlook and act appropriately.',
         governor: 'Lesetja Kganyago'
     }
@@ -173,18 +173,25 @@ function displayCentralBankRates() {
     const container = document.getElementById('central-bank-rates');
     if (!container) return;
 
-    container.innerHTML = CENTRAL_BANK_RATES.map((bank, index) => `
-        <div class="bank-rate-card" onclick="openBankModal(${index})">
-            <div class="bank-info">
-                <span class="bank-flag">${bank.flag}</span>
-                <div class="bank-details">
-                    <span class="bank-currency">${bank.currency}</span>
-                    <span class="bank-name">${bank.bank}</span>
+    container.innerHTML = CENTRAL_BANK_RATES.map((bank, index) => {
+        // ✅ Handle both numbers and strings (ranges)
+        const rateDisplay = typeof bank.rate === 'number' 
+            ? `${bank.rate.toFixed(2)}%` 
+            : bank.rate;
+        
+        return `
+            <div class="bank-rate-card" onclick="openBankModal(${index})">
+                <div class="bank-info">
+                    <span class="bank-flag">${bank.flag}</span>
+                    <div class="bank-details">
+                        <span class="bank-currency">${bank.currency}</span>
+                        <span class="bank-name">${bank.bank}</span>
+                    </div>
                 </div>
+                <div class="rate-value">${rateDisplay}</div>
             </div>
-            <div class="rate-value">${bank.rate.toFixed(2)}%</div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 // =====================
