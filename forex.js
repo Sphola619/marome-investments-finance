@@ -1,4 +1,16 @@
 const API_BASE_URL = CONFIG.API_BASE_URL;
+const WS_BASE_URL = (window.location.protocol === 'https:' ? 'wss' : 'ws') + `://${window.location.hostname}:5001`;
+
+const WS_FOREX_SYMBOL_MAP = {
+    EURUSD: "EUR/USD",
+    GBPUSD: "GBP/USD",
+    USDJPY: "USD/JPY",
+    USDZAR: "USD/ZAR",
+    EURZAR: "EUR/ZAR",
+    GBPZAR: "GBP/ZAR",
+    AUDUSD: "AUD/USD",
+    USDCHF: "USD/CHF"
+};
 
 // Store commodity data globally for sentiment calculation
 let commodityData = [];
@@ -70,6 +82,7 @@ async function loadForex() {
         data.forEach(item => {
             const div = document.createElement("div");
             div.className = "market-item forex-card";
+            div.setAttribute("data-pair", item.pair);
 
             const pairSlug = item.pair.replace("/", "").toLowerCase();
             const pairUrl = `pair-${pairSlug}.html`;
@@ -82,7 +95,8 @@ async function loadForex() {
                         <p>${item.name}</p>
                     </div>
                     <div class="performance ${item.trend}">
-                        ${item.change}
+                        <div class="forex-price" style="font-size: 1.2em; font-weight: bold; margin-bottom: 4px;">${item.price}</div>
+                        <div class="forex-change">${item.change}</div>
                     </div>
                 </a>
             `;
@@ -93,6 +107,52 @@ async function loadForex() {
     } catch (err) {
         console.error("Forex error:", err);
     }
+}
+
+/* ===========================================================
+      FOREX WEBSOCKET (INSTANT UPDATES)
+   =========================================================== */
+
+function applyForexUpdate(pair, price, changePercent) {
+    const card = document.querySelector(`.forex-card[data-pair="${pair}"]`);
+    if (!card) return;
+
+    const priceEl = card.querySelector(".forex-price");
+    const changeEl = card.querySelector(".forex-change");
+    const perfEl = card.querySelector(".performance");
+
+    if (priceEl) priceEl.textContent = Number(price).toFixed(4);
+    if (changeEl) {
+        const pct = Number(changePercent) || 0;
+        changeEl.textContent = `${pct >= 0 ? "+" : ""}${pct.toFixed(2)}%`;
+    }
+
+    if (perfEl) {
+        perfEl.classList.remove("positive", "negative");
+        perfEl.classList.add(Number(changePercent) >= 0 ? "positive" : "negative");
+    }
+}
+
+function connectForexSocket() {
+    const socket = new WebSocket(WS_BASE_URL);
+
+    socket.addEventListener("message", (event) => {
+        try {
+            const msg = JSON.parse(event.data);
+            if (msg.type !== "forex") return;
+
+            const pair = msg.pair || WS_FOREX_SYMBOL_MAP[msg.symbol];
+            if (!pair) return;
+
+            applyForexUpdate(pair, msg.price, msg.changePercent);
+        } catch (err) {
+            console.error("Forex WS parse error:", err);
+        }
+    });
+
+    socket.addEventListener("close", () => {
+        setTimeout(connectForexSocket, 3000);
+    });
 }
 
 /* ===========================================================
@@ -202,10 +262,10 @@ document.addEventListener("DOMContentLoaded", () => {
     loadForex();
     loadStrength();
     loadCommodities();
+    connectForexSocket();
     
     // Auto-refresh every 10 seconds
     setInterval(() => {
-        loadForex();
         loadStrength();
         loadCommodities();
     }, 10000);
