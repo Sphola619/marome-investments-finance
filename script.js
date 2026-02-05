@@ -159,7 +159,7 @@ let liveEconomicIndicators = null;
 // Fetch live economic indicators from backend
 async function fetchEconomicIndicators() {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/economic-indicators`);
+        const response = await fetch(`${API_BASE_URL}/economic-indicators`);
         if (!response.ok) throw new Error('Failed to fetch economic indicators');
         const data = await response.json();
         liveEconomicIndicators = data.indicators;
@@ -697,7 +697,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     populateNewsList(news);
     
     // ✅ Load Economic Indicators (for central bank modals)
-    await fetchEconomicIndicators();
+    fetchEconomicIndicators();
     
     // ✅ Load Central Bank Rates
     displayCentralBankRates();
