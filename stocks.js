@@ -1,5 +1,5 @@
 const API_BASE_URL = CONFIG.API_BASE_URL;
-const WS_BASE_URL = (window.location.protocol === 'https:' ? 'wss' : 'ws') + `://${window.location.hostname}:5001`;
+const WS_BASE_URL = CONFIG.WS_BASE_URL;
 
 /* ===========================================================
    JSE STOCKS (SOUTH AFRICA) - FROM IRESS.CO.ZA
