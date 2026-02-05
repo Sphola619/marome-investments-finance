@@ -1,4 +1,5 @@
 const API_BASE_URL = CONFIG.API_BASE_URL;
+const WS_BASE_URL = (window.location.protocol === 'https:' ? 'wss' : 'ws') + `://${window.location.hostname}:5001`;
 
 /* ===========================================================
    JSE STOCKS (SOUTH AFRICA) - FROM IRESS.CO.ZA
@@ -247,6 +248,7 @@ async function loadUSStocks() {
 
             const div = document.createElement("div");
             div.className = "market-item stock-card";
+            div.setAttribute("data-symbol", stock.symbol);
 
             div.innerHTML = `
                 <div class="market-info">
@@ -254,9 +256,9 @@ async function loadUSStocks() {
                     <p>${stock.symbol} • ${stock.currency}</p>
                 </div>
                 <div class="stock-price-info">
-                    <div class="stock-price">${stock.price}</div>
+                    <div class="stock-price us-stock-price">${stock.price}</div>
                     <div class="performance ${trendClass}">
-                        ${stock.change}
+                        <span class="us-stock-change">${stock.change}</span>
                     </div>
                 </div>
             `;
@@ -388,6 +390,48 @@ function displayUSSentiment(usStocks) {
             </div>
         </div>
     `;
+}
+
+/* ===========================================================
+   US STOCKS WEBSOCKET (INSTANT UPDATES)
+   =========================================================== */
+
+function applyUSStockUpdate(symbol, price, changePercent) {
+    const card = document.querySelector(`.stock-card[data-symbol="${symbol}"]`);
+    if (!card) return;
+
+    const priceEl = card.querySelector(".us-stock-price");
+    const changeEl = card.querySelector(".us-stock-change");
+    const perfEl = card.querySelector(".performance");
+
+    if (priceEl) priceEl.textContent = `$${Number(price).toFixed(2)}`;
+    if (changeEl) {
+        const pct = Number(changePercent) || 0;
+        changeEl.textContent = `${pct >= 0 ? "+" : ""}${pct.toFixed(2)}%`;
+    }
+
+    if (perfEl) {
+        perfEl.classList.remove("positive", "negative");
+        perfEl.classList.add(Number(changePercent) >= 0 ? "positive" : "negative");
+    }
+}
+
+function connectUSStocksSocket() {
+    const socket = new WebSocket(WS_BASE_URL);
+
+    socket.addEventListener("message", (event) => {
+        try {
+            const msg = JSON.parse(event.data);
+            if (msg.type !== "us-stock") return;
+            applyUSStockUpdate(msg.symbol, msg.price, msg.changePercent);
+        } catch (err) {
+            console.error("US Stocks WS parse error:", err);
+        }
+    });
+
+    socket.addEventListener("close", () => {
+        setTimeout(connectUSStocksSocket, 3000);
+    });
 }
 
 /* ===========================================================
@@ -544,11 +588,11 @@ document.addEventListener("DOMContentLoaded", () => {
     loadUSStocks();
     loadIndices();
     loadNews();
+    connectUSStocksSocket();
     
     // Auto-refresh every 10 seconds
     setInterval(() => {
         loadJSEStocks();
-        loadUSStocks();
         loadIndices();
         loadNews();
     }, 10000);
