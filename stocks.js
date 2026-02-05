@@ -544,4 +544,12 @@ document.addEventListener("DOMContentLoaded", () => {
     loadUSStocks();
     loadIndices();
     loadNews();
+    
+    // Auto-refresh every 10 seconds
+    setInterval(() => {
+        loadJSEStocks();
+        loadUSStocks();
+        loadIndices();
+        loadNews();
+    }, 10000);
 });

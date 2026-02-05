@@ -202,4 +202,11 @@ document.addEventListener("DOMContentLoaded", () => {
     loadForex();
     loadStrength();
     loadCommodities();
+    
+    // Auto-refresh every 10 seconds
+    setInterval(() => {
+        loadForex();
+        loadStrength();
+        loadCommodities();
+    }, 10000);
 });

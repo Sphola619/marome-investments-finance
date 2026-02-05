@@ -704,4 +704,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     
     // ✅ Load SA Markets
     loadSAMarkets();
+    
+    // ✅ Auto-refresh movers and news every 10 seconds
+    setInterval(async () => {
+        const movers = await fetchTopMovers();
+        if (movers) populateMoverList(movers);
+        
+        const news = await fetchNews();
+        if (news) populateNewsList(news);
+    }, 10000);
 });

@@ -203,4 +203,9 @@ function loadCryptoSentiment(data) {
 document.addEventListener("DOMContentLoaded", () => {
     loadCryptoHeatmap();
     loadCrypto();
+    
+    // Auto-refresh every 10 seconds
+    setInterval(() => {
+        loadCrypto();
+    }, 10000);
 });
