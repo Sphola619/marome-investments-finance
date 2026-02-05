@@ -1,5 +1,7 @@
 const API_BASE_URL = CONFIG.API_BASE_URL;
 const WS_BASE_URL = CONFIG.WS_BASE_URL;
+let wsConnected = false;
+let lastWsUpdate = 0;
 
 const WS_FOREX_SYMBOL_MAP = {
     EURUSD: "EUR/USD",
@@ -136,6 +138,11 @@ function applyForexUpdate(pair, price, changePercent) {
 function connectForexSocket() {
     const socket = new WebSocket(WS_BASE_URL);
 
+    socket.addEventListener("open", () => {
+        wsConnected = true;
+        console.log("✅ Forex WS connected");
+    });
+
     socket.addEventListener("message", (event) => {
         try {
             const msg = JSON.parse(event.data);
@@ -145,12 +152,20 @@ function connectForexSocket() {
             if (!pair) return;
 
             applyForexUpdate(pair, msg.price, msg.changePercent);
+            lastWsUpdate = Date.now();
         } catch (err) {
             console.error("Forex WS parse error:", err);
         }
     });
 
+    socket.addEventListener("error", (err) => {
+        console.error("❌ Forex WS error:", err);
+        wsConnected = false;
+    });
+
     socket.addEventListener("close", () => {
+        wsConnected = false;
+        console.log("⚠️ Forex WS disconnected, retrying...");
         setTimeout(connectForexSocket, 3000);
     });
 }
@@ -268,5 +283,10 @@ document.addEventListener("DOMContentLoaded", () => {
     setInterval(() => {
         loadStrength();
         loadCommodities();
+
+        // Fallback: if WS hasn't updated recently, refresh forex via REST
+        if (!wsConnected || (Date.now() - lastWsUpdate > 30000)) {
+            loadForex();
+        }
     }, 10000);
 });
