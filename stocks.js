@@ -1,5 +1,4 @@
 const API_BASE_URL = CONFIG.API_BASE_URL;
-const WS_BASE_URL = CONFIG.WS_BASE_URL;
 
 /* ===========================================================
    JSE STOCKS (SOUTH AFRICA) - FROM IRESS.CO.ZA
@@ -417,7 +416,7 @@ function applyUSStockUpdate(symbol, price, changePercent) {
 }
 
 function connectUSStocksSocket() {
-    const socket = new WebSocket(WS_BASE_URL);
+    const socket = new WebSocket(CONFIG.WS_BASE_URL);
 
     socket.addEventListener("message", (event) => {
         try {

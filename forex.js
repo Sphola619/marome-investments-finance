@@ -1,5 +1,4 @@
 const API_BASE_URL = CONFIG.API_BASE_URL;
-const WS_BASE_URL = CONFIG.WS_BASE_URL;
 let wsConnected = false;
 let lastWsUpdate = 0;
 
@@ -136,7 +135,7 @@ function applyForexUpdate(pair, price, changePercent) {
 }
 
 function connectForexSocket() {
-    const socket = new WebSocket(WS_BASE_URL);
+    const socket = new WebSocket(CONFIG.WS_BASE_URL);
 
     socket.addEventListener("open", () => {
         wsConnected = true;
