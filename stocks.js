@@ -418,6 +418,10 @@ function applyUSStockUpdate(symbol, price, changePercent) {
 function connectUSStocksSocket() {
     const socket = new WebSocket(CONFIG.WS_BASE_URL);
 
+    socket.addEventListener("open", () => {
+        console.log("✅ US Stocks WS connected");
+    });
+
     socket.addEventListener("message", (event) => {
         try {
             const msg = JSON.parse(event.data);
@@ -428,7 +432,12 @@ function connectUSStocksSocket() {
         }
     });
 
+    socket.addEventListener("error", (err) => {
+        console.error("❌ US Stocks WS error:", err);
+    });
+
     socket.addEventListener("close", () => {
+        console.log("⚠️ US Stocks WS disconnected, retrying...");
         setTimeout(connectUSStocksSocket, 3000);
     });
 }
