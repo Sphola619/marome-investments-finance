@@ -580,7 +580,7 @@ async function loadSARBEvent() {
 
 async function loadSANews() {
     try {
-        const response = await fetch(`${API_BASE_URL}/news`);
+        const response = await fetch(`${API_BASE_URL}/sa-news`);
         const data = await response.json();
 
         const newsContainer = document.getElementById("sa-news-list");
@@ -591,16 +591,7 @@ async function loadSANews() {
             return;
         }
 
-        // Filter SA-related news
-        const saKeywords = ['south africa', 'jse', 'johannesburg', 'sarb', 'rand', 'zar', 
-                           'cape town', 'pretoria', 'sa ', 'african'];
-        
-        const saNews = data.filter(article => {
-            const text = (article.headline + ' ' + article.summary).toLowerCase();
-            return saKeywords.some(keyword => text.includes(keyword));
-        });
-
-        const newsToShow = (saNews.length > 0 ? saNews : data).slice(0, 5);
+        const newsToShow = data.slice(0, 5);
 
         newsToShow.forEach(article => {
             const newsCard = document.createElement("div");

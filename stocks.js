@@ -221,6 +221,21 @@ function setupJSESearchStocks() {
    US STOCKS
    =========================================================== */
 
+function classifyUSStockIndustry(name) {
+    if (!name) return 'Other';
+    const n = name.toLowerCase();
+    if (n.includes('apple') || n.includes('microsoft') || n.includes('nvidia') || n.includes('meta') || n.includes('alphabet') || n.includes('google')) return 'Technology';
+    if (n.includes('visa') || n.includes('mastercard') || n.includes('jpmorgan') || n.includes('bank of america') || n.includes('berkshire')) return 'Financials';
+    if (n.includes('unitedhealth') || n.includes('johnson & johnson') || n.includes('eli lilly') || n.includes('merck') || n.includes('pfizer') || n.includes('abbott')) return 'Healthcare';
+    if (n.includes('procter & gamble') || n.includes('coca-cola') || n.includes('pepsico') || n.includes('walmart') || n.includes('costco') || n.includes('home depot') || n.includes('mcdonald')) return 'Consumer';
+    if (n.includes('exxon') || n.includes('chevron') || n.includes('conocophillips') || n.includes('duke energy') || n.includes('nextera energy')) return 'Energy & Utilities';
+    if (n.includes('comcast') || n.includes('walt disney') || n.includes('at&t') || n.includes('verizon')) return 'Media & Telecom';
+    if (n.includes('honeywell') || n.includes('union pacific') || n.includes('3m company') || n.includes('american tower') || n.includes('crown castle')) return 'Industrials & Real Estate';
+    if (n.includes('newmont')) return 'Materials';
+    if (n.includes('tesla')) return 'Automotive';
+    return 'Other';
+}
+
 async function loadUSStocks() {
     try {
         const response = await fetch(`${API_BASE_URL}/us-stocks`);
@@ -241,32 +256,115 @@ async function loadUSStocks() {
             return;
         }
 
+        // Group by industry
+        const industries = {};
         data.forEach(stock => {
-            const pct = parseFloat(stock.change);
-            const trendClass = pct >= 0 ? "positive" : "negative";
+            const industry = classifyUSStockIndustry(stock.name);
+            if (!industries[industry]) industries[industry] = [];
+            industries[industry].push(stock);
+        });
 
-            const div = document.createElement("div");
-            div.className = "market-item stock-card";
-            div.setAttribute("data-symbol", stock.symbol);
+        // Order of industries
+        const industryOrder = [
+            'Technology',
+            'Financials',
+            'Healthcare',
+            'Consumer',
+            'Energy & Utilities',
+            'Media & Telecom',
+            'Industrials & Real Estate',
+            'Materials',
+            'Automotive',
+            'Other'
+        ];
+        const sortedIndustries = industryOrder.filter(i => industries[i]);
 
-            div.innerHTML = `
-                <div class="market-info">
-                    <h3>${stock.name}</h3>
-                    <p>${stock.symbol} • ${stock.currency}</p>
+        // Render each industry accordion
+        sortedIndustries.forEach(industry => {
+            const stocks = industries[industry];
+            // Calculate industry total change
+            const industryTotalChange = stocks.reduce((sum, stock) => {
+                const pct = parseFloat(stock.rawChange) || 0;
+                return sum + pct;
+            }, 0);
+            const trendClass = industryTotalChange >= 0 ? 'positive' : 'negative';
+            const arrow = industryTotalChange >= 0 ? '↑' : '↓';
+
+            const industryDiv = document.createElement('div');
+            industryDiv.className = 'sector-accordion';
+            industryDiv.style.cssText = 'margin-bottom: 1rem; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden;';
+            const header = document.createElement('div');
+            header.className = 'sector-header';
+            header.style.cssText = 'padding: 15px; background: var(--card-bg); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s;';
+            header.innerHTML = `
+                <div style="flex: 1;">
+                    <strong style="font-size: 1.1rem;">${industry}</strong>
+                    <span style="color: var(--text-muted); margin-left: 10px;">(${stocks.length} stocks)</span>
                 </div>
-                <div class="stock-price-info">
-                    <div class="stock-price us-stock-price">${stock.price}</div>
-                    <div class="performance ${trendClass}">
-                        <span class="us-stock-change">${stock.change}</span>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div class="performance ${trendClass}" style="font-size: 1.1rem; font-weight: bold; padding: 8px 15px; border-radius: 8px;">
+                        ${arrow} ${Math.abs(industryTotalChange).toFixed(2)}%
                     </div>
+                    <span class="sector-toggle" style="font-size: 1.5rem;">▶</span>
                 </div>
             `;
 
-            container.appendChild(div);
+            const content = document.createElement('div');
+            content.className = 'sector-content';
+            content.style.cssText = 'max-height: 0; overflow: hidden; transition: max-height 0.3s ease;';
+
+            const stocksList = document.createElement('div');
+            stocksList.style.cssText = 'padding: 10px;';
+
+            stocks.sort((a, b) => Math.abs(parseFloat(b.rawChange)) - Math.abs(parseFloat(a.rawChange)));
+
+            stocks.forEach(stock => {
+                const pct = parseFloat(stock.rawChange);
+                const trendClass = pct >= 0 ? 'positive' : 'negative';
+                const arrow = pct >= 0 ? '↑' : '↓';
+
+                const stockDiv = document.createElement('div');
+                stockDiv.className = 'market-item stock-card';
+                stockDiv.setAttribute('data-stock-name', stock.name.toLowerCase());
+                stockDiv.setAttribute('data-symbol', stock.symbol.toLowerCase());
+                stockDiv.style.cssText = 'margin-bottom: 8px;';
+
+                stockDiv.innerHTML = `
+                    <div class="market-info">
+                        <h3 style="font-size: 0.95rem;">${stock.name}</h3>
+                        <p style="font-size: 0.85rem;">${stock.symbol} • ${stock.currency}</p>
+                    </div>
+                    <div class="stock-price-info">
+                        <div class="stock-price us-stock-price">${stock.price}</div>
+                        <div class="performance ${trendClass}">
+                            ${arrow} ${Math.abs(pct).toFixed(2)}%
+                        </div>
+                    </div>
+                `;
+
+                stocksList.appendChild(stockDiv);
+            });
+
+            content.appendChild(stocksList);
+
+            header.addEventListener('click', () => {
+                const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
+                const toggle = header.querySelector('.sector-toggle');
+                if (isOpen) {
+                    content.style.maxHeight = '0';
+                    toggle.textContent = '▶';
+                } else {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    toggle.textContent = '▼';
+                }
+            });
+
+            industryDiv.appendChild(header);
+            industryDiv.appendChild(content);
+            container.appendChild(industryDiv);
         });
 
-        console.log(`✅ Loaded ${data.length} US stocks`);
-        
+        console.log(`✅ Loaded ${data.length} US stocks grouped into ${sortedIndustries.length} industries`);
         // Display US sentiment widget
         displayUSSentiment(data);
 
