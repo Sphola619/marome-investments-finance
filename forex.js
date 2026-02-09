@@ -173,7 +173,7 @@ function applyCommodityUpdate(symbol, price, changePercent) {
 }
 
 /* ===========================================================
-   COMMODITY SENTIMENT (REST – AGGREGATE) ✅ FIXED
+   COMMODITY SENTIMENT (REST – AGGREGATE + STORY) ✅
 =========================================================== */
 
 async function loadCommoditySentiment() {
@@ -186,11 +186,15 @@ async function loadCommoditySentiment() {
 
         container.innerHTML = `
             <div class="sentiment-item">
-                <h3>Commodity Sentiment</h3>
-                <p class="sentiment-label">${data.Sentiment}</p>
+                <p class="sentiment-label">${data.Sentiment ?? "Neutral －"}</p>
+
                 <small>
-                    Avg Change: ${data.Score}% · Based on ${data.Count} commodities
+                    Avg Change: ${data.Score ?? 0}% · Based on ${data.Count ?? 0} commodities
                 </small>
+
+                <p class="sentiment-story">
+                    ${data.Story ?? "Commodity markets are calm today."}
+                </p>
             </div>
         `;
 

@@ -170,7 +170,8 @@ async function loadCrypto() {
                         <p>${item.symbol}</p>
                     </div>
                     <div class="performance ${item.trend}">
-                        ${item.change}
+                        <div class="crypto-price">${item.price}</div>
+                        <div class="crypto-change">${item.change}</div>
                     </div>
                 </a>
             `;
@@ -185,6 +186,66 @@ async function loadCrypto() {
         console.error("Crypto load error:", err);
         container. innerHTML = "<p>Failed to load crypto data. </p>";
     }
+}
+
+/* ===========================================================
+      CRYPTO WEBSOCKET (LIVE UPDATES)
+   =========================================================== */
+
+function initCryptoWebSocket() {
+    const ws = new WebSocket(API_BASE_URL.replace(/^http/, "ws"));
+
+    ws.onopen = () => {
+        console.log("🔌 Crypto WebSocket connected");
+    };
+
+    ws.onmessage = (event) => {
+        try {
+            const msg = JSON.parse(event.data);
+
+            // Only handle crypto updates
+            if (msg.type !== "crypto") return;
+
+            updateCryptoItem(msg);
+        } catch (err) {
+            console.error("Crypto WS parse error:", err);
+        }
+    };
+
+    ws.onerror = (err) => {
+        console.error("Crypto WebSocket error:", err);
+    };
+}
+
+function updateCryptoItem(msg) {
+    const cards = document.querySelectorAll("#crypto-list .market-item");
+
+    cards.forEach(card => {
+        const symbolEl = card.querySelector(".market-info p");
+        if (!symbolEl) return;
+
+        if (symbolEl.textContent === msg.symbol) {
+            const priceEl = card.querySelector(".crypto-price");
+            const changeEl = card.querySelector(".crypto-change");
+            const perf = card.querySelector(".performance");
+
+            if (!priceEl || !changeEl) return;
+
+            if (!Number.isFinite(msg.changePercent)) {
+                priceEl.textContent = Number(msg.price).toFixed(2);
+                changeEl.textContent = "--";
+                perf.className = "performance";
+                return;
+            }
+
+            priceEl.textContent = Number(msg.price).toFixed(2);
+            changeEl.textContent =
+                `${msg.changePercent >= 0 ? "+" : ""}${msg.changePercent.toFixed(2)}%`;
+
+            perf.classList.toggle("positive", msg.changePercent >= 0);
+            perf.classList.toggle("negative", msg.changePercent < 0);
+        }
+    });
 }
 
 /* ===========================================================
@@ -203,9 +264,5 @@ function loadCryptoSentiment(data) {
 document.addEventListener("DOMContentLoaded", () => {
     loadCryptoHeatmap();
     loadCrypto();
-    
-    // Auto-refresh every 10 seconds
-    setInterval(() => {
-        loadCrypto();
-    }, 10000);
+    initCryptoWebSocket();
 });
