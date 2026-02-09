@@ -31,7 +31,7 @@
             <li><a href="forex.html" class="active">Forex & Commodities</a></li>
             <li><a href="crypto.html">Cryptocurrency</a></li>
             <li><a href="analysis.html">Market Analysis</a></li>
-            <li><a href="calendar. html">Economic Calendar</a></li>
+            <li><a href="calendar.html">Economic Calendar</a></li>
             
             <li class="theme-toggle-item">
               <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -43,6 +43,7 @@
         </nav>
       </header>
 
+    <!-- CONTENT -->
     <div class="container animate delay-1">
 
         <h1>Forex & Commodities</h1>
@@ -111,19 +112,46 @@
                 <p class="placeholder-text">Loading sentiment... </p>
             </div>
         </div>
-
+        
+        
         <div class="performance-section" style="margin-top: 2rem;">
             <h2 class="section-title">Major Commodities</h2>
-
-            <div id="commodities-list" class="market-list">
-                <div class="market-item">
+                
+                <!-- GOLD -->
+                <div class="market-item" data-symbol="XAUUSD">
                     <div class="market-info">
-                        <h3>Loading commodities... </h3>
-                        <p>Please wait</p>
+                        <h3>Gold</h3>
+                        <p class="commodity-symbol">XAU/USD</p>
                     </div>
-                    <div class="performance">--%</div>
+                    <div class="performance">
+                        <span class="commodity-price">--</span>
+                        <span class="commodity-change">--</span>
+                    </div>
                 </div>
-            </div>
+
+                <!-- SILVER -->
+                <div class="market-item" data-symbol="XAGUSD">
+                    <div class="market-info">
+                        <h3>Silver</h3>
+                        <p class="commodity-symbol">XAG/USD</p>
+                    </div>
+                    <div class="performance">
+                        <span class="commodity-price">--</span>
+                        <span class="commodity-change">--</span>
+                    </div>
+                </div>
+
+                <!-- PLATINUM -->
+                <div class="market-item" data-symbol="XPTUSD">
+                    <div class="market-info">
+                        <h3>Platinum</h3>
+                        <p class="commodity-symbol">XPT/USD</p>
+                    </div>
+                    <div class="performance">
+                        <span class="commodity-price">--</span>
+                        <span class="commodity-change">--</span>
+                    </div>
+                </div>
         </div>
 
         <div class="disclaimer">

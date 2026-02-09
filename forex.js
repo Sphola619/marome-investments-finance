@@ -3,34 +3,16 @@ let wsConnected = false;
 let lastWsUpdate = 0;
 
 /* ===========================================================
-      SYMBOL NORMALIZATION (CLEAN & CANONICAL)
-   =========================================================== */
+   HELPERS
+=========================================================== */
 
 function normalizeCommoditySymbol(symbol) {
     return symbol ? symbol.toUpperCase() : "";
 }
 
 /* ===========================================================
-      SYMBOL MAPS
-   =========================================================== */
-
-const WS_FOREX_SYMBOL_MAP = {
-    EURUSD: "EUR/USD",
-    GBPUSD: "GBP/USD",
-    USDJPY: "USD/JPY",
-    USDZAR: "USD/ZAR",
-    EURZAR: "EUR/ZAR",
-    GBPZAR: "GBP/ZAR",
-    AUDUSD: "AUD/USD",
-    USDCHF: "USD/CHF",
-    XAUUSD: "XAU/USD", // Gold spot
-    XAGUSD: "XAG/USD", // Silver spot
-    XPTUSD: "XPT/USD"  // Platinum spot
-};
-
-/* ===========================================================
-      HEATMAP
-   =========================================================== */
+   HEATMAP
+=========================================================== */
 
 function colorCell(pct) {
     if (pct === null || pct === undefined || isNaN(pct)) return "";
@@ -44,6 +26,8 @@ function formatPct(pct) {
 
 async function loadHeatmapTable() {
     const tableBody = document.querySelector("#heatmap-table tbody");
+    if (!tableBody) return;
+
     tableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Loading...</td></tr>`;
 
     try {
@@ -70,8 +54,8 @@ async function loadHeatmapTable() {
 }
 
 /* ===========================================================
-      FOREX LIST (REST)
-   =========================================================== */
+   FOREX (REST = INVENTORY)
+=========================================================== */
 
 async function loadForex() {
     try {
@@ -79,12 +63,14 @@ async function loadForex() {
         const data = await response.json();
 
         const container = document.getElementById("forex-list");
+        if (!container) return;
+
         container.innerHTML = "";
 
         data.forEach(item => {
             const div = document.createElement("div");
             div.className = "market-item forex-card";
-            div.setAttribute("data-pair", item.pair);
+            div.dataset.pair = item.pair;
 
             const pairSlug = item.pair.replace("/", "").toLowerCase();
 
@@ -111,85 +97,111 @@ async function loadForex() {
 }
 
 /* ===========================================================
-      FOREX WEBSOCKET UPDATE
-   =========================================================== */
+   FOREX STRENGTH (REST – AGGREGATE)
+=========================================================== */
 
-function applyForexUpdate(pair, price, changePercent) {
-    const card = document.querySelector(`.forex-card[data-pair="${pair}"]`);
-    if (!card) return;
-
-    card.querySelector(".forex-price").textContent = Number(price).toFixed(4);
-    card.querySelector(".forex-change").textContent =
-        `${changePercent >= 0 ? "+" : ""}${changePercent.toFixed(2)}%`;
-
-    const perf = card.querySelector(".performance");
-    perf.classList.toggle("positive", changePercent >= 0);
-    perf.classList.toggle("negative", changePercent < 0);
-}
-
-/* ===========================================================
-      COMMODITIES (REST = INVENTORY)
-   =========================================================== */
-
-async function loadCommodities() {
+async function loadForexStrength() {
     try {
-        const response = await fetch(`${API_BASE_URL}/commodities`);
+        const response = await fetch(`${API_BASE_URL}/forex-strength`);
         const data = await response.json();
 
-        const container = document.getElementById("commodities-list");
+        const container = document.getElementById("strength-list");
+        if (!container) return;
+
         container.innerHTML = "";
 
-        data.forEach(item => {
-            const symbol = normalizeCommoditySymbol(item.symbol);
-            const pct = parseFloat(item.change) || 0;
-
+        Object.entries(data).forEach(([currency, status]) => {
             const div = document.createElement("div");
             div.className = "market-item";
-            div.setAttribute("data-symbol", symbol);
 
             div.innerHTML = `
-                <a href="commodity-${symbol.toLowerCase()}.html"
-                   style="text-decoration:none;color:inherit;display:flex;justify-content:space-between;width:100%;">
-                    <div class="market-info">
-                        <h3>${item.name}</h3>
-                        <p class="commodity-symbol">${symbol}</p>
-                    </div>
-                    <div class="performance ${pct >= 0 ? "positive" : "negative"}">
-                        <span class="commodity-price">${item.price}</span>
-                        <span class="commodity-change">${item.change}</span>
-                    </div>
-                </a>
+                <div class="market-info">
+                    <h3>${currency}</h3>
+                    <p>${status}</p>
+                </div>
             `;
 
             container.appendChild(div);
         });
 
     } catch (err) {
-        console.error("Commodities error:", err);
+        console.error("Forex strength error:", err);
     }
 }
 
 /* ===========================================================
-      COMMODITY WEBSOCKET UPDATE
-   =========================================================== */
+   FOREX WS UPDATE
+=========================================================== */
+
+function applyForexUpdate(pair, price, changePercent) {
+    const card = document.querySelector(`.forex-card[data-pair="${pair}"]`);
+    if (!card) return;
+
+    const priceEl = card.querySelector(".forex-price");
+    const changeEl = card.querySelector(".forex-change");
+    const perf = card.querySelector(".performance");
+
+    if (!priceEl || !changeEl || !perf) return;
+
+    priceEl.textContent = Number(price).toFixed(4);
+    changeEl.textContent = `${changePercent >= 0 ? "+" : ""}${changePercent.toFixed(2)}%`;
+
+    perf.classList.toggle("positive", changePercent >= 0);
+    perf.classList.toggle("negative", changePercent < 0);
+}
+
+/* ===========================================================
+   COMMODITY WS UPDATE (STATIC DOM)
+=========================================================== */
 
 function applyCommodityUpdate(symbol, price, changePercent) {
     const normalized = normalizeCommoditySymbol(symbol);
     const card = document.querySelector(`.market-item[data-symbol="${normalized}"]`);
     if (!card) return;
 
-    card.querySelector(".commodity-price").textContent = Number(price).toFixed(2);
-    card.querySelector(".commodity-change").textContent =
-        `${changePercent >= 0 ? "+" : ""}${changePercent.toFixed(2)}%`;
-
+    const priceEl = card.querySelector(".commodity-price");
+    const changeEl = card.querySelector(".commodity-change");
     const perf = card.querySelector(".performance");
+
+    if (!priceEl || !changeEl || !perf) return;
+
+    priceEl.textContent = Number(price).toFixed(2);
+    changeEl.textContent = `${changePercent >= 0 ? "+" : ""}${changePercent.toFixed(2)}%`;
+
     perf.classList.toggle("positive", changePercent >= 0);
     perf.classList.toggle("negative", changePercent < 0);
 }
 
 /* ===========================================================
-      WEBSOCKET CONNECTION
-   =========================================================== */
+   COMMODITY SENTIMENT (REST – AGGREGATE) ✅ FIXED
+=========================================================== */
+
+async function loadCommoditySentiment() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/commodity-sentiment`);
+        const data = await response.json();
+
+        const container = document.getElementById("commodity-sentiment");
+        if (!container) return;
+
+        container.innerHTML = `
+            <div class="sentiment-item">
+                <h3>Commodity Sentiment</h3>
+                <p class="sentiment-label">${data.Sentiment}</p>
+                <small>
+                    Avg Change: ${data.Score}% · Based on ${data.Count} commodities
+                </small>
+            </div>
+        `;
+
+    } catch (err) {
+        console.error("Commodity sentiment error:", err);
+    }
+}
+
+/* ===========================================================
+   WEBSOCKET
+=========================================================== */
 
 function connectForexSocket() {
     const socket = new WebSocket(CONFIG.WS_BASE_URL);
@@ -202,9 +214,8 @@ function connectForexSocket() {
     socket.addEventListener("message", (event) => {
         const msg = JSON.parse(event.data);
 
-        if (msg.type === "forex") {
-            const pair = msg.pair || WS_FOREX_SYMBOL_MAP[msg.symbol];
-            if (pair) applyForexUpdate(pair, msg.price, msg.changePercent);
+        if (msg.type === "forex" && msg.pair) {
+            applyForexUpdate(msg.pair, msg.price, msg.changePercent);
             lastWsUpdate = Date.now();
         }
 
@@ -220,19 +231,22 @@ function connectForexSocket() {
 }
 
 /* ===========================================================
-      PAGE LOAD
-   =========================================================== */
+   PAGE LOAD
+=========================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
     loadHeatmapTable();
     loadForex();
-    loadCommodities();
+    loadForexStrength();
+    loadCommoditySentiment();
     connectForexSocket();
 
+    // REST fallback ONLY for forex inventory + strength + sentiment
     setInterval(() => {
         if (!wsConnected || Date.now() - lastWsUpdate > 30000) {
             loadForex();
-            loadCommodities();
+            loadForexStrength();
+            loadCommoditySentiment();
         }
-    }, 10000);
+    }, 15000);
 });
