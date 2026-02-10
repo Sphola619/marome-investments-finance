@@ -208,7 +208,13 @@ body.dark-mode .header {
   cursor: pointer;
 }
 
-.market-item:hover {
+.market-item-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.market-item-link:hover .market-item {
   transform: translateY(-4px);
   box-shadow: 0 8px 20px var(--shadow);
 }

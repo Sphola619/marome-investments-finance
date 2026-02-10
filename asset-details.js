@@ -78,6 +78,13 @@ const ASSET_CONFIG = {
         keywords: ["Silver", "XAG", "precious metals"],
         type: "commodity"
     },
+    "platinum": { 
+        name: "Platinum", 
+        description: "Spot Platinum (XPT/USD) - Price per Troy Ounce",
+        tvSymbol: "OANDA:XPTUSD",
+        keywords: ["Platinum", "XPT", "precious metals"],
+        type: "commodity"
+    },
     "crude-oil": { 
         name: "Crude Oil", 
         description: "WTI Crude Oil Futures", 
