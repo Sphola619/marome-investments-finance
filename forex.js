@@ -31,7 +31,22 @@ async function loadHeatmapTable() {
     tableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Loading...</td></tr>`;
 
     try {
-        const response = await fetch(`${API_BASE_URL}/forex-heatmap`);
+        // Add timeout to prevent hanging requests
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+
+        const response = await fetch(`${API_BASE_URL}/forex-heatmap`, {
+            signal: controller.signal,
+            headers: {
+                'Cache-Control': 'no-cache'
+            }
+        });
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
         const data = await response.json();
 
         tableBody.innerHTML = "";
@@ -50,6 +65,10 @@ async function loadHeatmapTable() {
 
     } catch (err) {
         console.error("Heatmap error:", err);
+        tableBody.innerHTML = `<tr><td colspan="5" style="text-align:center; color: red;">Failed to load heatmap. Retrying...</td></tr>`;
+        
+        // Auto-retry after 3 seconds
+        setTimeout(() => loadHeatmapTable(), 3000);
     }
 }
 
