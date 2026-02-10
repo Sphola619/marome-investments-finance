@@ -326,7 +326,7 @@ async function loadUSStocks() {
                 const stockDiv = document.createElement('div');
                 stockDiv.className = 'market-item stock-card';
                 stockDiv.setAttribute('data-stock-name', stock.name.toLowerCase());
-                stockDiv.setAttribute('data-symbol', stock.symbol.toLowerCase());
+                stockDiv.setAttribute('data-symbol', stock.symbol); // Keep original case for WebSocket matching
                 stockDiv.style.cssText = 'margin-bottom: 8px;';
 
                 stockDiv.innerHTML = `
@@ -498,18 +498,18 @@ function applyUSStockUpdate(symbol, price, changePercent) {
     if (!card) return;
 
     const priceEl = card.querySelector(".us-stock-price");
-    const changeEl = card.querySelector(".us-stock-change");
     const perfEl = card.querySelector(".performance");
 
     if (priceEl) priceEl.textContent = `$${Number(price).toFixed(2)}`;
-    if (changeEl) {
-        const pct = Number(changePercent) || 0;
-        changeEl.textContent = `${pct >= 0 ? "+" : ""}${pct.toFixed(2)}%`;
-    }
 
     if (perfEl) {
+        const pct = Number(changePercent) || 0;
+        const arrow = pct >= 0 ? '↑' : '↓';
+        perfEl.textContent = `${arrow} ${Math.abs(pct).toFixed(2)}%`;
+
+        // Update performance class
         perfEl.classList.remove("positive", "negative");
-        perfEl.classList.add(Number(changePercent) >= 0 ? "positive" : "negative");
+        perfEl.classList.add(pct >= 0 ? "positive" : "negative");
     }
 }
 
@@ -524,6 +524,8 @@ function connectUSStocksSocket() {
         try {
             const msg = JSON.parse(event.data);
             if (msg.type !== "us-stock") return;
+
+            console.log("📈 US Stock update received:", msg.symbol, msg.price, msg.changePercent);
             applyUSStockUpdate(msg.symbol, msg.price, msg.changePercent);
         } catch (err) {
             console.error("US Stocks WS parse error:", err);
