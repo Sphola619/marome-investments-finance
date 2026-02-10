@@ -78,7 +78,7 @@ const ASSET_CONFIG = {
         keywords: ["Silver", "XAG", "precious metals"],
         type: "commodity"
     },
-    "platinum": { 
+    "platinuim": { 
         name: "Platinum", 
         description: "Spot Platinum (XPT/USD) - Price per Troy Ounce",
         tvSymbol: "OANDA:XPTUSD",
@@ -256,6 +256,9 @@ async function loadAssetPage() {
 
     // Load news
     loadAssetNews(asset.keywords);
+
+    // Initialize WebSocket for real-time updates
+    initWebSocket(assetSlug, asset);
 }
 
 /* ===========================================================
@@ -361,13 +364,33 @@ async function loadCurrentPrice(assetSlug, asset) {
             }
 
             const change = findAsset.change || "--";
-            const isPositive = parseFloat(change) >= 0;
+            let formattedChange = change;
+            let isPositive = false;
+
+            // Handle different change formats
+            if (change !== "--") {
+                const numChange = parseFloat(change);
+                if (!isNaN(numChange)) {
+                    // If it's a raw number (decimal), format it as percentage
+                    if (Math.abs(numChange) < 10) { // Likely a percentage decimal like 0.0042
+                        formattedChange = `${numChange >= 0 ? "+" : ""}${(numChange * 100).toFixed(2)}%`;
+                        isPositive = numChange >= 0;
+                    } else {
+                        // If it's already a formatted string or large number, use as-is
+                        formattedChange = change;
+                        isPositive = parseFloat(change) >= 0;
+                    }
+                } else {
+                    // It's already a formatted string like "+0.42%"
+                    isPositive = change.startsWith("+");
+                }
+            }
 
             document.getElementById("price-value").textContent = formattedPrice;
-            document.getElementById("price-change").textContent = change;
+            document.getElementById("price-change").textContent = formattedChange;
             document.getElementById("price-change").className = `price-change ${isPositive ? "positive" : "negative"}`;
             
-            console.log("✅ Price loaded:", formattedPrice, change);
+            console.log("✅ Price loaded:", formattedPrice, formattedChange);
         } else {
             console.warn("⚠️ Asset data not found in API response");
             document.getElementById("price-value").textContent = "--";
@@ -379,6 +402,97 @@ async function loadCurrentPrice(assetSlug, asset) {
         document.getElementById("price-value").textContent = "Error";
         document.getElementById("price-change").textContent = "--";
     }
+}
+
+/* ===========================================================
+      WEBSOCKET CONNECTION FOR REAL-TIME UPDATES
+   =========================================================== */
+
+function initWebSocket(assetSlug, asset) {
+    const wsUrl = CONFIG.WS_BASE_URL;
+    const socket = new WebSocket(wsUrl);
+
+    socket.onopen = function(event) {
+        console.log("🔌 Asset details WebSocket connected for:", assetSlug);
+    };
+
+    socket.onmessage = function(event) {
+        try {
+            const data = JSON.parse(event.data);
+            console.log("📨 Asset details WebSocket message:", data);
+
+            // Handle commodity updates
+            if (data.type === "commodity" && asset.type === "commodity") {
+                // Check if this update is for our specific asset
+                if (data.name === asset.name || data.symbol === asset.name) {
+                    updatePriceDisplay(data.price, data.changePercent);
+                }
+            }
+
+            // Handle forex updates
+            if (data.type === "forex" && asset.type === "forex") {
+                if (data.pair === asset.name) {
+                    updatePriceDisplay(data.price, data.changePercent || data.change);
+                }
+            }
+
+            // Handle crypto updates
+            if (data.type === "crypto" && asset.type === "crypto") {
+                if (data.name === asset.name) {
+                    updatePriceDisplay(data.price, data.changePercent || data.change);
+                }
+            }
+
+            // Handle stock updates
+            if (data.type === "stock" && asset.type === "stock") {
+                if (data.name === asset.name) {
+                    updatePriceDisplay(data.price, data.changePercent || data.change);
+                }
+            }
+
+        } catch (err) {
+            console.error("❌ Error parsing WebSocket message:", err);
+        }
+    };
+
+    socket.onerror = function(error) {
+        console.error("❌ Asset details WebSocket error:", error);
+    };
+
+    socket.onclose = function(event) {
+        console.log("🔌 Asset details WebSocket closed, reconnecting in 5 seconds...");
+        setTimeout(() => initWebSocket(assetSlug, asset), 5000);
+    };
+
+    return socket;
+}
+
+function updatePriceDisplay(price, change) {
+    if (price !== undefined && price !== null) {
+        const numPrice = parseFloat(price);
+        if (!isNaN(numPrice)) {
+            const formattedPrice = numPrice.toFixed(2);
+            document.getElementById("price-value").textContent = formattedPrice;
+        }
+    }
+
+    if (change !== undefined && change !== null) {
+        const changeElement = document.getElementById("price-change");
+        const numChange = parseFloat(change);
+
+        if (!isNaN(numChange)) {
+            // Format as percentage with 2 decimal places and +/- sign
+            const formattedChange = `${numChange >= 0 ? "+" : ""}${numChange.toFixed(2)}%`;
+            changeElement.textContent = formattedChange;
+            changeElement.className = `price-change ${numChange >= 0 ? "positive" : "negative"}`;
+        } else {
+            // Fallback for non-numeric change values
+            changeElement.textContent = change;
+            changeElement.className = `price-change ${parseFloat(change) >= 0 ? "positive" : "negative"}`;
+        }
+    }
+
+    console.log("🔄 Price updated via WebSocket:", price, change);
 }
 
 /* ===========================================================

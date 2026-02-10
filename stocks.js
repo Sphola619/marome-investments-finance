@@ -493,23 +493,28 @@ function displayUSSentiment(usStocks) {
    US STOCKS WEBSOCKET (INSTANT UPDATES)
    =========================================================== */
 
-function applyUSStockUpdate(symbol, price, changePercent) {
-    const card = document.querySelector(`.stock-card[data-symbol="${symbol}"]`);
-    if (!card) return;
+function applyUSIndexUpdate(symbol, price, changePercent) {
+    // Find the index item by symbol - look for the paragraph containing the symbol
+    const indexItems = document.querySelectorAll("#indices-list .market-item");
+    
+    for (const item of indexItems) {
+        const symbolEl = item.querySelector("p");
+        if (symbolEl && symbolEl.textContent.trim() === symbol) {
+            const perfEl = item.querySelector(".performance");
+            
+            if (perfEl) {
+                const pct = Number(changePercent) || 0;
+                const arrow = pct >= 0 ? '↑' : '↓';
+                perfEl.textContent = `${arrow} ${Math.abs(pct).toFixed(2)}%`;
 
-    const priceEl = card.querySelector(".us-stock-price");
-    const perfEl = card.querySelector(".performance");
-
-    if (priceEl) priceEl.textContent = `$${Number(price).toFixed(2)}`;
-
-    if (perfEl) {
-        const pct = Number(changePercent) || 0;
-        const arrow = pct >= 0 ? '↑' : '↓';
-        perfEl.textContent = `${arrow} ${Math.abs(pct).toFixed(2)}%`;
-
-        // Update performance class
-        perfEl.classList.remove("positive", "negative");
-        perfEl.classList.add(pct >= 0 ? "positive" : "negative");
+                // Update performance class
+                perfEl.classList.remove("positive", "negative");
+                perfEl.classList.add(pct >= 0 ? "positive" : "negative");
+                
+                console.log(`📊 Updated index ${symbol}: ${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%`);
+            }
+            break; // Found the match, no need to continue
+        }
     }
 }
 
@@ -523,10 +528,14 @@ function connectUSStocksSocket() {
     socket.addEventListener("message", (event) => {
         try {
             const msg = JSON.parse(event.data);
-            if (msg.type !== "us-stock") return;
-
-            console.log("📈 US Stock update received:", msg.symbol, msg.price, msg.changePercent);
-            applyUSStockUpdate(msg.symbol, msg.price, msg.changePercent);
+            
+            if (msg.type === "us-stock") {
+                console.log("📈 US Stock update received:", msg.symbol, msg.price, msg.changePercent);
+                applyUSStockUpdate(msg.symbol, msg.price, msg.changePercent);
+            } else if (msg.type === "us-index") {
+                console.log("📊 US Index update received:", msg.symbol, msg.price, msg.changePercent);
+                applyUSIndexUpdate(msg.symbol, msg.price, msg.changePercent);
+            }
         } catch (err) {
             console.error("US Stocks WS parse error:", err);
         }
