@@ -202,6 +202,11 @@ function openBankModal(index) {
     const modal = document.getElementById('bank-modal');
     const modalBody = document.getElementById('bank-modal-body');
     
+    // 🔍 DEBUG LOGS
+    console.log("Full liveEconomicIndicators:", liveEconomicIndicators);
+    console.log("Currency being checked:", bank.currency);
+    console.log("Matched live data:", liveEconomicIndicators?.[bank.currency]);
+    
     // Calculate days until next meeting
     const today = new Date();
     const nextMeetingDate = new Date(bank.nextMeeting);
@@ -689,7 +694,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else {
         document.getElementById("movers-list").innerHTML = `
             <div style="text-align:center;color:#777;padding:1rem;">
-                ❌ Unable to load global movers. Please try again later.  
+                ❌ Unable to load global movers. Please try again later. 
             </div>
         `;
     }
@@ -697,7 +702,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     populateNewsList(news);
     
     // ✅ Load Economic Indicators (for central bank modals)
-    fetchEconomicIndicators();
+    await fetchEconomicIndicators();
     
     // ✅ Load Central Bank Rates
     displayCentralBankRates();
