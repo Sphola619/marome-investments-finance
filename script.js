@@ -19,7 +19,9 @@ const CENTRAL_BANK_RATES = [
         stance: 'Neutral',
         inflation: { current: 2.7, target: 2.0 },
         unemployment: 4.4,
+        previousUnemployment: 4.2,
         gdp: 4.4,
+        previousGdp: 3.1,
         recentComment: 'The Federal Reserve is monitoring inflation trends closely while maintaining flexibility in policy decisions.',
         governor: 'Jerome Powell'
     },
@@ -35,7 +37,9 @@ const CENTRAL_BANK_RATES = [
         stance: 'Neutral',
         inflation: { current: 1.9, target: 2.0 },
         unemployment: 6.2,
+        previousUnemployment: 6.3,
         gdp: 0.3,
+        previousGdp: 0.2,
         recentComment: 'Inflation is moving toward our target, allowing for gradual policy normalization.',
         governor: 'Christine Lagarde'
     },
@@ -51,7 +55,9 @@ const CENTRAL_BANK_RATES = [
         stance: 'Neutral',
         inflation: { current: 3.4, target: 2.0 },
         unemployment: 5.1,
+        previousUnemployment: 5.0,
         gdp: 0.1,
+        previousGdp: -0.1,
         recentComment: 'We remain committed to returning inflation sustainably to the 2% target.',
         governor: 'Andrew Bailey'
     },
@@ -67,7 +73,9 @@ const CENTRAL_BANK_RATES = [
         stance: 'Neutral',
         inflation: { current: 2.1, target: 2.0 },
         unemployment: 2.6,
+        previousUnemployment: 2.5,
         gdp: 0.6,
+        previousGdp: 0.9,
         recentComment: 'We will continue to adjust the degree of monetary accommodation as economic conditions evolve.',
         governor: 'Kazuo Ueda'
     },
@@ -83,7 +91,9 @@ const CENTRAL_BANK_RATES = [
         stance: 'Hawkish',
         inflation: { current: 3.8, target: '2.0 - 3.0' },
         unemployment: 4.2,
+        previousUnemployment: 4.0,
         gdp: 0.4,
+        previousGdp: 0.3,
         recentComment: 'The Board remains resolute in its determination to return inflation to target.',
         governor: 'Michele Bullock'
     },
@@ -99,7 +109,9 @@ const CENTRAL_BANK_RATES = [
         stance: 'Neutral',
         inflation: { current: 2.4, target: 2.0 },
         unemployment: 6.8,
+        previousUnemployment: 6.7,
         gdp: 1.3,
+        previousGdp: 1.0,
         recentComment: 'With inflation easing, we have room to support economic growth.',
         governor: 'Tiff Macklem'
     },
@@ -115,7 +127,9 @@ const CENTRAL_BANK_RATES = [
         stance: 'Dovish',
         inflation: { current: 0.7, target: 2.0 },
         unemployment: 2.3,
+        previousUnemployment: 2.2,
         gdp: 1.4,
+        previousGdp: 1.2,
         recentComment: 'The SNB is willing to intervene in the foreign exchange market to counter upward pressure on the franc.',
         governor: 'Thomas Jordan'
     },
@@ -131,7 +145,9 @@ const CENTRAL_BANK_RATES = [
         stance: 'Dovish',
         inflation: { current: 3.1, target: 2.0 },
         unemployment: 5.1,
+        previousUnemployment: 4.9,
         gdp: 1.1,
+        previousGdp: 0.8,
         recentComment: 'Inflation is within our target range, allowing for policy easing to support growth.',
         governor: 'Adrian Orr'
     },
@@ -147,7 +163,9 @@ const CENTRAL_BANK_RATES = [
         stance: 'Neutral',
         inflation: { current: 3.5, target: 3.0 },
         unemployment: 31.9,
+        previousUnemployment: 32.1,
         gdp: 0.5,
+        previousGdp: 0.3,
         recentComment: 'The MPC will continue to monitor risks to the inflation outlook and act appropriately.',
         governor: 'Lesetja Kganyago'
     }
@@ -240,14 +258,22 @@ function openBankModal(index) {
         : bank.inflation.current.toFixed(2);
     const inflationDate = liveData?.inflation?.date || null;
     
-    const unemploymentValue = liveData?.unemployment?.value !== null && liveData?.unemployment?.value !== undefined
-        ? liveData.unemployment.value.toFixed(2) 
+    // Unemployment - use live current/previous if available
+    const unemploymentValue = liveData?.unemployment?.current !== null && liveData?.unemployment?.current !== undefined
+        ? liveData.unemployment.current.toFixed(2) 
         : bank.unemployment.toFixed(2);
+    const previousUnemployment = liveData?.unemployment?.previous !== null && liveData?.unemployment?.previous !== undefined
+        ? liveData.unemployment.previous
+        : bank.previousUnemployment;
     const unemploymentDate = liveData?.unemployment?.date || null;
     
-    const gdpValue = liveData?.gdp?.value !== null && liveData?.gdp?.value !== undefined
-        ? liveData.gdp.value.toFixed(2) 
+    // GDP - use live current/previous if available
+    const gdpValue = liveData?.gdp?.current !== null && liveData?.gdp?.current !== undefined
+        ? liveData.gdp.current.toFixed(2) 
         : bank.gdp.toFixed(2);
+    const previousGdp = liveData?.gdp?.previous !== null && liveData?.gdp?.previous !== undefined
+        ? liveData.gdp.previous
+        : bank.previousGdp;
     const gdpDate = liveData?.gdp?.date || null;
     
     modalBody.innerHTML = `
@@ -294,17 +320,17 @@ function openBankModal(index) {
                 <div class="bank-modal-item">
                     <span class="item-label">Inflation (CPI)</span>
                     <span class="item-value">${inflationValue}%</span>
-                    <span class="item-sublabel">${inflationDate ? `As of ${new Date(inflationDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}` : `Target: ${bank.inflation.target}%`}</span>
+                    <span class="item-sublabel">Target: ${bank.inflation.target}%${inflationDate ? ` • ${new Date(inflationDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}` : ''}</span>
                 </div>
                 <div class="bank-modal-item">
                     <span class="item-label">Unemployment</span>
                     <span class="item-value">${unemploymentValue}%</span>
-                    ${unemploymentDate ? `<span class="item-sublabel">As of ${new Date(unemploymentDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>` : ''}
+                    <span class="item-sublabel">Previous: ${previousUnemployment.toFixed(1)}% ${unemploymentValue > previousUnemployment ? '↑' : unemploymentValue < previousUnemployment ? '↓' : '→'}${unemploymentDate ? ` • ${new Date(unemploymentDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}` : ''}</span>
                 </div>
                 <div class="bank-modal-item">
-                    <span class="item-label">GDP Growth</span>
+                    <span class="item-label">GDP Growth (QoQ)</span>
                     <span class="item-value">${gdpValue}%</span>
-                    ${gdpDate ? `<span class="item-sublabel">As of ${new Date(gdpDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>` : ''}
+                    <span class="item-sublabel">Previous: ${previousGdp.toFixed(1)}% ${gdpValue > previousGdp ? '↑' : gdpValue < previousGdp ? '↓' : '→'}${gdpDate ? ` • ${new Date(gdpDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}` : ''}</span>
                 </div>
             </div>
         </div>
