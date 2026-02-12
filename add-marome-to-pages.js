@@ -54,3 +54,4 @@ htmlFiles.forEach(file => {
 });
 
 console.log('\nDone! Marome chat widget has been added to all pages.');
+

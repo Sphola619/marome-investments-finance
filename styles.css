@@ -533,6 +533,102 @@ body.dark-mode .heatmap-table tr:hover {
 }
 
 /* =====================
+   BOND YIELDS TABLE
+   ===================== */
+.bond-yields-table-wrapper {
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+.bond-yields-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card-bg);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px var(--shadow);
+  transition: background 0.3s ease;
+}
+
+.bond-yields-table th {
+  background: var(--bg-secondary);
+  padding: 14px 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  border-bottom: 2px solid #2563eb;
+  text-align: left;
+  font-size: 0.95rem;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.bond-yields-table td {
+  padding: 14px 12px;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.95rem;
+  transition: color 0.3s ease, background 0.2s ease;
+}
+
+.bond-yields-table tbody tr:hover {
+  background: var(--hover-bg);
+}
+
+.bond-yields-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.bond-country {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.bond-flag {
+  font-size: 1.5rem;
+}
+
+.bond-yield-value {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.bond-spread {
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.bond-spread.positive {
+  background: rgba(0, 170, 80, 0.15);
+  color: #059669;
+}
+
+.bond-spread.negative {
+  background: rgba(200, 60, 60, 0.2);
+  color: #dc2626;
+}
+
+.bond-spread.inverted {
+  background: rgba(220, 38, 38, 0.25);
+  color: #dc2626;
+  font-weight: 800;
+}
+
+.bond-change {
+  font-weight: 600;
+}
+
+.bond-change.positive {
+  color: #059669;
+}
+
+.bond-change.negative {
+  color: #dc2626;
+}
+
+/* =====================
    ANALYSIS GRID
    ===================== */
 .analysis-grid {

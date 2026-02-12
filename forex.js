@@ -254,6 +254,58 @@ function connectForexSocket() {
 }
 
 /* ===========================================================
+   BOND YIELDS
+=========================================================== */
+async function loadBondYields() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/bond-yields`);
+        const data = await response.json();
+
+        const tableBody = document.querySelector("#bond-yields-table tbody");
+        tableBody.innerHTML = "";
+
+        if (!Array.isArray(data) || data.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No bond data available</td></tr>`;
+            return;
+        }
+
+        data.forEach(bond => {
+            const row = document.createElement("tr");
+
+            // Spread styling
+            const spreadClass = bond.isInverted ? 'inverted' : (parseFloat(bond.spread) >= 0 ? 'positive' : 'negative');
+            const spreadDisplay = bond.isInverted ? `${bond.spread}% ⚠️ INVERTED` : `${bond.spread > 0 ? '+' : ''}${bond.spread}%`;
+
+            // Change styling
+            const changeClass = parseFloat(bond.change24h) >= 0 ? 'positive' : 'negative';
+            const changeArrow = parseFloat(bond.change24h) >= 0 ? '↑' : '↓';
+            const changeDisplay = `${changeArrow} ${Math.abs(bond.change24h)}%`;
+
+            row.innerHTML = `
+                <td>
+                    <div class="bond-country">
+                        <span class="bond-flag">${bond.flag}</span>
+                        <span>${bond.country}</span>
+                    </div>
+                </td>
+                <td><span class="bond-yield-value">${bond.yield2Y}%</span></td>
+                <td><span class="bond-yield-value">${bond.yield10Y}%</span></td>
+                <td><span class="bond-spread ${spreadClass}">${spreadDisplay}</span></td>
+                <td><span class="bond-change ${changeClass}">${changeDisplay}</span></td>
+            `;
+
+            tableBody.appendChild(row);
+        });
+
+        console.log(`✅ Loaded ${data.length} bond yields`);
+    } catch (err) {
+        console.error("❌ Bond yields error:", err);
+        const tableBody = document.querySelector("#bond-yields-table tbody");
+        tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: red;">Failed to load bond yields</td></tr>`;
+    }
+}
+
+/* ===========================================================
    PAGE LOAD
 =========================================================== */
 
@@ -262,6 +314,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loadForex();
     loadForexStrength();
     loadCommoditySentiment();
+    loadBondYields();
     connectForexSocket();
 
     // REST fallback ONLY for forex inventory + strength + sentiment
@@ -272,4 +325,9 @@ document.addEventListener("DOMContentLoaded", () => {
             loadCommoditySentiment();
         }
     }, 15000);
+    
+    // Refresh bond yields every 30 minutes
+    setInterval(() => {
+        loadBondYields();
+    }, 30 * 60 * 1000);
 });
