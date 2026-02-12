@@ -340,8 +340,24 @@ body.dark-mode .header {
 .news-card a.news-link {
   text-decoration: none;
   color: var(--text-primary);
-  display: block;
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
   transition: color 0.3s ease;
+}
+
+.news-image {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  background: var(--border-color);
+}
+
+.news-content {
+  flex: 1;
+  min-width: 0;
 }
 
 .news-title {
@@ -350,6 +366,7 @@ body.dark-mode .header {
   margin-bottom: 8px;
   color: var(--text-primary);
   transition: color 0.3s ease;
+  line-height: 1.4;
 }
 
 .news-card a {

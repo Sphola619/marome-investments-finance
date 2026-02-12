@@ -36,6 +36,19 @@ async function loadJSEStocks() {
             console.error("❌ jse-stocks-accordion container not found");
             return;
         }
+        
+        // Save which sectors are currently open before clearing
+        const openSectors = new Set();
+        container.querySelectorAll('.sector-accordion').forEach(sectorDiv => {
+            const header = sectorDiv.querySelector('.sector-header strong');
+            const content = sectorDiv.querySelector('.sector-content');
+            if (header && content && content.style.maxHeight && content.style.maxHeight !== '0px') {
+                const sectorName = header.textContent.trim();
+                openSectors.add(sectorName);
+                console.log(`💾 Saving open sector: ${sectorName} (maxHeight: ${content.style.maxHeight})`);
+            }
+        });
+        
         container.innerHTML = "";
 
         // Check if we have stock data
@@ -153,8 +166,20 @@ async function loadJSEStocks() {
             sectorDiv.appendChild(header);
             sectorDiv.appendChild(content);
             container.appendChild(sectorDiv);
+            
+            // Restore open state if this sector was previously open
+            // Use setTimeout to ensure content is rendered before calculating scrollHeight
+            if (openSectors.has(sector)) {
+                setTimeout(() => {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    const toggle = header.querySelector('.sector-toggle');
+                    if (toggle) toggle.textContent = '▼';
+                    console.log(`🔄 Restored open state for: ${sector}`);
+                }, 50);
+            }
         });
 
+        console.log(`📂 Open sectors preserved: ${Array.from(openSectors).join(', ') || 'none'}`);
         setupJSESearchStocks();
 
         console.log(`✅ Loaded ${data.stocks.length} JSE stocks grouped into ${sortedSectors.length} sectors`);
@@ -707,10 +732,16 @@ document.addEventListener("DOMContentLoaded", () => {
     loadNews();
     connectUSStocksSocket();
     
-    // Auto-refresh every 10 seconds
+    // Refresh news every 5 minutes (news doesn't change frequently)
     setInterval(() => {
-        loadJSEStocks();
-        loadIndices();
         loadNews();
-    }, 10000);
+    }, 5 * 60 * 1000);
+    
+    // Refresh indices every 2 minutes
+    setInterval(() => {
+        loadIndices();
+    }, 2 * 60 * 1000);
+    
+    // No auto-refresh for JSE stocks - they're cached for 15 min on backend
+    // Users can manually refresh the page if needed
 });

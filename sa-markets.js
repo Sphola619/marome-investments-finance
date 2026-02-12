@@ -602,10 +602,13 @@ async function loadSANews() {
 
             newsCard.innerHTML = `
                 <a href="${article.url}" target="_blank" class="news-link">
-                    <div class="news-title">${article.headline}</div>
-                    <div class="news-meta">
-                        <span class="news-source">${article.source}</span>
-                        <span> • ${timeAgo}</span>
+                    ${article.image ? `<img src="${article.image}" alt="${article.headline}" class="news-image" onerror="this.style.display='none'">` : ''}
+                    <div class="news-content">
+                        <div class="news-title">${article.headline}</div>
+                        <div class="news-meta">
+                            <span class="news-source">${article.source}</span>
+                            <span> • ${timeAgo}</span>
+                        </div>
                     </div>
                 </a>
             `;
